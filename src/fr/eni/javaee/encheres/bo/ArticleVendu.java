@@ -12,6 +12,7 @@ public class ArticleVendu {
 	private float miseAPrix;
 	private float prixVente;
 	private String etatVente;
+	private String test;
 	
 	
 	
