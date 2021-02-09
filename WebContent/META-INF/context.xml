@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context docBase="GroupeGEncheres" path="/GroupeGEncheres"
-			source="org.eclipse.jst.jee.server:GroupeGEncheres">
+<Context docBase="GroupeGEnchere" path="/GroupeGEnchere"
+			source="org.eclipse.jst.jee.server:GroupeGEnchere">
 
 	<Resource
 		name="dsEncheres"

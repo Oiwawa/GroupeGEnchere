@@ -23,7 +23,7 @@ public class DBConnexion {
 		}
 		//-----------------------------------------
 		try {
-			ds =(DataSource) jndi.lookup("java:comp/env/dsRepas");
+			ds =(DataSource) jndi.lookup("java:comp/env/dsEncheres");
 		} catch(NamingException e) {
 			throw new DALException("Objet introuvable dans l'arbre JNDI", e);	
 		}

@@ -2,32 +2,49 @@ package fr.eni.javaee.encheres.dal.jdbcImpl;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import fr.eni.javaee.encheres.bo.ArticleVendu;
 import fr.eni.javaee.encheres.bo.Categorie;
 import fr.eni.javaee.encheres.bo.Enchere;
 import fr.eni.javaee.encheres.bo.Retrait;
+import fr.eni.javaee.encheres.bo.Utilisateur;
 import fr.eni.javaee.encheres.dal.DALException;
+import fr.eni.javaee.encheres.dal.DBConnexion;
 import fr.eni.javaee.encheres.dal.VenteDAO;
 
 public class VenteDAOJdbcImpl implements VenteDAO {
+	// Constantes
+	private static final String VENDRE_ARTICLE = "INSERT INTO article_vendu "
+			+ "(no_article, nom_article, description, date_debut_encheres, date_fin_encheres, "
+			+ "prix_initial, prix_vente, no_utilisateur, no_categorie, no_retrait " + "VALUES (?,?,?,?,?,?,?,?,?,?) ";
 
 	@Override
 	public void vendre(ArticleVendu article) throws DALException, SQLException {
-		// TODO Auto-generated method stub
-		
+		Connection cnx = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		cnx = DBConnexion.seConnecter();
+
+		try {
+			cnx.setAutoCommit(false);
+			pstmt = cnx.prepareStatement(VENDRE_ARTICLE, PreparedStatement.RETURN_GENERATED_KEYS);
+
+			pstmt.setString(2, article.getNomArticle());
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
 	}
 
 	@Override
 	public void encherir(Enchere ench) throws DALException, SQLException {
 		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void concerne(ArticleVendu art) throws DALException, SQLException {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -39,15 +56,55 @@ public class VenteDAOJdbcImpl implements VenteDAO {
 	@Override
 	public void lieuRetrait(Retrait ret) throws DALException, SQLException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void categorieArticle(Categorie cat) throws DALException, SQLException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
+	@Override
+	public void inscription(Utilisateur user) throws DALException, SQLException {
+		// TODO Auto-generated method stub
 
-	
+	}
+
+	@Override
+	public void connexion(Utilisateur user) throws DALException, SQLException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void updateUser(Utilisateur user) throws DALException, SQLException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void deleteUser(Utilisateur user) throws DALException, SQLException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void afficherProfil(Utilisateur user) throws DALException, SQLException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void remporterVente(ArticleVendu article) throws DALException, SQLException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void afficherDetailVente() throws DALException, SQLException {
+		// TODO Auto-generated method stub
+
+	}
+
 }
