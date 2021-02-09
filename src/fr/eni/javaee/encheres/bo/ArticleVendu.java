@@ -12,9 +12,10 @@ public class ArticleVendu {
 	private float miseAPrix;
 	private float prixVente;
 	private String etatVente;
+	//Constructeur
 	
 	
-	
+	//Constructeur pleins
 	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
 			LocalDate dateFinEncheres, float miseAPrix, float prixVente, String etatVente) {
 		super();

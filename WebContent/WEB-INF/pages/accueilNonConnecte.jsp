@@ -16,7 +16,7 @@
 
 </head>
 <body>
-	<header class="header">
+	<header>
 	<!-- Titre -->
 		<h1>
 			<a href="#">Les objets sont nos amis</a>
@@ -46,7 +46,7 @@
 				<option value="informatique">Informatique</option>
 				<option value="ameublement">Ameublement</option>
 				<option value="vetements">Vetements</option>
-				<option value="sport_loisirs">Sport&Loisirs</option>
+				<option value="sport_loisirs">Sport Loisirs</option>
 			</select>
 		</div>
 
