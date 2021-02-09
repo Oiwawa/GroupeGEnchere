@@ -30,7 +30,7 @@ public interface VenteDAO {
 	// -------------------ARTICLES-------------------//
 
 	// Mettre en vente un article / mettre aux encheres
-	public void vendre(ArticleVendu art) throws DALException, SQLException;
+	public void insertArticle(ArticleVendu art) throws DALException, SQLException;
 
 	// Les ventes
 	public List<ArticleVendu> listeVente(ArticleVendu art) throws DALException, SQLException;

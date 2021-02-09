@@ -76,6 +76,28 @@ public class ArticleVendu {
 	public void setEtatVente(String etatVente) {
 		this.etatVente = etatVente;
 	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("ArticleVendu [noArticle=");
+		builder.append(noArticle);
+		builder.append(", nomArticle=");
+		builder.append(nomArticle);
+		builder.append(", description=");
+		builder.append(description);
+		builder.append(", dateDebutEncheres=");
+		builder.append(dateDebutEncheres);
+		builder.append(", dateFinEncheres=");
+		builder.append(dateFinEncheres);
+		builder.append(", miseAPrix=");
+		builder.append(miseAPrix);
+		builder.append(", prixVente=");
+		builder.append(prixVente);
+		builder.append(", etatVente=");
+		builder.append(etatVente);
+		builder.append("]");
+		return builder.toString();
+	}
 	
 
 

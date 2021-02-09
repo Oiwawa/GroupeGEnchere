@@ -3,6 +3,7 @@ package fr.eni.javaee.encheres.dal.jdbcImpl;
 import java.sql.SQLException;
 import java.util.List;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -18,25 +19,60 @@ import fr.eni.javaee.encheres.dal.VenteDAO;
 public class VenteDAOJdbcImpl implements VenteDAO {
 	// Constantes
 	private static final String VENDRE_ARTICLE = "INSERT INTO article_vendu "
-			+ "(no_article, nom_article, description, date_debut_encheres, date_fin_encheres, "
-			+ "prix_initial, prix_vente, no_utilisateur, no_categorie, no_retrait " + "VALUES (?,?,?,?,?,?,?,?,?,?) ";
+			+ "(nom_article, description, date_debut_encheres, date_fin_encheres, "
+			+ "prix_initial, prix_vente, no_utilisateur, no_categorie, no_retrait " + "VALUES (?,?,?,?,?,?,?,?,?) ";
+	
 
 	@Override
-	public void vendre(ArticleVendu article) throws DALException, SQLException {
+	public void insertArticle(ArticleVendu article) throws DALException, SQLException {
 		Connection cnx = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		
+		Utilisateur user = null;
+		Categorie cat = null;
+		Retrait retrait = null;
 
 		cnx = DBConnexion.seConnecter();
 
 		try {
 			cnx.setAutoCommit(false);
 			pstmt = cnx.prepareStatement(VENDRE_ARTICLE, PreparedStatement.RETURN_GENERATED_KEYS);
+			
+			pstmt.setString(1, article.getNomArticle());
+			pstmt.setString(2, article.getDescription());
+			pstmt.setDate(3, Date.valueOf(article.getDateDebutEncheres()));
+			pstmt.setDate(4, Date.valueOf(article.getDateFinEncheres()));
+			pstmt.setFloat(5, article.getMiseAPrix());
+			pstmt.setFloat(6, article.getPrixVente());
+			pstmt.setInt(7, user.getNoUtilisateur());
+			pstmt.setInt(8, cat.getNoCategorie());
+			pstmt.setInt(9, retrait.getIdRetrait());
+			
+			rs = pstmt.getGeneratedKeys();
+			if(rs.next()) {
+				article.setNoArticle(rs.getInt(1));
+			}
+			
+		rs.close();
+		
+		pstmt.close();
+		cnx.commit();
 
-			pstmt.setString(2, article.getNomArticle());
-
-		} catch (Exception e) {
-			// TODO: handle exception
+		} catch (SQLException e) {
+			try {
+				cnx.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			throw new DALException(e.getMessage());
+		} finally {
+			try {
+				cnx.setAutoCommit(true);
+				cnx.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 
 	}
