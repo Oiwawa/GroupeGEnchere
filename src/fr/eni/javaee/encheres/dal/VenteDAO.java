@@ -28,6 +28,10 @@ public interface VenteDAO {
 	public void afficherProfil(Utilisateur user) throws DALException, SQLException;
 
 	// -------------------ARTICLES-------------------//
+    public ArticleVendu selectByName(String name) throws DALException, SQLException;
+
+    public Categorie selectByCat(int noCategorie) throws DALException, SQLException;
+
 
 	// Mettre en vente un article / mettre aux encheres
 	public void insertArticle(ArticleVendu art) throws DALException, SQLException;
@@ -52,5 +56,7 @@ public interface VenteDAO {
 
 	// Ajouter un article dans une categorie
 	public void categorieArticle(Categorie cat) throws DALException, SQLException;
+	
+	
 
 }

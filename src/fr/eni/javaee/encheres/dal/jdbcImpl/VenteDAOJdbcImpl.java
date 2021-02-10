@@ -21,8 +21,14 @@ public class VenteDAOJdbcImpl implements VenteDAO {
 	private static final String VENDRE_ARTICLE = "INSERT INTO article_vendu "
 			+ "(nom_article, description, date_debut_encheres, date_fin_encheres, "
 			+ "prix_initial, prix_vente, no_utilisateur, no_categorie, no_retrait " + "VALUES (?,?,?,?,?,?,?,?,?) ";
-	
-
+	private static final String SQL_SELECT_BY_NAME = "SELECT nom_article, description, date_debut_encheres, date_fin_encheres, "
+			+ "prix_initial, prix_vente, no_utilisateur, no_categorie, no_retrait " 
+			+ " from ARTICLE_VENDU "
+			+ "where nom_article = ?"; 
+	private static final String SQL_SELECT_BY_CAT = "SELECT nom_article, description, date_debut_encheres, date_fin_encheres, "
+			+ "prix_initial, prix_vente, no_utilisateur, no_categorie, no_retrait " 
+			+ " from ARTICLE_VENDU "
+			+ "where no_categorie = ?"; 
 	@Override
 	public void insertArticle(ArticleVendu article) throws DALException, SQLException {
 		Connection cnx = null;
@@ -143,4 +149,47 @@ public class VenteDAOJdbcImpl implements VenteDAO {
 
 	}
 
-}
+	@Override
+	public ArticleVendu selectByName(String name) throws DALException, SQLException {
+	        ResultSet rs = null;
+	        ArticleVendu art= null;
+
+	        try(Connection cnx = DBConnexion.seConnecter();
+	            PreparedStatement pstmt = cnx.prepareStatement(SQL_SELECT_BY_NAME);
+	){
+	            pstmt.setString(1, name);
+	            rs = pstmt.executeQuery();
+	            if(rs.next()) {
+	            	
+	                art = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"),
+	                        rs.getDate("date_debut_encheres").toLocalDate(), rs.getDate("date_fin_encheres").toLocalDate(), rs.getFloat("prix_initial"),
+	                        rs.getFloat("prix_vente"), rs.getString("etatVente"));
+	            }
+	        } catch (Exception e) {
+	            throw new DALException("selectByName failed - name = " + name, e);
+	        }
+	        return art;
+	    }
+
+
+	@Override
+	public Categorie selectByCat(int noCategorie) throws DALException, SQLException {
+	        ResultSet rs = null;
+	        Categorie cat= null;
+
+	        try(Connection cnx = DBConnexion.seConnecter();
+	            PreparedStatement pstmt = cnx.prepareStatement(SQL_SELECT_BY_CAT);
+	){
+	            pstmt.setInt(1, noCategorie);
+	            rs = pstmt.executeQuery();
+	            if(rs.next()) {
+	            	cat = new Categorie(rs.getInt("noCategorie"), rs.getString("libelle"));
+	            }
+	        } catch (Exception e) {
+	            throw new DALException("selectByCat failed - noCategorie = " + noCategorie, e);
+	        }
+	        return cat;  
+	        }
+
+	}
+	

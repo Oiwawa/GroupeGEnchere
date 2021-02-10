@@ -17,7 +17,7 @@
 </head>
 <body>
 	<header>
-	<!-- Titre -->
+		<!-- Titre -->
 		<h1>
 			<a href="#">Les objets sont nos amis</a>
 		</h1>
@@ -35,8 +35,11 @@
 
 		<!-- FILTRE---------------------------- -->
 		<p>Filtres</p>
-		<input type="text" placeholder="Le nom de l'article contient">
-		<button type="submit" value="Rechercher">Rechercher</button>
+		<form action="Accueil.html">
+			<input type="text" placeholder="Le nom de l'article contient"
+				name="recherche">
+			<button type="submit" value="Rechercher">Rechercher</button>
+		</form>
 		<br>
 		<!--CATEGORIE  -->
 		<div>
