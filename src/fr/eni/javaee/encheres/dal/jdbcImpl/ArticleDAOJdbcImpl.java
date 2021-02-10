@@ -14,9 +14,9 @@ import fr.eni.javaee.encheres.bo.Retrait;
 import fr.eni.javaee.encheres.bo.Utilisateur;
 import fr.eni.javaee.encheres.dal.DALException;
 import fr.eni.javaee.encheres.dal.DBConnexion;
-import fr.eni.javaee.encheres.dal.VenteDAO;
+import fr.eni.javaee.encheres.dal.ArticleDAO;
 
-public class VenteDAOJdbcImpl implements VenteDAO {
+public class ArticleDAOJdbcImpl implements ArticleDAO {
 	// Constantes
 	private static final String VENDRE_ARTICLE = "INSERT INTO article_vendu "
 			+ "(nom_article, description, date_debut_encheres, date_fin_encheres, "
@@ -101,35 +101,6 @@ public class VenteDAOJdbcImpl implements VenteDAO {
 
 	}
 
-	@Override
-	public void inscription(Utilisateur user) throws DALException, SQLException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void connexion(Utilisateur user) throws DALException, SQLException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void updateUser(Utilisateur user) throws DALException, SQLException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void deleteUser(Utilisateur user) throws DALException, SQLException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void afficherProfil(Utilisateur user) throws DALException, SQLException {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	public void remporterVente(ArticleVendu article) throws DALException, SQLException {
