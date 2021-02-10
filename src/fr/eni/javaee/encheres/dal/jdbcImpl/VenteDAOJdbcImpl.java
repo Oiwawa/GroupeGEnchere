@@ -159,7 +159,7 @@ public class VenteDAOJdbcImpl implements VenteDAO {
 	){
 	            pstmt.setString(1, name);
 	            rs = pstmt.executeQuery();
-	            if(rs.next()) {
+	            while(rs.next()) {
 	            	
 	                art = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"),
 	                        rs.getDate("date_debut_encheres").toLocalDate(), rs.getDate("date_fin_encheres").toLocalDate(), rs.getFloat("prix_initial"),
@@ -186,7 +186,7 @@ public class VenteDAOJdbcImpl implements VenteDAO {
 	            	cat = new Categorie(rs.getInt("noCategorie"), rs.getString("libelle"));
 	            }
 	        } catch (Exception e) {
-	            throw new DALException("selectByCat failed - noCategorie = " + noCategorie, e);
+	            throw new DALException("selectByCat failed - noCategorie = " + cat.getNoCategorie(), e);
 	        }
 	        return cat;  
 	        }
