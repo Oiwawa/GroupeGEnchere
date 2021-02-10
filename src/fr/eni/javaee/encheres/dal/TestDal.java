@@ -13,7 +13,7 @@ public class TestDal {
 		
 		System.out.println();
 		
-		DAOFactory.venteDAO().insertArticle(a1);
+		DAOFactory.getArticleDAO().insertArticle(a1);
 		System.out.println(a1);
 	}
 }

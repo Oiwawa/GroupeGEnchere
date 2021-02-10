@@ -9,29 +9,10 @@ import fr.eni.javaee.encheres.bo.Enchere;
 import fr.eni.javaee.encheres.bo.Retrait;
 import fr.eni.javaee.encheres.bo.Utilisateur;
 
-public interface VenteDAO {
+public interface ArticleDAO {
 
-	// -------------------USER-------------------//
-	// Inscription au site
-	public void inscription(Utilisateur user) throws DALException, SQLException;
-
-	// Connexion au site
-	public void connexion(Utilisateur user) throws DALException, SQLException;
-
-	// Modification du profil
-	public void updateUser(Utilisateur user) throws DALException, SQLException;
-
-	// Suppression du compte par l'utilisateur
-	public void deleteUser(Utilisateur user) throws DALException, SQLException;
-	
-	//Afficher un profil
-	public void afficherProfil(Utilisateur user) throws DALException, SQLException;
 
 	// -------------------ARTICLES-------------------//
-    public ArticleVendu selectByName(String name) throws DALException, SQLException;
-
-    public Categorie selectByCat(int noCategorie) throws DALException, SQLException;
-
 
 	// Mettre en vente un article / mettre aux encheres
 	public void insertArticle(ArticleVendu art) throws DALException, SQLException;
@@ -56,7 +37,5 @@ public interface VenteDAO {
 
 	// Ajouter un article dans une categorie
 	public void categorieArticle(Categorie cat) throws DALException, SQLException;
-	
-	
 
 }
