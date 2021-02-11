@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context docBase="GroupeGEnchere" path="/GroupeGEnchere"
+			source="org.eclipse.jst.jee.server:GroupeGEnchere">
+
+	<Resource
+		name="dsEncheres"
+		driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+		type="javax.sql.DataSource"
+		url="jdbc:sqlserver://127.0.0.1:1433;databasename=BDD_ENCHERES"
+		username="sa"
+		password="Passw0rd123"
+		maxTotal="10"
+		maxIdle="5"
+		maxWaitMillis="3000"
+	>
+	</Resource>
+
+</Context>
