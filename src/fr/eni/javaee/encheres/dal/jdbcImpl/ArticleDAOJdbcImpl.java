@@ -1,6 +1,7 @@
 package fr.eni.javaee.encheres.dal.jdbcImpl;
 
 import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.Connection;
@@ -19,9 +20,9 @@ import fr.eni.javaee.encheres.dal.ArticleDAO;
 
 public class ArticleDAOJdbcImpl implements ArticleDAO {
 	// Constantes
-	private static final String VENDRE_ARTICLE = "INSERT INTO article_vendu "
+	private static final String INSERT = "INSERT INTO article_vendu "
 			+ "(nom_article, description, date_debut_encheres, date_fin_encheres, "
-			+ "prix_initial, prix_vente, no_utilisateur, no_categorie, no_retrait " + "VALUES (?,?,?,?,?,?,?,?,?) ";
+			+ "prix_initial, no_utilisateur, no_categorie, no_retrait " + "VALUES (?,?,?,?,?,?,?,?) ";
 	private static final String SQL_SELECT_BY_NAME = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, "
 			+ "prix_initial, prix_vente, no_utilisateur, no_categorie, no_retrait " + " from ARTICLES_VENDUS "
 			+ "where nom_article = ?";
@@ -45,17 +46,16 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 		try {
 			cnx.setAutoCommit(false);
-			pstmt = cnx.prepareStatement(VENDRE_ARTICLE, PreparedStatement.RETURN_GENERATED_KEYS);
+			pstmt = cnx.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
 
 			pstmt.setString(1, article.getNomArticle());
 			pstmt.setString(2, article.getDescription());
-			pstmt.setDate(3, Date.valueOf(article.getDateDebutEncheres()));
-			pstmt.setDate(4, Date.valueOf(article.getDateFinEncheres()));
+			pstmt.setDate(3, java.sql.Date.valueOf(article.getDateDebutEncheres()));
+			pstmt.setDate(4, java.sql.Date.valueOf(article.getDateFinEncheres()));
 			pstmt.setFloat(5, article.getMiseAPrix());
-			pstmt.setFloat(6, article.getPrixVente());
-			pstmt.setInt(7, user.getNoUtilisateur());
-			pstmt.setInt(8, article.getNoCategorie());
-			pstmt.setInt(9, retrait.getIdRetrait());
+			pstmt.setInt(6, article.getVendeur().getNoUtilisateur());
+			pstmt.setInt(7, article.getNoCategorie().getNoCategorie());
+			pstmt.setInt(8, article.getLieuRetrait().getIdRetrait());
 
 			rs = pstmt.getGeneratedKeys();
 			if (rs.next()) {

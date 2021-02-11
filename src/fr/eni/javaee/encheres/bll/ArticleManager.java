@@ -9,15 +9,21 @@ import fr.eni.javaee.encheres.bo.ArticleVendu;
 import fr.eni.javaee.encheres.dal.ArticleDAO;
 import fr.eni.javaee.encheres.dal.DALException;
 import fr.eni.javaee.encheres.dal.DAOFactory;
+import fr.eni.javaee.encheres.dal.jdbcImpl.ArticleDAOJdbcImpl;
 
 public class ArticleManager {
 
-	private ArticleDAO articleDAO;
+	private ArticleDAO articleDAO = new ArticleDAOJdbcImpl();
+	private ArticleVendu art = new ArticleVendu();
+	BusinessException businessException = new BusinessException();
+	
+	
 	private static ArticleManager instance;
 
 	// Constructeur
+	
 	public ArticleManager() {
-		this.articleDAO = new DAOFactory().getArticleDAO();
+	
 	}
 
 	public static ArticleManager getInstance() {
@@ -26,28 +32,18 @@ public class ArticleManager {
 		}
 		return instance;
 	}
-	public void insertArticle(String recupArticle, String recupDesc, LocalDate recupDateDeb, LocalDate recupDateFin,
-			float prix, float prixVente, String recupEtat) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	// Methode
-	public ArticleVendu insertArticle(String recupArticle, String recupDesc, int categ, LocalDate recupDateDeb,
-			LocalDate recupDateFin, float prix, float prixVente, String etatVente) throws BusinessException {
-		BusinessException businessException = new BusinessException();
+	public ArticleVendu insertArticle(ArticleVendu article) throws BusinessException {
 		this.validerNom(recupArticle, businessException);
 		this.validerDescription(recupDesc, businessException);
 		this.validerCategorie(categ, businessException);
 		this.validerDateDebut(recupDateDeb, businessException);
 		this.validerDateFin(recupDateFin, businessException);
 		this.validerPrix(prix, businessException);
-		ArticleVendu art = null;
 		if (!businessException.hasErreurs()) {
-			art = new ArticleVendu();
 			art.setNomArticle(recupArticle);
 			art.setDescription(recupDesc);
-			art.setNoCategorie(categ);
 			art.setDateDebutEncheres(recupDateDeb);
 			art.setDateFinEncheres(recupDateFin);
 			art.setMiseAPrix(prix);

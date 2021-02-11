@@ -10,14 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class ModifierEnchere
  */
-@WebServlet("/ModifierEnchere")
-public class ModifierEnchereServlet extends HttpServlet {
+@WebServlet("/EnchereNonCommencee")
+public class EnchereNonCommencee extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ModifierEnchereServlet() {
+    public EnchereNonCommencee() {
         super();
     }
 
@@ -26,7 +26,7 @@ public class ModifierEnchereServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		request.getRequestDispatcher("WEB-INF/pages/modifierEnchere.jsp").forward(request, response);
+		request.getRequestDispatcher("WEB-INF/pages/enchereNonCommencee.jsp").forward(request, response);
 	}
 
 	/**

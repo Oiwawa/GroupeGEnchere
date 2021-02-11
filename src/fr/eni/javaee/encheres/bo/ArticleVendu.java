@@ -7,12 +7,14 @@ public class ArticleVendu {
 	private int noArticle;
 	private String nomArticle;
 	private String description;
-	private int noCategorie;
 	private LocalDate dateDebutEncheres;
 	private LocalDate dateFinEncheres;
 	private float miseAPrix;
 	private float prixVente;
 	private String etatVente;
+	private Utilisateur vendeur;
+	private Retrait lieuRetrait;
+	private Categorie noCategorie;
 	
 	// Constructeur vide
 
@@ -21,7 +23,7 @@ public class ArticleVendu {
 	}
 	// Constructeur sans id
 
-	public ArticleVendu(String nomArticle, String description, int noCategorie, LocalDate dateDebutEncheres,
+	public ArticleVendu(String nomArticle, String description, Categorie noCategorie, LocalDate dateDebutEncheres,
 			LocalDate dateFinEncheres, float miseAPrix, float prixVente) {
 		this.nomArticle = nomArticle;
 		this.description = description;
@@ -35,7 +37,7 @@ public class ArticleVendu {
 	}
 
 	// Constructeur pleins
-	public ArticleVendu(int noArticle, String nomArticle, String description, int noCategorie,
+	public ArticleVendu(int noArticle, String nomArticle, String description, Categorie noCategorie,
 			LocalDate dateDebutEncheres, LocalDate dateFinEncheres, float miseAPrix, float prixVente) {
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
@@ -74,11 +76,11 @@ public class ArticleVendu {
 		this.description = description;
 	}
 
-	public int getNoCategorie() {
+	public Categorie getNoCategorie() {
 		return noCategorie;
 	}
 
-	public void setNoCategorie(int noCategorie) {
+	public void setNoCategorie(Categorie noCategorie) {
 		this.noCategorie = noCategorie;
 	}
 
@@ -124,6 +126,21 @@ public class ArticleVendu {
 		this.etatVente = etatVente;
 	}
 	
+	public Utilisateur getVendeur() {
+		return vendeur;
+	}
+	
+	public void setVendeur(Utilisateur vendeur) {
+		this.vendeur = vendeur;
+	}
+	public Retrait getLieuRetrait() {
+		return lieuRetrait;
+	}
+	
+	public void setLieuRetrait(Retrait lieuRetrait) {
+		this.lieuRetrait = lieuRetrait;
+	}
+	
 	private void calculEtatVente() {
 		LocalDate today = LocalDate.now();
         if(today.isBefore(dateDebutEncheres)) {
@@ -157,5 +174,7 @@ public class ArticleVendu {
 		builder.append("]");
 		return builder.toString();
 	}
+
+
 
 }

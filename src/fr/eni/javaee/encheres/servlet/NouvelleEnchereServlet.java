@@ -16,7 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.javaee.encheres.BusinessException;
 import fr.eni.javaee.encheres.bll.ArticleManager;
+import fr.eni.javaee.encheres.bll.RetraitManager;
 import fr.eni.javaee.encheres.bo.ArticleVendu;
+import fr.eni.javaee.encheres.bo.Retrait;
 
 /**
  * Servlet implementation class NouvelleVenteServlet
@@ -49,76 +51,50 @@ public class NouvelleEnchereServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// Récupération des chaines encodées UTF-08
-		request.setCharacterEncoding("UTF-08");
+		// Récupération des chaines encodages UTF-8
+		request.setCharacterEncoding("UTF-8");
 		StringBuilder sb = new StringBuilder();
 
-		// Création de l'article
-		ArticleVendu art = null;
-
-		// Variables de récupération
-		String recupArticle = null;
-		String recupDesc = null;
-		String recupPrix = null;
-		String recupCateg = null;
-		LocalDate recupDateDeb = null;
-		LocalDate recupDateFin = null;
-		String recupEtat = null;
 		List<Integer> listeCodesErreur = new ArrayList<>();
+		// Création de l'article
+		ArticleVendu art = new ArticleVendu();
 
-		// Recuperation du nom de l'article
-		recupArticle = request.getParameter("sarticle");
-		if (recupArticle == null || recupArticle.trim().isEmpty()) {
-			listeCodesErreur.add(CodesErreursServlets.CHAMPS_VIDE_ERREUR);
-
-		}
-
-		// Recuperation de la description
-		recupDesc = request.getParameter("sdescription");
-		if (recupDesc.length() > 300) {
-			sb.append("La description de l'article ne doit pas dépasser 300 charactères.<br>");
-		}
-		// Recuperation des categories
-
-		recupCateg = request.getParameter("scategorie");
-		int categ = Integer.parseInt(recupCateg);
-		if (categ <= 0) {
-			listeCodesErreur.add(CodesErreursServlets.CHAMPS_VIDE_ERREUR);
-
-		}
-
-		// Recuperation du prix
-		recupPrix = request.getParameter("sprix");
-		float prix = Integer.parseInt(recupPrix);
+		// Variables de récupération ----------------
+			// Recuperation du nom de l'article
+		String recupArticle = request.getParameter("sarticle");
 		
-		if (prix <= 0) {
-			listeCodesErreur.add(CodesErreursServlets.CHAMPS_VIDE_ERREUR);
-			
-		}
-		//Prix de la vente initialiser au prix de départ de l'article, sera changé à la fin de la vente
-		float prixVente = prix;;
-
-		// TEST
-		System.out.println(recupPrix);
-
+			// Recuperation de la description
+		String recupDesc = request.getParameter("sdescription");
+		
+			// Recuperation du prix
+		int recupPrix =  Integer.parseInt(request.getParameter("sprix"));
+		
+			// Recuperation des categorie
+		int categorieId =  Integer.parseInt(request.getParameter("scateg"));
+		
 		// Recuperation date début encheres
-		try {
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyy");
-			recupDateDeb = LocalDate.parse(request.getParameter("sdatedeb"), dtf);
-		} catch (DateTimeParseException e) {
-			e.printStackTrace();
-			listeCodesErreur.add(CodesErreursServlets.DATE_DEBUT_ERREUR);
-		}
-
-		// Recuperation date fin d'encheres
-		try {
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyy");
-			recupDateDeb = LocalDate.parse(request.getParameter("sdatefin"), dtf);
-		} catch (DateTimeParseException e) {
-			e.printStackTrace();
-			listeCodesErreur.add(CodesErreursServlets.DATE_FIN_ERREUR);
-		}
+		LocalDate recupDateDeb = LocalDate.parse("sdatedeb");
 		
+		// Recuperation date fin d'encheres
+		LocalDate recupDateFin = LocalDate.parse("sdatefin");
+		
+		//Recuperation de la rue de la ville et code postal
+		String rue=request.getParameter("srue");
+		String ville = request.getParameter("sville");
+		String codePostal = request.getParameter("scodepostal");
+		
+		String recupCateg = request.getParameter("scategorie");
+		Retrait retrait = new Retrait();
+		
+		retrait.setVille(ville);
+		retrait.setCodePostal(codePostal);
+		retrait.setRue(rue);
+		
+		//RetraitManager.addRetrait(retrait);
+	
+			
+				
+			
 		// Réalisation du traitement
 
 		if (listeCodesErreur.size() > 0) {
@@ -129,14 +105,14 @@ public class NouvelleEnchereServlet extends HttpServlet {
 
 			try {
 				ArticleManager articleManager = new ArticleManager();
-				articleManager.insertArticle(recupArticle, recupDesc, categ, recupDateDeb,recupDateFin, prix, prixVente, recupEtat);
+			//	articleManager.insertArticle(recupArticle, recupDesc, categ, recupDateDeb,recupDateFin, prix, prixVente, recupEtat);
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/modifierVente.jsp");
 				rd.forward(request, response);
 				
-			} catch (BusinessException  e) {
+			} catch (Exception  e) {
 				//Si probleme regle pas respecter = renvoie vers la page + affichage erreurs
 				e.printStackTrace();
-			request.setAttribute("listeCodeErreur", e.getListeCodesErreur());
+			//request.setAttribute("listeCodeErreur", e.getListeCodesErreur());
 			RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/pages/nouvelleVente.jsp");
 			rd.forward(request, response);
 			}
