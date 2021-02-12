@@ -53,18 +53,21 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		return null;
 	}
 
+	//Select enchere par id
 	@Override
 	public Enchere selectById() throws BusinessException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	//Select les encheres gagnées par un User
 	@Override
 	public List<Enchere> selectGagneeParEncherisseur(int id) throws BusinessException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	//Select les encheres en cours pour un User
 	@Override
 	public List<Enchere> selectByEncherisseur(int id) throws BusinessException {
 		// TODO Auto-generated method stub

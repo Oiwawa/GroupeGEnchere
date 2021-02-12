@@ -46,33 +46,34 @@ public class ArticleManager {
 		return article;
 	}
 //*********************** A faire ou pas? la gestion de taille peut être géré par le html (max length par exemple)
-	private void validerNom(String recupArticle, BusinessException businessException) {
-		if (recupArticle.trim().length() > 30) {
-			businessException.ajouterErreur(CodesResultatBLL.REGLE_NOM_VENTE);
-		}
-	}
+//	private void validerNom(String recupArticle, BusinessException businessException) {
+//		if (recupArticle.trim().length() > 30) {
+//			businessException.ajouterErreur(CodesResultatBLL.REGLE_NOM_VENTE);
+//		}
+//	}
+//
+//	private void validerDescription(String recupDesc, BusinessException businessException) {
+//		if (recupDesc == null || recupDesc.isBlank()) {
+//			businessException.ajouterErreur(CodesResultatBLL.REGLE_DESCRITPION_VENTE);
+//		}
+//	}
+//
+//	private void validerCategorie(int categorie, BusinessException businessException) {
+//		if (categorie <= 0 ) {
+//			businessException.ajouterErreur(CodesResultatBLL.REGLE_CATEGORIE_VENTE);
+//		}
+//
+//	}
+//	private void validerPrix(float prix, BusinessException businessException) {
+//		
+//		if (prix <= 0) {
+//			businessException.ajouterErreur(CodesResultatBLL.REGLE_PRIX_DEPART_VENTE);
+//			
+//		}
+//	}
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-	private void validerDescription(String recupDesc, BusinessException businessException) {
-		if (recupDesc == null || recupDesc.isBlank()) {
-			businessException.ajouterErreur(CodesResultatBLL.REGLE_DESCRITPION_VENTE);
-		}
-	}
-
-	private void validerCategorie(int categorie, BusinessException businessException) {
-		if (categorie <= 0 ) {
-			businessException.ajouterErreur(CodesResultatBLL.REGLE_CATEGORIE_VENTE);
-		}
-
-	}
-	private void validerPrix(float prix, BusinessException businessException) {
-		
-		if (prix <= 0) {
-			businessException.ajouterErreur(CodesResultatBLL.REGLE_PRIX_DEPART_VENTE);
-			
-		}
-	}
-//**************************************************************************************************
-
+	//Test les dates (Début avant date du jour et fin avant début)
 public void validerDate(ArticleVendu article) {
 	if(article.getDateDebutEncheres() == null || article.getDateFinEncheres() == null 
 			|| article.getDateDebutEncheres().isBefore(LocalDate.now()) 
@@ -87,7 +88,7 @@ public void validerDate(ArticleVendu article) {
 
 
 //--------------------------------------------------------------------
-	//Vente par USER
+	//selecte vente par USER
 	public List<ArticleVendu> selectByUser(int id) throws BusinessException {
 		return this.articleDAO.selectByUser(id);
 	}
@@ -97,12 +98,12 @@ public void validerDate(ArticleVendu article) {
 	}
 	
 	//Select toutes Les ventes
-	public List<ArticleVendu> getAllArticles() throws DALException, SQLException{
+	public List<ArticleVendu> getAllArticles() throws BusinessException{
         return this.articleDAO.liste();
     }
 	
 	//Select par nom article
-    public ArticleVendu selectName (String name) throws BusinessException, DALException, SQLException {
+    public ArticleVendu selectName (String name) throws BusinessException {
         return this.articleDAO.selectByName(name);
     }
 }

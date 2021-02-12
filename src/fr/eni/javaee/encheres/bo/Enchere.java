@@ -11,6 +11,9 @@ public class Enchere {
 	private Utilisateur encherisseur;
 	private boolean remporteEnchere = false;
 
+	//Constructeur vide
+	public Enchere() {
+	}
 	// Constructeur sans ID
 	public Enchere(LocalDate dateEnchere, float montantEnchere, ArticleVendu article, Utilisateur encherisseur) {
 		this.dateEnchere = dateEnchere;
@@ -21,7 +24,7 @@ public class Enchere {
 
 	}
 
-	// Constructeur avec ID
+	// Constructeur plein (avec ID)
 	public Enchere(int id, LocalDate dateEnchere, float montantEnchere, ArticleVendu article,
 			Utilisateur encherisseur) {
 		this.id = id;

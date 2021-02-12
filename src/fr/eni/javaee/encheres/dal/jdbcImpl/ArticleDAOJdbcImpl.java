@@ -1,21 +1,14 @@
 package fr.eni.javaee.encheres.dal.jdbcImpl;
 
-import java.sql.SQLException;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import fr.eni.javaee.encheres.BusinessException;
 import fr.eni.javaee.encheres.bo.ArticleVendu;
 import fr.eni.javaee.encheres.bo.Categorie;
-import fr.eni.javaee.encheres.bo.Enchere;
-import fr.eni.javaee.encheres.bo.Retrait;
-import fr.eni.javaee.encheres.bo.Utilisateur;
-import fr.eni.javaee.encheres.dal.DALException;
 import fr.eni.javaee.encheres.dal.DBConnexion;
 import fr.eni.javaee.encheres.dal.ArticleDAO;
 import fr.eni.javaee.encheres.dal.CodeResultatDal;
@@ -40,12 +33,13 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
+		//Si l'article n'existe pas, création d'une erreur
 		if(article ==null) {
 			BusinessException businessException = new BusinessException();
 			businessException.ajouterErreur(CodeResultatDal.INSERT_OBJET_NULL);
 		}
 
-
+		//Test connexion, si bon = traitement et 
 		try (Connection cnx = DBConnexion.seConnecter()){
 			cnx.setAutoCommit(false);
 			pstmt = cnx.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -71,8 +65,11 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			pstmt.close();
 			cnx.commit();
 
+			//Si la connexion est un echec, renvoie une erreur echec
 		} catch (Exception e) {
+			//Exception est plus général que DAL ou BLLExecp 
 			e.printStackTrace();
+			//Création d'une exception qui renvoie un code erreur
 			BusinessException businessException = new BusinessException();
 			businessException.ajouterErreur(CodeResultatDal.INSERT_OBJET_ECHEC);
 			throw businessException;
@@ -84,13 +81,14 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 	//Liste de tous les articles en vente
 	@Override
-	public List<ArticleVendu> liste() throws DALException, SQLException {
+	public List<ArticleVendu> liste() throws BusinessException {
 
 		List<ArticleVendu> listeArticleEnVente = new ArrayList<ArticleVendu>();
 		try (Connection cnx = DBConnexion.seConnecter()) {
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_ALL);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
+				
 				ArticleVendu av = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"),
 						rs.getString("description"), 0, rs.getDate("date_debut_encheres").toLocalDate(),
 						rs.getDate("date_fin_encheres").toLocalDate(), rs.getFloat("prix_initial"),
@@ -98,7 +96,12 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 				listeArticleEnVente.add(av);
 			}
 		} catch (Exception e) {
-			throw new DALException("liste failed", e);
+			//Exception est plus général que DAL ou BLLExecp 
+			e.printStackTrace();
+			//Création d'une exception qui renvoie un code erreur
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodeResultatDal.LECTURE_ARTICLES_ECHEC);
+			throw businessException;
 		}
 		return listeArticleEnVente;
 	}
@@ -107,7 +110,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 	//Select un article par son nom (pour le filtrage)
 	@Override
-	public ArticleVendu selectByName(String name) throws DALException, SQLException {
+	public ArticleVendu selectByName(String name) throws BusinessException {
 		ResultSet rs = null;
 		ArticleVendu art = null;
 
@@ -123,14 +126,19 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 						rs.getFloat("prix_vente"));
 			}
 		} catch (Exception e) {
-			throw new DALException("selectByName failed - name = " + name, e);
+			//Exception est plus général que DAL ou BLLExecp 
+			e.printStackTrace();
+			//Création d'une exception qui renvoie un code erreur
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodeResultatDal.LECTURE_ARTICLES_ECHEC);
+			throw businessException;
 		}
 		return art;
 	}
 
 	//Select un article par sa categorie (pour le filtrage)
 	@Override
-	public Categorie selectByCat(int noCategorie) throws DALException, SQLException {
+	public Categorie selectByCat(int noCategorie) throws BusinessException {
 		ResultSet rs = null;
 		Categorie cat = null;
 
@@ -142,11 +150,17 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 				cat = new Categorie(rs.getInt("noCategorie"), rs.getString("libelle"));
 			}
 		} catch (Exception e) {
-			throw new DALException("selectByCat failed - noCategorie = " + cat.getNoCategorie(), e);
+			//Exception est plus général que DAL ou BLLExecp 
+			e.printStackTrace();
+			//Création d'une exception qui renvoie un code erreur
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodeResultatDal.LECTURE_ARTICLES_ECHEC);
+			throw businessException;
 		}
 		return cat;
 	}
 
+	//*****************************************************************
 	//Select un article par User (pour affichage article en vente sur profil)
 	@Override
 	public List<ArticleVendu> selectByUser(int id) throws BusinessException {
@@ -155,7 +169,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		
 		return null;
 	}
-
+	//*****************************************************************
 	//Select un article par son ID 
 	@Override
 	public ArticleVendu selectById(int id) throws BusinessException {
