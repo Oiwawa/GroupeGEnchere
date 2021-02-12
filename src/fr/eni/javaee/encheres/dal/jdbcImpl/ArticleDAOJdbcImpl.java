@@ -28,7 +28,11 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	private static final String SQL_SELECT_BY_CAT = "SELECT nom_article, description, date_debut_encheres, date_fin_encheres, "
 			+ "prix_initial, prix_vente, no_utilisateur, no_categorie, no_retrait " + " from ARTICLE_VENDUS "
 			+ "where no_categorie = ?";
-	private static final String SELECT_ALL = "SELECT * FROM ARTICLES_VENDUS";
+	private static final String SELECT_ALL = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres,"
+			+" prix_initial, prix_vente, no_utilisateur, no_categorie, no_retrait"
+			+ "from ARTICLE_VENDUS"
+			+ "where nom_article LIKE '%?%'"
+			+ "where no_categorie = ?";
 
 
 	@Override
@@ -100,9 +104,10 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				ArticleVendu av = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"),
-						rs.getString("description"), 0, rs.getDate("date_debut_encheres").toLocalDate(),
-						rs.getDate("date_fin_encheres").toLocalDate(), rs.getFloat("prix_initial"),
-						rs.getFloat("prix_vente"));
+						rs.getString("description"), rs.getDate("date_debut_encheres").toLocalDate(),
+						rs.getDate("date_fin_encheres").toLocalDate(), rs.getFloat("prix_initial"), rs.getFloat("prix_vente"),
+						rs.getInt("no_utilisateur"), rs.getInt("no_categorie"), rs.getInt("no_retrait"));
+
 				listeArticleEnVente.add(av);
 			}
 		} catch (Exception e) {
@@ -135,44 +140,44 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 	}
 
-	@Override
-	public ArticleVendu selectByName(String name) throws DALException, SQLException {
-		ResultSet rs = null;
-		ArticleVendu art = null;
+//	@Override
+//	public ArticleVendu selectByName(String name) throws DALException, SQLException {
+//		ResultSet rs = null;
+//		ArticleVendu art = null;
+//
+//		try (Connection cnx = DBConnexion.seConnecter();
+//				PreparedStatement pstmt = cnx.prepareStatement(SQL_SELECT_BY_NAME);) {
+//			pstmt.setString(1, name);
+//			rs = pstmt.executeQuery();
+//			while (rs.next()) {
+//
+//				art = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"),
+//						rs.getString("description"), 0, rs.getDate("date_debut_encheres").toLocalDate(),
+//						rs.getDate("date_fin_encheres").toLocalDate(), rs.getFloat("prix_initial"),
+//						rs.getFloat("prix_vente"));
+//			}
+//		} catch (Exception e) {
+//			throw new DALException("selectByName failed - name = " + name, e);
+//		}
+//		return art;
+//	}
 
-		try (Connection cnx = DBConnexion.seConnecter();
-				PreparedStatement pstmt = cnx.prepareStatement(SQL_SELECT_BY_NAME);) {
-			pstmt.setString(1, name);
-			rs = pstmt.executeQuery();
-			while (rs.next()) {
-
-				art = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"),
-						rs.getString("description"), 0, rs.getDate("date_debut_encheres").toLocalDate(),
-						rs.getDate("date_fin_encheres").toLocalDate(), rs.getFloat("prix_initial"),
-						rs.getFloat("prix_vente"));
-			}
-		} catch (Exception e) {
-			throw new DALException("selectByName failed - name = " + name, e);
-		}
-		return art;
-	}
-
-	@Override
-	public Categorie selectByCat(int noCategorie) throws DALException, SQLException {
-		ResultSet rs = null;
-		Categorie cat = null;
-
-		try (Connection cnx = DBConnexion.seConnecter();
-				PreparedStatement pstmt = cnx.prepareStatement(SQL_SELECT_BY_CAT);) {
-			pstmt.setInt(1, noCategorie);
-			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				cat = new Categorie(rs.getInt("noCategorie"), rs.getString("libelle"));
-			}
-		} catch (Exception e) {
-			throw new DALException("selectByCat failed - noCategorie = " + cat.getNoCategorie(), e);
-		}
-		return cat;
-	}
+//	@Override
+//	public Categorie selectByCat(int noCategorie) throws DALException, SQLException {
+//		ResultSet rs = null;
+//		Categorie cat = null;
+//
+//		try (Connection cnx = DBConnexion.seConnecter();
+//				PreparedStatement pstmt = cnx.prepareStatement(SQL_SELECT_BY_CAT);) {
+//			pstmt.setInt(1, noCategorie);
+//			rs = pstmt.executeQuery();
+//			if (rs.next()) {
+//				cat = new Categorie(rs.getInt("noCategorie"), rs.getString("libelle"));
+//			}
+//		} catch (Exception e) {
+//			throw new DALException("selectByCat failed - noCategorie = " + cat.getNoCategorie(), e);
+//		}
+//		return cat;
+//	}
 
 }

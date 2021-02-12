@@ -37,8 +37,8 @@
 		<p>Filtres</p>
 		<form action="Accueil.html">
 			<input type="text" placeholder="Le nom de l'article contient"
-				name="recherche">
-			<button type="submit" value="Rechercher">Rechercher</button>
+				name="nomArticle">
+			<button type="submit" name="recherche" value="Rechercher">Rechercher</button>
 		</form>
 		<br>
 		<!--CATEGORIE  -->

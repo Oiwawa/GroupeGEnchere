@@ -13,6 +13,8 @@ public class ArticleVendu {
 	private float miseAPrix;
 	private float prixVente;
 	private String etatVente;
+	private int noUtilisateur;
+	private int noRetrait;
 	
 	// Constructeur vide
 
@@ -35,17 +37,22 @@ public class ArticleVendu {
 	}
 
 	// Constructeur pleins
-	public ArticleVendu(int noArticle, String nomArticle, String description, int noCategorie,
-			LocalDate dateDebutEncheres, LocalDate dateFinEncheres, float miseAPrix, float prixVente) {
+	public ArticleVendu(int noArticle, String nomArticle, String description, 
+			LocalDate dateDebutEncheres, LocalDate dateFinEncheres, float miseAPrix, float prixVente, int noCategorie, 
+			int noUtilisateur, int noRetrait) {
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
 		this.description = description;
-		this.noCategorie = noCategorie;
-
 		this.dateDebutEncheres = dateDebutEncheres;
 		this.dateFinEncheres = dateFinEncheres;
 		this.miseAPrix = miseAPrix;
 		this.prixVente = prixVente;
+		this.noCategorie = noCategorie;
+		this.noUtilisateur = noUtilisateur;
+		this.noRetrait = noRetrait;
+
+		
+
 		
 		this.calculEtatVente();
 	}
