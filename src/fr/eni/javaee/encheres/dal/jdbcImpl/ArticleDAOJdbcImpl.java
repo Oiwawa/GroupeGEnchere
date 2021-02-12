@@ -9,6 +9,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import fr.eni.javaee.encheres.BusinessException;
 import fr.eni.javaee.encheres.bo.ArticleVendu;
 import fr.eni.javaee.encheres.bo.Categorie;
 import fr.eni.javaee.encheres.bo.Enchere;
@@ -17,6 +18,7 @@ import fr.eni.javaee.encheres.bo.Utilisateur;
 import fr.eni.javaee.encheres.dal.DALException;
 import fr.eni.javaee.encheres.dal.DBConnexion;
 import fr.eni.javaee.encheres.dal.ArticleDAO;
+import fr.eni.javaee.encheres.dal.CodeResultatDal;
 
 public class ArticleDAOJdbcImpl implements ArticleDAO {
 	// Constantes
@@ -32,19 +34,19 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	private static final String SELECT_ALL = "SELECT * FROM ARTICLES_VENDUS";
 
 
+	//Insert un nouvel article
 	@Override
-	public void insertArticle(ArticleVendu article) throws DALException, SQLException {
-		Connection cnx = null;
+	public void insertArticle(ArticleVendu article) throws BusinessException {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
-		Utilisateur user = null;
-		Categorie cat = null;
-		Retrait retrait = null;
+		if(article ==null) {
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodeResultatDal.INSERT_OBJET_NULL);
+		}
 
-		cnx = DBConnexion.seConnecter();
 
-		try {
+		try (Connection cnx = DBConnexion.seConnecter()){
 			cnx.setAutoCommit(false);
 			pstmt = cnx.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
 
@@ -57,6 +59,8 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			pstmt.setInt(7, article.getNoCategorie().getNoCategorie());
 			pstmt.setInt(8, article.getLieuRetrait().getIdRetrait());
 
+			pstmt.executeUpdate();
+			
 			rs = pstmt.getGeneratedKeys();
 			if (rs.next()) {
 				article.setNoArticle(rs.getInt(1));
@@ -67,30 +71,18 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			pstmt.close();
 			cnx.commit();
 
-		} catch (SQLException e) {
-			try {
-				cnx.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-			throw new DALException(e.getMessage());
-		} finally {
-			try {
-				cnx.setAutoCommit(true);
-				cnx.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
+		} catch (Exception e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodeResultatDal.INSERT_OBJET_ECHEC);
+			throw businessException;
 
 	}
-
-	@Override
-	public void encherir(Enchere ench) throws DALException, SQLException {
-		// TODO Auto-generated method stub
-
 	}
 
+
+
+	//Liste de tous les articles en vente
 	@Override
 	public List<ArticleVendu> liste() throws DALException, SQLException {
 
@@ -111,30 +103,9 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		return listeArticleEnVente;
 	}
 
-	@Override
-	public void lieuRetrait(Retrait ret) throws DALException, SQLException {
-		// TODO Auto-generated method stub
+	
 
-	}
-
-	@Override
-	public void categorieArticle(Categorie cat) throws DALException, SQLException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void remporterVente(ArticleVendu article) throws DALException, SQLException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void afficherDetailVente() throws DALException, SQLException {
-		// TODO Auto-generated method stub
-
-	}
-
+	//Select un article par son nom (pour le filtrage)
 	@Override
 	public ArticleVendu selectByName(String name) throws DALException, SQLException {
 		ResultSet rs = null;
@@ -157,6 +128,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		return art;
 	}
 
+	//Select un article par sa categorie (pour le filtrage)
 	@Override
 	public Categorie selectByCat(int noCategorie) throws DALException, SQLException {
 		ResultSet rs = null;
@@ -173,6 +145,22 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			throw new DALException("selectByCat failed - noCategorie = " + cat.getNoCategorie(), e);
 		}
 		return cat;
+	}
+
+	//Select un article par User (pour affichage article en vente sur profil)
+	@Override
+	public List<ArticleVendu> selectByUser(int id) throws BusinessException {
+
+		
+		
+		return null;
+	}
+
+	//Select un article par son ID 
+	@Override
+	public ArticleVendu selectById(int id) throws BusinessException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

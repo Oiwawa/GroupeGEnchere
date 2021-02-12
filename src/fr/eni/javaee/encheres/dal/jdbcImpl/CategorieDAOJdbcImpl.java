@@ -9,6 +9,7 @@ import java.util.List;
 import fr.eni.javaee.encheres.BusinessException;
 import fr.eni.javaee.encheres.bo.Categorie;
 import fr.eni.javaee.encheres.dal.CategorieDAO;
+import fr.eni.javaee.encheres.dal.CodeResultatDal;
 import fr.eni.javaee.encheres.dal.DBConnexion;
 
 public class CategorieDAOJdbcImpl implements CategorieDAO {
@@ -19,6 +20,7 @@ public class CategorieDAOJdbcImpl implements CategorieDAO {
 	//SELECT PAR ID 
 	@Override
 	public Categorie selectById(int id) throws BusinessException {
+	
 		Categorie categorie = null;
 		
 		try(Connection cnx = DBConnexion.seConnecter()) {
@@ -35,16 +37,19 @@ public class CategorieDAOJdbcImpl implements CategorieDAO {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodeResultatDal.LECTURE_CATEGORIES_ECHEC);
+			throw businessException;
 		}
 		
 		return categorie;
 	}
 
-	//SELECT TOUTES LES METHODS 
+	//SELECT TOUTES LES CATEGORIES 
 	@Override
 	public List<Categorie> selectAll() throws BusinessException {
 		
-		List<Categorie> categories = new ArrayList<Categorie>();
+		List<Categorie> listeCategories = new ArrayList<Categorie>();
 		try(Connection cnx = DBConnexion.seConnecter()) {
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_ALL);
 			
@@ -54,13 +59,16 @@ public class CategorieDAOJdbcImpl implements CategorieDAO {
 				Categorie categorie = new Categorie();
 				categorie.setNoCategorie(rs.getInt("no_categorie"));
 				categorie.setLibelle(rs.getString("libelle"));
-				categories.add(categorie);
+				listeCategories.add(categorie);
 			}
 			} catch(Exception e) {
 				e.printStackTrace();
+				BusinessException businessException = new BusinessException();
+				businessException.ajouterErreur(CodeResultatDal.LECTURE_CATEGORIES_ECHEC);
+				throw businessException;
 			}
 		
-		return null;
+		return listeCategories;
 	}
 
 }

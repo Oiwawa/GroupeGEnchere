@@ -52,6 +52,11 @@ public class ArticleVendu {
 		this.calculEtatVente();
 	}
 
+	public ArticleVendu(int int1, String string, String string2, int i, LocalDate localDate, LocalDate localDate2,
+			float float1, float float2) {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getNoArticle() {
 		return noArticle;
 	}

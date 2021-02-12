@@ -1,23 +1,38 @@
 package fr.eni.javaee.encheres.bo;
 
-public class Retrait {
+import java.io.Serializable;
+
+public class Retrait implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	
+	
 	private int noArticle;
 	private String codePostal;
 	private String ville;
 	private int idRetrait;
 	private String rue;
 	
+	//Constructeur vide
 	public Retrait() {
-		
+		super();
+	}
+	//Constructeur sans ID retrait
+	public Retrait(int noArticle, String codePostal, String ville, String rue) {
+		super();
+		this.noArticle = noArticle;
+		this.codePostal = codePostal;
+		this.ville = ville;
+		this.rue = rue;
 	}
 	
-	
+	//Constructeur avec ID retrait
 	public Retrait(int noArticle, String codePostal, String ville, String rue, int idRetrait) {
 		super();
 		this.noArticle = noArticle;
 		this.codePostal = codePostal;
 		this.ville = ville;
-		this.setRue(rue);
+		this.rue = rue;
 		this.idRetrait = idRetrait;
 	}
 	

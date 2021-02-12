@@ -14,7 +14,7 @@ import fr.eni.javaee.encheres.dal.jdbcImpl.ArticleDAOJdbcImpl;
 public class ArticleManager {
 
 	private ArticleDAO articleDAO = new ArticleDAOJdbcImpl();
-	private ArticleVendu art = new ArticleVendu();
+	private ArticleVendu article = new ArticleVendu();
 	BusinessException businessException = new BusinessException();
 	
 	
@@ -34,30 +34,18 @@ public class ArticleManager {
 	}
 
 	// Methode
-	public ArticleVendu insertArticle(ArticleVendu article) throws BusinessException {
-		this.validerNom(recupArticle, businessException);
-		this.validerDescription(recupDesc, businessException);
-		this.validerCategorie(categ, businessException);
-		this.validerDateDebut(recupDateDeb, businessException);
-		this.validerDateFin(recupDateFin, businessException);
-		this.validerPrix(prix, businessException);
-		if (!businessException.hasErreurs()) {
-			art.setNomArticle(recupArticle);
-			art.setDescription(recupDesc);
-			art.setDateDebutEncheres(recupDateDeb);
-			art.setDateFinEncheres(recupDateFin);
-			art.setMiseAPrix(prix);
-			art.setPrixVente(prix);
-			art.setEtatVente(etatVente);
-			
-			// TODO recuperer la categorie
-			//this.articleDAO.insertArticle(art);
+	public ArticleVendu insertArticle(ArticleVendu article) throws BusinessException, DALException, SQLException {
+		
+		validerDate(article);
+		article.setEtatVente(null);
+		if(!businessException.hasErreurs()) {
+			articleDAO.insertArticle(article);
 		} else {
 			throw businessException;
 		}
-		return art;
+		return article;
 	}
-
+//*********************** A faire ou pas? la gestion de taille peut être géré par le html (max length par exemple)
 	private void validerNom(String recupArticle, BusinessException businessException) {
 		if (recupArticle.trim().length() > 30) {
 			businessException.ajouterErreur(CodesResultatBLL.REGLE_NOM_VENTE);
@@ -76,33 +64,44 @@ public class ArticleManager {
 		}
 
 	}
-
-	public void validerDateDebut(LocalDate recupDateDeb, BusinessException businessException) {
-		if (recupDateDeb == null || recupDateDeb.isBefore(LocalDate.now())) {
-			businessException.ajouterErreur(CodesResultatBLL.REGLE_DATE_DEBUT_VENTE);
-		}
-	}
-
-	private void validerDateFin(LocalDate recupDateFin, BusinessException businessException) {
-		if (recupDateFin == null || recupDateFin.isAfter(LocalDate.now().plusDays(1))) {
-			businessException.ajouterErreur(CodesResultatBLL.REGLE_DATE_FIN_VENTE);
-		}
-	}
-
 	private void validerPrix(float prix, BusinessException businessException) {
-
+		
 		if (prix <= 0) {
 			businessException.ajouterErreur(CodesResultatBLL.REGLE_PRIX_DEPART_VENTE);
-
+			
 		}
 	}
+//**************************************************************************************************
+
+public void validerDate(ArticleVendu article) {
+	if(article.getDateDebutEncheres() == null || article.getDateFinEncheres() == null 
+			|| article.getDateDebutEncheres().isBefore(LocalDate.now()) 
+			|| article.getDateFinEncheres().isBefore(article.getDateDebutEncheres()) ) {
+
+		businessException.ajouterErreur(CodesResultatBLL.REGLE_DATE_ENCHERE_ARTICLE);
+	}
+}
+
+
+
+
 
 //--------------------------------------------------------------------
+	//Vente par USER
+	public List<ArticleVendu> selectByUser(int id) throws BusinessException {
+		return this.articleDAO.selectByUser(id);
+	}
+	//Select vente par Article ID
+	public ArticleVendu selectById(int id) throws BusinessException {
+		return this.articleDAO.selectById(id);
+	}
 	
+	//Select toutes Les ventes
 	public List<ArticleVendu> getAllArticles() throws DALException, SQLException{
         return this.articleDAO.liste();
     }
-
+	
+	//Select par nom article
     public ArticleVendu selectName (String name) throws BusinessException, DALException, SQLException {
         return this.articleDAO.selectByName(name);
     }

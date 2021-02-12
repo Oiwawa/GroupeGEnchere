@@ -8,18 +8,24 @@ import java.util.List;
 
 import fr.eni.javaee.encheres.BusinessException;
 import fr.eni.javaee.encheres.bo.Retrait;
+import fr.eni.javaee.encheres.dal.CodeResultatDal;
 import fr.eni.javaee.encheres.dal.DBConnexion;
 import fr.eni.javaee.encheres.dal.RetraitDAO;
 
 public class RetraitDAOJdbcImpl implements RetraitDAO {
 
-	private static final String INSERT = "insert into RETRAITS (rue, code_postal, ville) values (?,?,?)";
-	private static final String SELECT_BY_ID = "SELECT * from RETRAITS WHERE no_retrait = ? ";
-	private static final String SELECT_ALL = "SELECT * FROM RETRAITS";
+	private static final String INSERT = "INSERT INTO RETRAITS (rue, code_postal, ville) values (?,?,?)";
+	private static final String SELECT_BY_ID = "SELECT FROM RETRAITS (rue, code_postal, ville) WHERE no_retrait = ? ";
+	private static final String SELECT_ALL = "SELECT FROM RETRAITS (rue, code_postal, ville)";
 
+	//INSERTION D'UN NOUVEAU RETRAIT
 	@Override
 	public Retrait insert(Retrait retrait) throws BusinessException {
 
+		if(retrait ==null) {
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodeResultatDal.INSERT_OBJET_NULL);
+		}
 		try (Connection cnx = DBConnexion.seConnecter()) {
 			PreparedStatement pstmt = cnx.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
 			pstmt.setString(1, retrait.getRue());
@@ -40,6 +46,7 @@ public class RetraitDAOJdbcImpl implements RetraitDAO {
 		return retrait;
 	}
 
+	//SELECT RETRAIT PAR ID
 	@Override
 	public Retrait selectById(int id) throws BusinessException {
 
@@ -61,10 +68,14 @@ public class RetraitDAOJdbcImpl implements RetraitDAO {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodeResultatDal.INSERT_OBJET_ECHEC);
+			throw businessException;
 		}
 		return retrait;
 	}
 
+	//SELECT TOUS LES RETRAITS
 	@Override
 	public List<Retrait> selectAll() throws BusinessException {
 
@@ -84,9 +95,13 @@ public class RetraitDAOJdbcImpl implements RetraitDAO {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodeResultatDal.LECTURE_RETRAIT_ECHEC);
+			throw businessException;
 		}
 
 		return retraits;
 	}
 
+	
 }
