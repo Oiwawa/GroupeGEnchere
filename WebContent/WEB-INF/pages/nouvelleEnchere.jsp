@@ -1,5 +1,8 @@
-<%@page import="fr.eni.javaee.encheres.messages.LecteurMessage" %>
+<%@page import="fr.eni.javaee.encheres.bo.Categorie"%>
 <%@page import="java.util.List"%>
+<%@page import="fr.eni.javaee.encheres.bll.CategorieManager"%>
+<%@page import="fr.eni.javaee.encheres.bo.Utilisateur"%>
+<%@page import="fr.eni.javaee.encheres.messages.LecteurMessage"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -10,6 +13,7 @@
 </head>
 <body>
 
+<% Utilisateur connectedUser = (Utilisateur) session.getAttribute("ConnectedUser"); %>
 	<h1>Nouvelle Vente</h1>
 	<br>
 	<!--NOM DE L'ARTICLE ---------  -->
@@ -17,7 +21,7 @@
 		method="post">
 		<div>
 			<label for="article">Article : </label> <input type="text"
-				id="nomArt" name="sarticle"
+				id="sarticle" name="sarticle"
 				value="<%=request.getParameter("sarticle")%>" placeholder="Nom">
 		</div>
 	</form>
@@ -28,7 +32,7 @@
 		<div>
 			<label for="description">Description : </label>
 			 <textarea rows="5" cols="30"  size="50" for="description"
-				id="description" name="sdescription"
+				id="sdescription" name="sdescription"
 				value="<%=request.getParameter("sdescription")%>">
 				</textarea>
 		</div>
@@ -39,7 +43,7 @@
 		method="post">
 		<div>
 			<label for="categorie">Categorie : </label> <select name="scategorie"
-				id="categorie">
+				id="scategorie">
 				<option value="">Toutes</option>
 				<option value="1">Informatique</option>
 				<option value="2">Ameublement</option>
@@ -60,7 +64,7 @@
 	<form action="<%=request.getContextPath()%>/NouvelleEnchere.html"
 		method="post">
 		<label for="quantity">Prix : </label> <input type="number"
-			id="quantity" name="sprix" min="0" max="50" maxlength="4" size="4"
+			id="quantity" name="sprix" min="0" max="100000" maxlength="4" size="4"
 			value="<%=request.getParameter("sprix")%>">
 		<!-- Ne pas supprimer le € -->
 		€
@@ -70,7 +74,7 @@
 	<!--DATE DE DEBUT D'ENCHERE DE L'ARTICLE  -->
 	<form action="<%=request.getContextPath()%>/NouvelleEnchere.html"
 		method="post">
-		<label for="date">Début de l'enchère : </label> <input type="date" id="dateDeb"
+		<label for="date">Début de l'enchère : </label> <input type="date" id="sdateDeb"
 			name="sdateDeb" value="<%=request.getParameter("sdatedeb")%>">
 
 	</form>
@@ -78,7 +82,7 @@
 	<!--DATE DE FIN D'ENCHERE DE L'ARTICLE  -->
 	<form action="<%=request.getContextPath()%>/NouvelleEnchere.html"
 		method="post">
-		<label for="date">Fin de l'enchère : </label> <input type="date" id="dateFin"
+		<label for="date">Fin de l'enchère : </label> <input type="date" id="sdateFin"
 			name="sdateFin" value="<%=request.getParameter("sdatefin")%>">
 	</form>
 	<br>
@@ -86,6 +90,27 @@
 	<!-- RETRAIT -->
 	
 	<p> Retrait
+	<%--  
+	 <div >
+      <h1>Retrait de l'objet</h1>
+      <div >
+          <label for="rue">Rue :</label>
+          <input type="text" name="srue" id="srue" maxlength="100" value="<%=connectedUser.getRue() %>" required>
+      </div>
+
+      <div >
+          <label for="cp">Code Postale :</label>
+          <input class="input" type="text" name="scodepostal" id="scodepostal" 
+          step="1000" min="0" maxlength="5" value="<%=connectedUser.getCodePostal() %>" required>
+      </div>
+
+      <div >
+          <label for="ville">Ville :</label>
+          <input class="input" type="text" name="sville" id="sville" value="<%=connectedUser.getVille() %>" required>
+      </div>
+    </div>
+	 --%>
+	
 	<!-- Erreurs -->
 	<div>
 	<%

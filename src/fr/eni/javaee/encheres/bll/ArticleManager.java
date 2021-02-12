@@ -9,15 +9,21 @@ import fr.eni.javaee.encheres.bo.ArticleVendu;
 import fr.eni.javaee.encheres.dal.ArticleDAO;
 import fr.eni.javaee.encheres.dal.DALException;
 import fr.eni.javaee.encheres.dal.DAOFactory;
+import fr.eni.javaee.encheres.dal.jdbcImpl.ArticleDAOJdbcImpl;
 
 public class ArticleManager {
 
-	private ArticleDAO articleDAO;
+	private ArticleDAO articleDAO = new ArticleDAOJdbcImpl();
+	private ArticleVendu article = new ArticleVendu();
+	BusinessException businessException = new BusinessException();
+	
+	
 	private static ArticleManager instance;
 
 	// Constructeur
+	
 	public ArticleManager() {
-		this.articleDAO = new DAOFactory().getArticleDAO();
+	
 	}
 
 	public static ArticleManager getInstance() {
@@ -26,88 +32,78 @@ public class ArticleManager {
 		}
 		return instance;
 	}
-	public void insertArticle(String recupArticle, String recupDesc, LocalDate recupDateDeb, LocalDate recupDateFin,
-			float prix, float prixVente, String recupEtat) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	// Methode
-	public ArticleVendu insertArticle(String recupArticle, String recupDesc, int categ, LocalDate recupDateDeb,
-			LocalDate recupDateFin, float prix, float prixVente, String etatVente) throws BusinessException {
-		BusinessException businessException = new BusinessException();
-		this.validerNom(recupArticle, businessException);
-		this.validerDescription(recupDesc, businessException);
-		this.validerCategorie(categ, businessException);
-		this.validerDateDebut(recupDateDeb, businessException);
-		this.validerDateFin(recupDateFin, businessException);
-		this.validerPrix(prix, businessException);
-		ArticleVendu art = null;
-		if (!businessException.hasErreurs()) {
-			art = new ArticleVendu();
-			art.setNomArticle(recupArticle);
-			art.setDescription(recupDesc);
-			art.setNoCategorie(categ);
-			art.setDateDebutEncheres(recupDateDeb);
-			art.setDateFinEncheres(recupDateFin);
-			art.setMiseAPrix(prix);
-			art.setPrixVente(prix);
-			art.setEtatVente(etatVente);
-			
-			// TODO recuperer la categorie
-			//this.articleDAO.insertArticle(art);
+	public ArticleVendu insertArticle(ArticleVendu article) throws BusinessException, DALException, SQLException {
+		
+		validerDate(article);
+		article.setEtatVente(null);
+		if(!businessException.hasErreurs()) {
+			articleDAO.insertArticle(article);
 		} else {
 			throw businessException;
 		}
-		return art;
+		return article;
 	}
+//*********************** A faire ou pas? la gestion de taille peut être géré par le html (max length par exemple)
+//	private void validerNom(String recupArticle, BusinessException businessException) {
+//		if (recupArticle.trim().length() > 30) {
+//			businessException.ajouterErreur(CodesResultatBLL.REGLE_NOM_VENTE);
+//		}
+//	}
+//
+//	private void validerDescription(String recupDesc, BusinessException businessException) {
+//		if (recupDesc == null || recupDesc.isBlank()) {
+//			businessException.ajouterErreur(CodesResultatBLL.REGLE_DESCRITPION_VENTE);
+//		}
+//	}
+//
+//	private void validerCategorie(int categorie, BusinessException businessException) {
+//		if (categorie <= 0 ) {
+//			businessException.ajouterErreur(CodesResultatBLL.REGLE_CATEGORIE_VENTE);
+//		}
+//
+//	}
+//	private void validerPrix(float prix, BusinessException businessException) {
+//		
+//		if (prix <= 0) {
+//			businessException.ajouterErreur(CodesResultatBLL.REGLE_PRIX_DEPART_VENTE);
+//			
+//		}
+//	}
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-	private void validerNom(String recupArticle, BusinessException businessException) {
-		if (recupArticle.trim().length() > 30) {
-			businessException.ajouterErreur(CodesResultatBLL.REGLE_NOM_VENTE);
-		}
+	//Test les dates (Début avant date du jour et fin avant début)
+public void validerDate(ArticleVendu article) {
+	if(article.getDateDebutEncheres() == null || article.getDateFinEncheres() == null 
+			|| article.getDateDebutEncheres().isBefore(LocalDate.now()) 
+			|| article.getDateFinEncheres().isBefore(article.getDateDebutEncheres()) ) {
+
+		businessException.ajouterErreur(CodesResultatBLL.REGLE_DATE_ENCHERE_ARTICLE);
 	}
+}
 
-	private void validerDescription(String recupDesc, BusinessException businessException) {
-		if (recupDesc == null || recupDesc.isBlank()) {
-			businessException.ajouterErreur(CodesResultatBLL.REGLE_DESCRITPION_VENTE);
-		}
-	}
 
-	private void validerCategorie(int categorie, BusinessException businessException) {
-		if (categorie <= 0 ) {
-			businessException.ajouterErreur(CodesResultatBLL.REGLE_CATEGORIE_VENTE);
-		}
 
-	}
 
-	public void validerDateDebut(LocalDate recupDateDeb, BusinessException businessException) {
-		if (recupDateDeb == null || recupDateDeb.isBefore(LocalDate.now())) {
-			businessException.ajouterErreur(CodesResultatBLL.REGLE_DATE_DEBUT_VENTE);
-		}
-	}
-
-	private void validerDateFin(LocalDate recupDateFin, BusinessException businessException) {
-		if (recupDateFin == null || recupDateFin.isAfter(LocalDate.now().plusDays(1))) {
-			businessException.ajouterErreur(CodesResultatBLL.REGLE_DATE_FIN_VENTE);
-		}
-	}
-
-	private void validerPrix(float prix, BusinessException businessException) {
-
-		if (prix <= 0) {
-			businessException.ajouterErreur(CodesResultatBLL.REGLE_PRIX_DEPART_VENTE);
-
-		}
-	}
 
 //--------------------------------------------------------------------
+	//selecte vente par USER
+	public List<ArticleVendu> selectByUser(int id) throws BusinessException {
+		return this.articleDAO.selectByUser(id);
+	}
+	//Select vente par Article ID
+	public ArticleVendu selectById(int id) throws BusinessException {
+		return this.articleDAO.selectById(id);
+	}
 	
-	public List<ArticleVendu> getAllArticles() throws DALException, SQLException{
+	//Select toutes Les ventes
+	public List<ArticleVendu> getAllArticles() throws BusinessException{
         return this.articleDAO.liste();
     }
-
-    public ArticleVendu selectName (String name) throws BusinessException, DALException, SQLException {
+	
+	//Select par nom article
+    public ArticleVendu selectName (String name) throws BusinessException {
         return this.articleDAO.selectByName(name);
     }
 }

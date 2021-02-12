@@ -7,14 +7,14 @@ public class ArticleVendu {
 	private int noArticle;
 	private String nomArticle;
 	private String description;
-	private int noCategorie;
 	private LocalDate dateDebutEncheres;
 	private LocalDate dateFinEncheres;
 	private float miseAPrix;
 	private float prixVente;
 	private String etatVente;
-	private int noUtilisateur;
-	private int noRetrait;
+	private Utilisateur vendeur;
+	private Retrait lieuRetrait;
+	private Categorie noCategorie;
 	
 	// Constructeur vide
 
@@ -23,7 +23,7 @@ public class ArticleVendu {
 	}
 	// Constructeur sans id
 
-	public ArticleVendu(String nomArticle, String description, int noCategorie, LocalDate dateDebutEncheres,
+	public ArticleVendu(String nomArticle, String description, Categorie noCategorie, LocalDate dateDebutEncheres,
 			LocalDate dateFinEncheres, float miseAPrix, float prixVente) {
 		this.nomArticle = nomArticle;
 		this.description = description;
@@ -37,9 +37,8 @@ public class ArticleVendu {
 	}
 
 	// Constructeur pleins
-	public ArticleVendu(int noArticle, String nomArticle, String description, 
-			LocalDate dateDebutEncheres, LocalDate dateFinEncheres, float miseAPrix, float prixVente, int noCategorie, 
-			int noUtilisateur, int noRetrait) {
+	public ArticleVendu(int noArticle, String nomArticle, String description, Categorie noCategorie,
+			LocalDate dateDebutEncheres, LocalDate dateFinEncheres, float miseAPrix, float prixVente) {
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
 		this.description = description;
@@ -55,6 +54,11 @@ public class ArticleVendu {
 
 		
 		this.calculEtatVente();
+	}
+
+	public ArticleVendu(int int1, String string, String string2, int i, LocalDate localDate, LocalDate localDate2,
+			float float1, float float2) {
+		// TODO Auto-generated constructor stub
 	}
 
 	public int getNoArticle() {
@@ -81,11 +85,11 @@ public class ArticleVendu {
 		this.description = description;
 	}
 
-	public int getNoCategorie() {
+	public Categorie getNoCategorie() {
 		return noCategorie;
 	}
 
-	public void setNoCategorie(int noCategorie) {
+	public void setNoCategorie(Categorie noCategorie) {
 		this.noCategorie = noCategorie;
 	}
 
@@ -131,6 +135,21 @@ public class ArticleVendu {
 		this.etatVente = etatVente;
 	}
 	
+	public Utilisateur getVendeur() {
+		return vendeur;
+	}
+	
+	public void setVendeur(Utilisateur vendeur) {
+		this.vendeur = vendeur;
+	}
+	public Retrait getLieuRetrait() {
+		return lieuRetrait;
+	}
+	
+	public void setLieuRetrait(Retrait lieuRetrait) {
+		this.lieuRetrait = lieuRetrait;
+	}
+	
 	private void calculEtatVente() {
 		LocalDate today = LocalDate.now();
         if(today.isBefore(dateDebutEncheres)) {
@@ -164,5 +183,7 @@ public class ArticleVendu {
 		builder.append("]");
 		return builder.toString();
 	}
+
+
 
 }

@@ -1,19 +1,38 @@
 package fr.eni.javaee.encheres.bo;
 
-public class Retrait {
+import java.io.Serializable;
+
+public class Retrait implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	
+	
 	private int noArticle;
-	private int codePostal;
+	private String codePostal;
 	private String ville;
 	private int idRetrait;
+	private String rue;
 	
-	
-	
-	
-	public Retrait(int noArticle, int codePostal, String ville, int idRetrait) {
+	//Constructeur vide
+	public Retrait() {
+		super();
+	}
+	//Constructeur sans ID retrait
+	public Retrait(int noArticle, String codePostal, String ville, String rue) {
 		super();
 		this.noArticle = noArticle;
 		this.codePostal = codePostal;
 		this.ville = ville;
+		this.rue = rue;
+	}
+	
+	//Constructeur avec ID retrait
+	public Retrait(int noArticle, String codePostal, String ville, String rue, int idRetrait) {
+		super();
+		this.noArticle = noArticle;
+		this.codePostal = codePostal;
+		this.ville = ville;
+		this.rue = rue;
 		this.idRetrait = idRetrait;
 	}
 	
@@ -24,10 +43,10 @@ public class Retrait {
 	public void setNoArticle(int noArticle) {
 		this.noArticle = noArticle;
 	}
-	public int getCodePostal() {
+	public String getCodePostal() {
 		return codePostal;
 	}
-	public void setCodePostal(int codePostal) {
+	public void setCodePostal(String codePostal) {
 		this.codePostal = codePostal;
 	}
 	public String getVille() {
@@ -35,6 +54,14 @@ public class Retrait {
 	}
 	public void setVille(String ville) {
 		this.ville = ville;
+	}
+	public String getRue() {
+		return rue;
+	}
+	
+	
+	public void setRue(String rue) {
+		this.rue = rue;
 	}
 	public int getIdRetrait() {
 		return idRetrait;
@@ -58,6 +85,8 @@ public class Retrait {
 		builder.append("]");
 		return builder.toString();
 	}
+
+
 
 
 
