@@ -18,20 +18,10 @@ public class ArticleManager {
 	BusinessException businessException = new BusinessException();
 	
 	
-	private static ArticleManager instance;
+	
 
 	// Constructeur
 	
-	public ArticleManager() {
-	
-	}
-
-	public static ArticleManager getInstance() {
-		if (instance == null) {
-			instance = new ArticleManager();
-		}
-		return instance;
-	}
 
 	// Methode
 	public ArticleVendu insertArticle(ArticleVendu article) throws BusinessException, DALException, SQLException {

@@ -22,18 +22,20 @@
 		<!--DESCRIPTION DE L'ARTICLE ---------  -->
 
 		<label for="description">Description : </label>
-		<textarea rows="5" cols="30" size="50" for="description"
-			id="description" name="sdescription"
-			value="<%=request.getParameter("sdescription")%>">
+		<textarea rows="5" cols="30" id="description" name="sdescription" value="<%=request.getParameter("sdescription")%>">
 				</textarea>
 
 		<br>
 		<!--CATEGORIE DE L'ARTICLE ---------  -->
-		<label for="categorie">Categorie : </label>
-		 <select name="scategorie" id="categorie">
-			<% for(Categorie categorie : CategorieManager.selectionnerToutesLesCategories()) { %>
-            <option  value ="<%=categorie.getId()%>"><%=categorie.getLibelle()%></option>
-            <% } %>
+		<label for="categorie">Categorie : </label> <select name="scategorie"
+			id="categorie">
+			<%
+			for (Categorie categorie : CategorieManager.selectAllCat()) {
+			%>
+			<option value="<%=categorie.getNoCategorie()%>"><%=categorie.getLibelle()%></option>
+			<%
+			}
+			%>
 		</select> <br>
 		<!--PHOTO DE L'ARTICLE ---------  -->
 
@@ -56,10 +58,22 @@
 		<label for="date">Fin de l'enchère : </label> <input type="date"
 			id="dateFin" name="sdateFin"
 			value="<%=request.getParameter("sdatefin")%>"> <br> <br>
+	
 		<!-- RETRAIT -->
-
 		<p>
-			Retrait <input type="submit" value="Valider" /> <a
+			Retrait 
+		</p>
+			<label for="article">Rue : </label> <input type="text"
+				id="rue" name="srue" placeholder="Rue" required> <br> <label
+				for="article">Code Postal : </label> <input type="text" id="cp"
+				name="scodepostal" placeholder="Ex: 44000" required> <br>
+			<label for="article">Ville : </label> <input type="text" id="ville"
+				name="sville" placeholder="Ville" required> <br>
+				
+				
+				<!-- BOUTONS  -->
+				 <input
+				type="submit" value="Valider" /> <a
 				href="<%=request.getContextPath()%>/EnchereNonCommencee"><input
 				type="button" value="Annuler" /></a> <a
 				href="<%=request.getContextPath()%>/EnchereNonCommencee"><input

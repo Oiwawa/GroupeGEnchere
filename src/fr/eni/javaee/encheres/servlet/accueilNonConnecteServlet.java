@@ -37,15 +37,18 @@ public class accueilNonConnecteServlet extends HttpServlet {
 		protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	            throws ServletException, IOException {
 	        System.out.println("hello post accueilNonConnecteServlet");
-	        String rechercheNomArt = request.getParameter("nomArticle");
-	        System.out.println("nomArticle : " + rechercheNomArt);
+	        String rechercheArt = request.getParameter("nomArticle");
+	        String rechercheCat = request.getParameter("categorie");
+	        System.out.println("categorie : " + rechercheCat);
+	        System.out.println("nomArticle : " + rechercheArt);
 
 	        try {
-	            ArticleManager am = ArticleManager.getInstance();
-	            ArticleVendu av = am.selectName(rechercheNomArt);
-	            request.setAttribute(rechercheNomArt, av);
+	            ArticleManager am = new ArticleManager();
+	            ArticleVendu av = (ArticleVendu) am.getAllArticles();
+	            request.setAttribute(rechercheArt, av);
+	            request.setAttribute(rechercheCat, av);
 
-	        } catch ( BusinessException e) {
+	        } catch ( DALException | SQLException e) {
 	            e.printStackTrace();
 	            //   request.setAttribute("listeCodesErreur",e.getListeCodesErreur());
 
