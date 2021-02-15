@@ -45,7 +45,7 @@ public class accueilNonConnecteServlet extends HttpServlet {
 	            ArticleVendu av = am.selectName(rechercheNomArt);
 	            request.setAttribute(rechercheNomArt, av);
 
-	        } catch ( BusinessException | DALException | SQLException e) {
+	        } catch ( BusinessException e) {
 	            e.printStackTrace();
 	            //   request.setAttribute("listeCodesErreur",e.getListeCodesErreur());
 

@@ -16,7 +16,7 @@ public class RetraitDAOJdbcImpl implements RetraitDAO {
 
 	private static final String INSERT = "INSERT INTO RETRAITS (rue, code_postal, ville) values (?,?,?)";
 	private static final String SELECT_BY_ID = "SELECT FROM RETRAITS (rue, code_postal, ville) WHERE no_retrait = ? ";
-	private static final String SELECT_ALL = "SELECT FROM RETRAITS (rue, code_postal, ville)";
+	private static final String SELECT_ALL = "SELECT F+ROM RETRAITS (rue, code_postal, ville)";
 
 	//INSERTION D'UN NOUVEAU RETRAIT
 	@Override
