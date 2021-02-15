@@ -1,8 +1,7 @@
 package fr.eni.javaee.encheres.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import fr.eni.javaee.encheres.BusinessException;
 import fr.eni.javaee.encheres.bll.ArticleManager;
 import fr.eni.javaee.encheres.bo.ArticleVendu;
-import fr.eni.javaee.encheres.dal.CodeResultatDal;
-import fr.eni.javaee.encheres.dal.DALException;
 
 /**
  * Servlet implementation class accueilNonConnecteServlet
@@ -33,7 +30,7 @@ public class accueilNonConnecteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 	     System.out.println("hello");
-	     ArticleManager am = ArticleManager.getInstance();
+	     ArticleManager am = new ArticleManager();
 	     List<ArticleVendu> avs;
 		try {
 			avs = am.selectAll();

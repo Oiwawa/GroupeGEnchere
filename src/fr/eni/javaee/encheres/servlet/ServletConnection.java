@@ -27,7 +27,7 @@ public class ServletConnection extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-//		// recuperation de la session -- identifiant stocke en memoire dans la methode doGet
+		// recuperation de la session -- identifiant stocke en memoire dans la methode doGet
 //		HttpSession maSession = request.getSession();
 //		maSession.getAttribute("identifiant");
 //		// Recuperation des infos stocke dans les cookies - renvoie tout les cookies de l'utilisateur stocke pour ce site

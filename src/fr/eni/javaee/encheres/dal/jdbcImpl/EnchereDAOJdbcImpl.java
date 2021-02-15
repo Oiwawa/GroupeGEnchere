@@ -10,7 +10,6 @@ import java.util.List;
 
 import fr.eni.javaee.encheres.BusinessException;
 import fr.eni.javaee.encheres.bo.Enchere;
-import fr.eni.javaee.encheres.bo.Utilisateur;
 import fr.eni.javaee.encheres.dal.ArticleDAO;
 import fr.eni.javaee.encheres.dal.CodeResultatDal;
 import fr.eni.javaee.encheres.dal.DBConnexion;

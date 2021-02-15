@@ -70,7 +70,7 @@
 		
 		
 		
-		<table border ="1" width="500" align="center"> 
+		<table border ="1" > 
          <tr bgcolor="00FF7F"> 
           <th><b>Nom</b></th> 
           <th><b>Description</b></th> 

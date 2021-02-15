@@ -8,7 +8,6 @@ import fr.eni.javaee.encheres.BusinessException;
 import fr.eni.javaee.encheres.bo.ArticleVendu;
 import fr.eni.javaee.encheres.dal.ArticleDAO;
 import fr.eni.javaee.encheres.dal.DALException;
-import fr.eni.javaee.encheres.dal.DAOFactory;
 import fr.eni.javaee.encheres.dal.jdbcImpl.ArticleDAOJdbcImpl;
 
 public class ArticleManager {

@@ -36,4 +36,10 @@ public class UserDAOJdbcImpl implements UserDAO {
 		// TODO Auto-generated method stub
 
 	}
+
+	@Override
+	public Utilisateur selectById(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
