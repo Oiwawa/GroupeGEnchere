@@ -39,6 +39,12 @@ public abstract class CodeResultatDal {
 	 */
 	public static final int LECTURE_RETRAIT_ECHEC=10006;
 	
+	/**
+	 * Echec CONNEXION
+	 */
+	public static final int IDENTIFIANT_MDP_INCORECT=10007;
+	public static final int CONNEXION_RECHERCHEUSER_ERREUR=10008;
+
 	
 }
 

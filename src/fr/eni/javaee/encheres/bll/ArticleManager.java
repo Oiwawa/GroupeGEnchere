@@ -97,13 +97,34 @@ public void validerDate(ArticleVendu article) {
 		return this.articleDAO.selectById(id);
 	}
 	
-	//Select toutes Les ventes
-	public List<ArticleVendu> getAllArticles() throws BusinessException{
-        return this.articleDAO.liste();
-    }
+	public List<ArticleVendu> selectAll() throws BusinessException{
+		return this.articleDAO.liste();
+	}
 	
-	//Select par nom article
-    public ArticleVendu selectName (String name) throws BusinessException {
-        return this.articleDAO.selectByName(name);
-    }
+//-----------Methode pour le filtrage-------------------------//
+	
+	public List<ArticleVendu> selectArticle (String name, int noCategorie) throws BusinessException {
+		
+		if ((name==null) && (noCategorie==0)) {
+	          return this.articleDAO.liste();
+		}
+		else if ((name!=null) && (noCategorie==0)) {
+	        return this.articleDAO.listeSelectByName(name);
+		}
+		else if ((name==null) && (noCategorie!=0)) {
+	        return this.articleDAO.listeSelectByCat(noCategorie);
+		}
+		else if ((name!=null) && (noCategorie!=0)) {
+	        return this.articleDAO.listeSelectByNameAndCat(name, noCategorie);
+		}
+		return null;
+	}
+   
+  
+    
+  	
 }
+    
+   
+    
+  

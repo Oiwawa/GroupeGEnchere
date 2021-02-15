@@ -20,9 +20,11 @@ public interface ArticleDAO {
 	//Select vente par Article ID
 	public ArticleVendu selectById(int id) throws BusinessException;
 	//Selection par categorie
-	public Categorie selectByCat(int noCategorie) throws BusinessException;
+	public List<ArticleVendu> listeSelectByCat(int noCategorie) throws BusinessException;
 	//Selection par nom
-	public ArticleVendu selectByName(String name) throws BusinessException;
+	public List<ArticleVendu> listeSelectByName(String name) throws BusinessException;
+	
+	public List<ArticleVendu> listeSelectByNameAndCat(String name, int noCategorie) throws BusinessException;
 
 
 }

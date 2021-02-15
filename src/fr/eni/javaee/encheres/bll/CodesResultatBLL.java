@@ -46,4 +46,9 @@ public abstract class CodesResultatBLL {
 	 */
 	public static final int REGLE_RETRAITS_ADRESSE_ERREUR=30006;
 	
+	/**
+	 * Regle quand le pseudo n'est pas correct
+	 */
+	public static final int REGLE_VALIDER_PSEUDO=30007;
+
 }

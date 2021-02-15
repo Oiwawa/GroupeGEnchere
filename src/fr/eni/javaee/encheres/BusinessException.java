@@ -4,6 +4,8 @@ package fr.eni.javaee.encheres;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.eni.javaee.encheres.messages.LecteurMessage;
+
 /**
  * 
  * @author hugor
@@ -20,7 +22,11 @@ public class BusinessException extends Exception {
 		this.listeCodesErreur=new ArrayList<>();
 	}
 	
-
+	public String getMessage() {
+		int code = this.listeCodesErreur.get(0);
+		return LecteurMessage.getMessageErreur(code);
+	}
+	
 
 	/**
 	 * 

@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+
+<%@page import="fr.eni.javaee.encheres.bo.ArticleVendu"%> 
+<%@page import="java.util.ArrayList"%> 
+
+
+
 <html>
 
 <head>
@@ -35,11 +41,11 @@
 
 		<!-- FILTRE---------------------------- -->
 		<p>Filtres</p>
-		<form action="Accueil.html">
+		<form action="Accueil.html" method="post">
 			<input type="text" placeholder="Le nom de l'article contient"
 				name="nomArticle">
 			<button type="submit" name="recherche" value="Rechercher">Rechercher</button>
-		</form>
+	
 		<br>
 		<!--CATEGORIE  -->
 		<div>
@@ -52,8 +58,45 @@
 				<option value="sport_loisirs">Sport Loisirs</option>
 			</select>
 		</div>
+		</form>
 
 		<!-- LISTE -->
+		
+		<div>${av.forename}</div>
+		<div>${av.forename}</div>
+		
+		
+		
+		
+		
+		
+		<table border ="1" width="500" align="center"> 
+         <tr bgcolor="00FF7F"> 
+          <th><b>Nom</b></th> 
+          <th><b>Description</b></th> 
+          <th><b>Etat de vente</b></th> 
+         </tr> 
+        <%-- Fetching the attributes of the request object 
+             which was previously set by the servlet  
+              "StudentServlet.java" 
+        --%>  
+        <%
+        
+        ArrayList<ArticleVendu> avs =  (ArrayList<ArticleVendu>)request.getAttribute("avs"); 
+        for(ArticleVendu av : avs){%> 
+        <%-- Arranging data in tabular form 
+        --%> 
+            <tr> 
+                <td><%=av.getNomArticle()%></td> 
+                <td><%=av.getDescription()%></td> 
+                <td><%=av.getEtatVente()%></td> 
+            </tr> 
+            <%}%> 
+        </table>  
+        
+        
+        
+        
 
 
 

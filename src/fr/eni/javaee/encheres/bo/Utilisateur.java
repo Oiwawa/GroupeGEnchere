@@ -15,6 +15,16 @@ public class Utilisateur {
 	private int credit;
 	private String administrateur;
 	
+	public Utilisateur() {
+
+	}
+	public Utilisateur(int noUtilisateur) {
+		this.noUtilisateur = noUtilisateur;
+	}
+	public Utilisateur(String pseudo, String motDePasse) {
+		this.pseudo = pseudo;
+		this.motDePasse = motDePasse;
+	}
 	
 	public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, int telephone,
 			String rue, int codePostal, String ville, String motDePasse, int credit, String administrateur) {

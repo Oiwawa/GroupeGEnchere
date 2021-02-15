@@ -3,7 +3,10 @@ package fr.eni.javaee.encheres.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import fr.eni.javaee.encheres.BusinessException;
 import fr.eni.javaee.encheres.bll.ArticleManager;
 import fr.eni.javaee.encheres.bo.ArticleVendu;
+import fr.eni.javaee.encheres.dal.CodeResultatDal;
 import fr.eni.javaee.encheres.dal.DALException;
 
 /**
@@ -27,8 +31,21 @@ public class accueilNonConnecteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/pages/accueilNonConnecte.jsp").forward(request, response);
 		
+	     System.out.println("hello");
+	     ArticleManager am = ArticleManager.getInstance();
+	     List<ArticleVendu> avs;
+		try {
+			avs = am.selectAll();
+			request.setAttribute("avs", avs);
+		} catch (BusinessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	     
+	     request.getRequestDispatcher("/WEB-INF/pages/accueilNonConnecte.jsp").forward(request, response);
+   
+
 	}
 
 	/**
@@ -37,24 +54,39 @@ public class accueilNonConnecteServlet extends HttpServlet {
 		protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	            throws ServletException, IOException {
 	        System.out.println("hello post accueilNonConnecteServlet");
-	        String rechercheArt = request.getParameter("nomArticle");
+	        String rechercheName = request.getParameter("nomArticle");
 	        String rechercheCat = request.getParameter("categorie");
+	        int cat = 0;
+	        if (rechercheCat.equals("informatique")) {
+	        	cat = 1;
+	        }
+	        else if (rechercheCat.equals("ameublement")) {
+	          	cat = 2;
+	        }
+	        else if (rechercheCat.equals("vetements")) {
+	          	cat = 3;
+	        }
+	        else if (rechercheCat.equals(" sport_loisirs")) {
+	          	cat = 4;
+	        }
+	        
 	        System.out.println("categorie : " + rechercheCat);
-	        System.out.println("nomArticle : " + rechercheArt);
+	        System.out.println("nomArticle : " + rechercheName);
 
 	        try {
 	            ArticleManager am = ArticleManager.getInstance();
-	            ArticleVendu av = (ArticleVendu) am.getAllArticles();
-	            request.setAttribute(rechercheArt, av);
-	            request.setAttribute(rechercheCat, av);
-
-	        } catch ( DALException | SQLException e) {
+	            List<ArticleVendu> avs = am.selectArticle(rechercheName, cat);
+	            
+	            // met les attributs
+	            request.setAttribute("avs", avs);
+	        } catch ( BusinessException e) {
+	        	System.out.println("in erreur");
 	            e.printStackTrace();
-	            //   request.setAttribute("listeCodesErreur",e.getListeCodesErreur());
-
+	            request.setAttribute("avs", new ArrayList<ArticleVendu>());
+	            request.setAttribute("listeCodesErreur",e.getMessage());
 	        }
-
-	        javax.servlet.RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/accueilNonConnecte.jsp");
+	        
+	        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/accueilNonConnecte.jsp");
 	        rd.forward(request, response);
 
 	    }

@@ -17,6 +17,11 @@ public class Retrait implements Serializable{
 	public Retrait() {
 		super();
 	}
+	
+	public Retrait(int idRetrait) {
+		this.idRetrait = idRetrait;
+	}
+	
 	//Constructeur sans ID retrait
 	public Retrait(int noArticle, String codePostal, String ville, String rue) {
 		super();

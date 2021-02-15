@@ -13,4 +13,13 @@
     <servlet-name>AccueilNonConnecte</servlet-name>
     <url-pattern>/pages/accueilNonConnecte</url-pattern>
   </servlet-mapping>
+  
+   <servlet>
+    <servlet-name>Connection</servlet-name>
+    <jsp-file>/WEB-INF/pages/pageConnection.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Connection</servlet-name>
+    <url-pattern>/pages/pageConnection</url-pattern>
+  </servlet-mapping>
 </web-app>
