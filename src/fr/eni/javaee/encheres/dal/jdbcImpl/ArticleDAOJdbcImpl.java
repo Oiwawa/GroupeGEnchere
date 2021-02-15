@@ -3,6 +3,7 @@ package fr.eni.javaee.encheres.dal.jdbcImpl;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -50,8 +51,8 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 			pstmt.setString(1, article.getNomArticle());
 			pstmt.setString(2, article.getDescription());
-			pstmt.setDate(3, java.sql.Date.valueOf(article.getDateDebutEncheres()));
-			pstmt.setDate(4, java.sql.Date.valueOf(article.getDateFinEncheres()));
+			pstmt.setDate(3, Date.valueOf(article.getDateDebutEncheres()));
+			pstmt.setDate(4, Date.valueOf(article.getDateFinEncheres()));
 			pstmt.setFloat(5, article.getMiseAPrix());
 			pstmt.setInt(6, article.getVendeur().getNoUtilisateur());
 			pstmt.setInt(7, article.getNoCategorie().getNoCategorie());

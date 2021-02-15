@@ -21,4 +21,6 @@ public interface UserDAO {
 		
 		//Afficher un profil
 		public void afficherProfil(Utilisateur user) throws DALException, SQLException;
+
+		public Utilisateur selectById(int id);
 }

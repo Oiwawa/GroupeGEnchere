@@ -21,7 +21,7 @@ public class ArticleVendu {
 	// Constructeur vide
 
 	public ArticleVendu() {
-		
+
 	}
 	// Constructeur sans id
 
@@ -71,8 +71,8 @@ public class ArticleVendu {
 		this.noRetrait = noRetrait;
 	}
 
-	public ArticleVendu(int int1, String string, String string2, int i, LocalDate localDate, LocalDate localDate2,
-			float float1, float float2) {
+	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
+			LocalDate dateFinEncheres, float miseAPrix, float prixVente, int int2, int int3, int int4) {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -145,58 +145,44 @@ public class ArticleVendu {
 	public String getEtatVente() {
 		return etatVente;
 	}
-	
+
 	public void setEtatVente(String etatVente) {
 		this.etatVente = etatVente;
 	}
-	
+
 	public Utilisateur getVendeur() {
 		return vendeur;
 	}
-	
+
 	public void setVendeur(Utilisateur vendeur) {
 		this.vendeur = vendeur;
 	}
+
 	public Retrait getLieuRetrait() {
-		return lieuRetrait;
+		return noRetrait;
 	}
-	
+
 	public void setLieuRetrait(Retrait lieuRetrait) {
-		this.lieuRetrait = lieuRetrait;
+		this.noRetrait = lieuRetrait;
 	}
-	
+
 	private void calculEtatVente() {
 		LocalDate today = LocalDate.now();
-        if(today.isBefore(dateDebutEncheres)) {
-        	this.setEtatVente("Vente non debute");
-        } else if (today.isAfter(dateDebutEncheres) && today.isBefore(dateFinEncheres)) {
-        	this.setEtatVente("Vente en cours");
-        }else {
-        	this.setEtatVente("Vente terminee");
-        }
+		if (today.isBefore(dateDebutEncheres)) {
+			this.setEtatVente("Vente non debute");
+		} else if (today.isAfter(dateDebutEncheres) && today.isBefore(dateFinEncheres)) {
+			this.setEtatVente("Vente en cours");
+		} else {
+			this.setEtatVente("Vente terminee");
+		}
 	}
-	
+
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("ArticleVendu [noArticle=");
-		builder.append(noArticle);
-		builder.append(", nomArticle=");
-		builder.append(nomArticle);
-		builder.append(", description=");
-		builder.append(description);
-		builder.append(", dateDebutEncheres=");
-		builder.append(dateDebutEncheres);
-		builder.append(", dateFinEncheres=");
-		builder.append(dateFinEncheres);
-		builder.append(", miseAPrix=");
-		builder.append(miseAPrix);
-		builder.append(", prixVente=");
-		builder.append(prixVente);
-		builder.append(", etatVente=");
-		builder.append(etatVente);
-		builder.append("]");
-		return builder.toString();
+		return "ArticleVendu [noArticle=" + noArticle + ", nomArticle=" + nomArticle + ", description=" + description
+				+ ", dateDebutEncheres=" + dateDebutEncheres + ", dateFinEncheres=" + dateFinEncheres + ", miseAPrix="
+				+ miseAPrix + ", prixVente=" + prixVente + ", etatVente=" + etatVente + ", vendeur=" + vendeur
+				+ ", noRetrait=" + noRetrait + ", noCategorie=" + noCategorie + "]";
 	}
 
 

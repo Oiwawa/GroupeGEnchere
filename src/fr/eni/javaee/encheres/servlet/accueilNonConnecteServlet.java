@@ -74,7 +74,7 @@ public class accueilNonConnecteServlet extends HttpServlet {
 	        System.out.println("nomArticle : " + rechercheName);
 
 	        try {
-	            ArticleManager am = ArticleManager.getInstance();
+	            ArticleManager am = new ArticleManager();
 	            List<ArticleVendu> avs = am.selectArticle(rechercheName, cat);
 	            
 	            // met les attributs
