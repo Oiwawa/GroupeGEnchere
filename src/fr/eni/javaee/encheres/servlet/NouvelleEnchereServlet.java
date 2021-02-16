@@ -1,8 +1,8 @@
 package fr.eni.javaee.encheres.servlet;
 
 import java.io.IOException;
+
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.javaee.encheres.BusinessException;
 import fr.eni.javaee.encheres.bll.ArticleManager;
@@ -20,6 +21,7 @@ import fr.eni.javaee.encheres.bll.RetraitManager;
 import fr.eni.javaee.encheres.bo.ArticleVendu;
 import fr.eni.javaee.encheres.bo.Categorie;
 import fr.eni.javaee.encheres.bo.Retrait;
+import fr.eni.javaee.encheres.bo.Utilisateur;
 
 /**
  * Servlet implementation class NouvelleVenteServlet
@@ -33,7 +35,6 @@ public class NouvelleEnchereServlet extends HttpServlet {
 	 */
 	public NouvelleEnchereServlet() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -55,7 +56,10 @@ public class NouvelleEnchereServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// Récupération des chaines encodages UTF-8
 		request.setCharacterEncoding("UTF-8");
-
+		
+		//La session
+		HttpSession session = request.getSession();
+		//Liste des erreurs
 		List<Integer> listeCodesErreur = new ArrayList<>();
 		// Création de l'article
 		ArticleVendu art = new ArticleVendu();
@@ -75,13 +79,11 @@ public class NouvelleEnchereServlet extends HttpServlet {
 			int categorieId = Integer.parseInt(request.getParameter("scategorie"));
 			Categorie categorie = CategorieManager.selectCatById(categorieId);
 
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/YYYY");
 			// Recuperation date début encheres
-
-			LocalDate recupDateDeb = LocalDate.parse(request.getParameter("sdatedeb"), dtf);
+			LocalDate recupDateDeb = LocalDate.parse(request.getParameter("sdatedeb"));
 
 			// Recuperation date fin d'encheres
-			LocalDate recupDateFin = LocalDate.parse(request.getParameter("sdatefin"), dtf);
+			LocalDate recupDateFin = LocalDate.parse(request.getParameter("sdatefin"));
 
 			// Recuperation de la rue de la ville et code postal
 			String rue = request.getParameter("srue");
@@ -93,9 +95,9 @@ public class NouvelleEnchereServlet extends HttpServlet {
 			retrait.setVille(ville);
 			retrait.setCodePostal(codePostal);
 			retrait.setRue(rue);
-
 			RetraitManager.addRetrait(retrait);
 
+			//Création de l'article
 			art.setNomArticle(recupNom);
 			art.setDescription(recupDesc);
 			art.setDateDebutEncheres(recupDateDeb);
@@ -103,27 +105,30 @@ public class NouvelleEnchereServlet extends HttpServlet {
 			art.setMiseAPrix(recupPrix);
 			art.setNoCategorie(categorie);
 			art.setLieuRetrait(retrait);
+			
+			//Récupération de la session user
+			Utilisateur user = (Utilisateur) session.getAttribute("user");
+			art.setVendeur(user);
 
 			// Réalisation du traitement
 
 			if (listeCodesErreur.size() > 0) {
 				request.setAttribute("listeCodesErreur", listeCodesErreur);
-				RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/pages/nouvelleVente.jsp");
+				RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/pages/nouvelleEnchere.jsp");
 				rd.forward(request, response);
 			} else {
 
 				try {
-					ArticleManager mger = new ArticleManager();
-					mger.insertArticle(art);
+					ArticleManager.insertArticle(art);
 					request.setAttribute("ArticleAffiche", art);
-					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/modifierVente.jsp");
+					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/accueilNonConnecte.jsp");
 					rd.forward(request, response);
 
 				} catch (Exception e) {
 					// Si probleme regle pas respecter = renvoie vers la page + affichage erreurs
 					e.printStackTrace();
 					request.setAttribute("listeCodeErreur", ((BusinessException) e).getListeCodesErreur());
-					RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/pages/nouvelleVente.jsp");
+					RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/pages/nouvelleEnchere.jsp");
 					rd.forward(request, response);
 				}
 				// TODO changer la redirection vers la page avec bouton modification si tout se
@@ -132,7 +137,7 @@ public class NouvelleEnchereServlet extends HttpServlet {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("test erreur date");
+			System.out.println("test erreur retrait");
 
 		}
 	}

@@ -36,7 +36,11 @@ public class RetraitManager {
 				|| retrait.getRue().trim().equals("") || retrait.getCodePostal().trim().equals("")
 				|| retrait.getVille().trim().equals("")) {
 					
+			businessException.ajouterErreur(CodesResultatBLL.REGLE_RETRAITS_ADRESSE_ERREUR);
 				}
-		businessException.ajouterErreur(CodesResultatBLL.REGLE_RETRAITS_ADRESSE_ERREUR);
+	}
+	
+	public static Retrait selectRetraitById(int id) throws BusinessException {
+		return retraitDAO.selectById(id);
 	}
 }

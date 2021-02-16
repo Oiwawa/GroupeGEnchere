@@ -6,114 +6,119 @@ import java.util.List;
 
 import fr.eni.javaee.encheres.BusinessException;
 import fr.eni.javaee.encheres.bo.ArticleVendu;
+import fr.eni.javaee.encheres.bo.EtatVente;
 import fr.eni.javaee.encheres.dal.ArticleDAO;
 import fr.eni.javaee.encheres.dal.DALException;
 import fr.eni.javaee.encheres.dal.jdbcImpl.ArticleDAOJdbcImpl;
 
 public class ArticleManager {
 
-	private ArticleDAO articleDAO = new ArticleDAOJdbcImpl();
-	private ArticleVendu article = new ArticleVendu();
-	BusinessException businessException = new BusinessException();
-	
-	
-	
-
-	// Constructeur
-	
+	private static ArticleDAO articleDAO = new ArticleDAOJdbcImpl();
+	private static ArticleVendu article = new ArticleVendu();
+	private static BusinessException businessException = new BusinessException();
 
 	// Methode
-	public ArticleVendu insertArticle(ArticleVendu article) throws BusinessException, DALException, SQLException {
-		
+	public static ArticleVendu insertArticle(ArticleVendu article)
+			throws BusinessException, DALException, SQLException {
+
 		validerDate(article);
-		article.setEtatVente(null);
-		if(!businessException.hasErreurs()) {
+		validerNom(article);
+		validerDescription(article);
+		validerCategorie(article);
+		validerPrix(article);
+		if (!businessException.hasErreurs()) {
 			articleDAO.insertArticle(article);
 		} else {
 			throw businessException;
 		}
 		return article;
 	}
-//*********************** A faire ou pas? la gestion de taille peut être géré par le html (max length par exemple)
-//	private void validerNom(String recupArticle, BusinessException businessException) {
-//		if (recupArticle.trim().length() > 30) {
-//			businessException.ajouterErreur(CodesResultatBLL.REGLE_NOM_VENTE);
-//		}
-//	}
-//
-//	private void validerDescription(String recupDesc, BusinessException businessException) {
-//		if (recupDesc == null || recupDesc.isBlank()) {
-//			businessException.ajouterErreur(CodesResultatBLL.REGLE_DESCRITPION_VENTE);
-//		}
-//	}
-//
-//	private void validerCategorie(int categorie, BusinessException businessException) {
-//		if (categorie <= 0 ) {
-//			businessException.ajouterErreur(CodesResultatBLL.REGLE_CATEGORIE_VENTE);
-//		}
-//
-//	}
-//	private void validerPrix(float prix, BusinessException businessException) {
-//		
-//		if (prix <= 0) {
-//			businessException.ajouterErreur(CodesResultatBLL.REGLE_PRIX_DEPART_VENTE);
-//			
-//		}
-//	}
-//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-	//Test les dates (Début avant date du jour et fin avant début)
-public void validerDate(ArticleVendu article) {
-	if(article.getDateDebutEncheres() == null || article.getDateFinEncheres() == null 
-			|| article.getDateDebutEncheres().isBefore(LocalDate.now()) 
-			|| article.getDateFinEncheres().isBefore(article.getDateDebutEncheres()) ) {
-
-		businessException.ajouterErreur(CodesResultatBLL.REGLE_DATE_ENCHERE_ARTICLE);
+	/**
+	 * Vérifie que le nom de l'article est valide
+	 * @param article
+	 */
+	public static void validerNom(ArticleVendu article) {
+		if (article.getNomArticle() == null  ||article.getNomArticle().trim().length() > 30 ) {
+			businessException.ajouterErreur(CodesResultatBLL.REGLE_NOM_VENTE);
+		}
 	}
-}
+/**
+ * vérifie que la description de l'article est valide
+ * @param article
+ */
+	public static void validerDescription(ArticleVendu article) {
+		if (article.getDescription() == null || article.getDescription().isBlank() || article.getDescription().trim().length()>300) {
+			businessException.ajouterErreur(CodesResultatBLL.REGLE_DESCRITPION_VENTE);
+		}
+	}
+/**
+ * Vérifie que la categorie selectionner est valide
+ * @param article
+ */
+	public static void validerCategorie(ArticleVendu article) {
+		if (article.getNoCategorie() == null) {
+			businessException.ajouterErreur(CodesResultatBLL.REGLE_CATEGORIE_VENTE);
+		}
 
+	}
 
+	/**
+	 * Vérifie que le prix de mise en vente n'est pas = a 0
+	 * @param article
+	 */
+	public static void validerPrix(ArticleVendu article) {
+		if (article.getMiseAPrix() <= 0) {
+			businessException.ajouterErreur(CodesResultatBLL.REGLE_PRIX_DEPART_VENTE);
 
+		}
+	}
 
+	// Test les dates (Début avant date du jour et fin avant début)
+	public static void validerDate(ArticleVendu article) {
+		if (article.getDateDebutEncheres() == null || article.getDateFinEncheres() == null
+				|| article.getDateDebutEncheres().isBefore(LocalDate.now())
+				|| article.getDateFinEncheres().isBefore(article.getDateDebutEncheres())) {
+
+			businessException.ajouterErreur(CodesResultatBLL.REGLE_DATE_ENCHERE_ARTICLE);
+		}
+	}
+
+//public static void validerEtatVente(EtatVente etatVente ) throws BusinessException{
+//	if(article.getEtatVenteEnum() == EtatVente.ENCHERE_TERMINEE) {
+//		businessException.ajouterErreur(CodesResultatBLL.REGLE_ETAT_VENTE_ARTICLE);
+//	}
+//}
 
 //--------------------------------------------------------------------
-	//selecte vente par USER
+	// selecte vente par USER
 	public List<ArticleVendu> selectByUser(int id) throws BusinessException {
-		return this.articleDAO.selectByUser(id);
+		return ArticleManager.articleDAO.selectByUser(id);
 	}
-	//Select vente par Article ID
+
+	// Select vente par Article ID
 	public ArticleVendu selectById(int id) throws BusinessException {
-		return this.articleDAO.selectById(id);
+		return ArticleManager.articleDAO.selectById(id);
 	}
-	
-	public List<ArticleVendu> selectAll() throws BusinessException{
-		return this.articleDAO.liste();
+
+	public List<ArticleVendu> selectAll() throws BusinessException {
+		return ArticleManager.articleDAO.liste();
 	}
-	
+
 //-----------Methode pour le filtrage-------------------------//
-	
-	public List<ArticleVendu> selectArticle (String name, int noCategorie) throws BusinessException {
-		
-		if ((name==null) && (noCategorie==0)) {
-	          return this.articleDAO.liste();
-		}
-		else if ((name!=null) && (noCategorie==0)) {
-	        return this.articleDAO.listeSelectByName(name);
-		}
-		else if ((name==null) && (noCategorie!=0)) {
-	        return this.articleDAO.listeSelectByCat(noCategorie);
-		}
-		else if ((name!=null) && (noCategorie!=0)) {
-	        return this.articleDAO.listeSelectByNameAndCat(name, noCategorie);
+
+	public List<ArticleVendu> selectArticle(String name, int noCategorie) throws BusinessException {
+
+		if ((name == null) && (noCategorie == 0)) {
+			return ArticleManager.articleDAO.liste();
+		} else if ((name != null) && (noCategorie == 0)) {
+			return ArticleManager.articleDAO.listeSelectByName(name);
+		} else if ((name == null) && (noCategorie != 0)) {
+			return ArticleManager.articleDAO.listeSelectByCat(noCategorie);
+		} else if ((name != null) && (noCategorie != 0)) {
+			return ArticleManager.articleDAO.listeSelectByNameAndCat(name, noCategorie);
 		}
 		return null;
 	}
-   
-  
-    
-  	
+
 }
-    
-   
-    
-  

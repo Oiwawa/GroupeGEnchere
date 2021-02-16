@@ -13,8 +13,9 @@ public class Utilisateur {
 	private String ville;
 	private String motDePasse;
 	private int credit;
-	private String administrateur;
+	private boolean administrateur;
 	
+	//Constructeur vide
 	public Utilisateur() {
 
 	}
@@ -25,9 +26,25 @@ public class Utilisateur {
 		this.pseudo = pseudo;
 		this.motDePasse = motDePasse;
 	}
+	//Constructeur sans ID 
+	public Utilisateur(String pseudo, String nom, String prenom, String email, int telephone,
+			String rue, int codePostal, String ville, String motDePasse, int credit, boolean administrateur) {
+		this.pseudo = pseudo;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.telephone = telephone;
+		this.rue = rue;
+		this.codePostal = codePostal;
+		this.ville = ville;
+		this.motDePasse = motDePasse;
+		this.credit = credit;
+		this.administrateur = administrateur;
+	}
 	
+	//Constructeur plein	
 	public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, int telephone,
-			String rue, int codePostal, String ville, String motDePasse, int credit, String administrateur) {
+			String rue, int codePostal, String ville, String motDePasse, int credit, boolean administrateur) {
 		super();
 		this.noUtilisateur = noUtilisateur;
 		this.pseudo = pseudo;
@@ -109,10 +126,10 @@ public class Utilisateur {
 	public void setCredit(int credit) {
 		this.credit = credit;
 	}
-	public String getAdministrateur() {
+	public boolean getAdministrateur() {
 		return administrateur;
 	}
-	public void setAdministrateur(String administrateur) {
+	public void setAdministrateur(boolean administrateur) {
 		this.administrateur = administrateur;
 	}
 	

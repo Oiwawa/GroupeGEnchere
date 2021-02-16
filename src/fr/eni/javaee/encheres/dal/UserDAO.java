@@ -2,6 +2,7 @@ package fr.eni.javaee.encheres.dal;
 
 import java.sql.SQLException;
 
+import fr.eni.javaee.encheres.BusinessException;
 import fr.eni.javaee.encheres.bo.Utilisateur;
 
 public interface UserDAO {
@@ -22,5 +23,5 @@ public interface UserDAO {
 		//Afficher un profil
 		public void afficherProfil(Utilisateur user) throws DALException, SQLException;
 
-		public Utilisateur selectById(int id);
+		public Utilisateur selectById(int id) throws BusinessException;
 }

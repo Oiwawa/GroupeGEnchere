@@ -50,5 +50,10 @@ public abstract class CodesResultatBLL {
 	 * Regle quand le pseudo n'est pas correct
 	 */
 	public static final int REGLE_VALIDER_PSEUDO=30007;
+	
+	/**
+	 * Regle quand l'etat de la vente n'est pas correct
+	 */
 
+	public static final int REGLE_ETAT_VENTE_ARTICLE=30008;
 }

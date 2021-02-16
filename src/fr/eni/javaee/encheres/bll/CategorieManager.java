@@ -12,19 +12,9 @@ import fr.eni.javaee.encheres.dal.jdbcImpl.CategorieDAOJdbcImpl;
 public class CategorieManager {
 
 	private static CategorieDAO categorieDAO = new CategorieDAOJdbcImpl();
-	private static CategorieManager instance;
 
 	
-	public CategorieManager() {
-		
-	}
-	
-	public static CategorieManager getInstance() {
-		if (instance == null) {
-			instance = new CategorieManager();
-		}
-		return instance;
-	}
+
 	public static Categorie selectCatById(int id) throws BusinessException {
 		return categorieDAO.selectById(id);
 	}
