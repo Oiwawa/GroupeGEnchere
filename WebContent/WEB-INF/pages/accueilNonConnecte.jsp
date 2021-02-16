@@ -29,7 +29,7 @@
 		</h1>
 		<!-- INSCRIPTION ET CONNEXION---------------------------- -->
 		<div>
-			<a href="#">S'inscrire</a> <span> - </span> <a href="#">Se
+			<a href="">S'inscrire</a> <span> - </span> <a href="/GroupeGEnchere/ServletConnection">Se
 				connecter</a>
 
 		</div>

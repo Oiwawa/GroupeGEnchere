@@ -21,7 +21,7 @@ public class Utilisateur {
 	public Utilisateur(int noUtilisateur) {
 		this.noUtilisateur = noUtilisateur;
 	}
-	public Utilisateur(String pseudo, String motDePasse) {
+	public Utilisateur(String pseudo, String motDePasse, int noUtilisateur ) {
 		this.pseudo = pseudo;
 		this.motDePasse = motDePasse;
 	}

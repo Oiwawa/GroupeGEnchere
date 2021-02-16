@@ -27,20 +27,24 @@ public class ServletConnection extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// recuperation de la session -- identifiant stocke en memoire dans la methode doGet
-//		HttpSession maSession = request.getSession();
-//		maSession.getAttribute("identifiant");
-//		// Recuperation des infos stocke dans les cookies - renvoie tout les cookies de l'utilisateur stocke pour ce site
-//		Cookie[] cookies = request.getCookies();
-//		if (cookies != null) {
-//			for (Cookie cookie : cookies) {
-//				// verification que le cookie est bien le cookie identifiant
-//				if (cookie.getName().equals("identifiant")) {
-//					// recuperation de la valeur du cookie
-//					request.setAttribute("identifiant", cookie.getValue());
-//				}
-//			}
-//		}
+		// recuperation de la session -- identifiant stocke en memoire dans la methode
+		// doGet
+		HttpSession maSession = request.getSession();
+		maSession.getAttribute("identifiant");
+
+		// Recuperation des infos stocke dans les cookies - renvoie tout les cookies de l'utilisateur stocke pour ce site
+		
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				// verification que le cookie est bien le cookie identifiant
+				if (cookie.getName().equals("identifiant")) {
+					// recuperation de la valeur du cookie
+					request.setAttribute("identifiant", cookie.getValue());
+				}
+			}
+		}
+
 		System.out.println("Passage dans la methode doGet");
 		this.getServletContext().getRequestDispatcher("/WEB-INF/pages/pageConnection.jsp").forward(request, response);
 
@@ -59,37 +63,39 @@ public class ServletConnection extends HttpServlet {
 		String mdp = request.getParameter("mdp");
 
 		try {
-
 			new ConnectionManager();
 			ConnectionManager cm = ConnectionManager.getInstance();
 			Utilisateur user = cm.connecterUser(identifiant, mdp);
-			request.setAttribute("user", user);
-
-//			// Soumettre les parametres de la requete a la couche service et recuperation du resultat
-//			HttpSession maSession = request.getSession();
-//			/* Mise en session d'un utilisateur */
-//			maSession.setAttribute("user", user);
-//		
-//			
-//			
-//			// Stockage dans des cookies cote visiteur
-//			Cookie cookie = new Cookie("identifiant", identifiant);
-//			// defini l'age d'expiration en seconde. Garde les infos enregistre pdt ce temps. Ici dure 1jour
-//			cookie.setMaxAge(60 * 60 * 24);
-//			response.addCookie(cookie);
 			
+			HttpSession maSession = request.getSession();
+			request.setAttribute("user", user);
+			maSession.setAttribute("user", user);
+			
+			// Reponse a l'utilisateur
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/resultatLogin.jsp");
 			rd.forward(request, response);
+			
+
 
 		} catch (Exception e) {
 			System.out.println("in erreur :" + e.getMessage());
 			request.setAttribute("message", e.getMessage());
+			HttpSession maSession = request.getSession();
+			maSession.setAttribute("user", null);
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/pageConnection.jsp");
 			rd.forward(request, response);
 		}
-
-		// Reponse a l'utilisateur
 		
+	
+					
+		/*
+		 * // Stockage dans des cookies cote visiteur Cookie cookie = new
+		 * Cookie("identifiant", identifiant); // defini l'age d'expiration en seconde.
+		 * Garde les infos enregistre pdt ce temps. Ici dure 1jour cookie.setMaxAge(60 *
+		 * 60 * 24); response.addCookie(cookie)
+		 */;
+					
+
 
 	}
 

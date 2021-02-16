@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link type="text/css" rel="stylesheet" href= "<c:url value="/inc/form.css"/>" />
 <meta charset="UTF-8">
 <title>Page de connection</title>
 </head>

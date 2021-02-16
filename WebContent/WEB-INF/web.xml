@@ -22,4 +22,62 @@
     <servlet-name>Connection</servlet-name>
     <url-pattern>/pages/pageConnection</url-pattern>
   </servlet-mapping>
+
+<!--   
+   <filter>
+   	<filter-name>RestrictionFiltre</filter-name>
+   	<filter-class>fr.eni.javaee.encheres.filtres.RestrictionFiltre</filter-class>
+   </filter>
+   <filter-mapping>
+    <filter-name>RestrictionFiltre</filter-name>
+   	<url-pattern>/restreint/*</url-pattern>
+   </filter-mapping> 
+-->
+  
+   <servlet>
+    <servlet-name>accesRestreint</servlet-name>
+    <jsp-file>/META-INF/restreint/accesRestreint.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>accesRestreint</servlet-name>
+    <url-pattern>/restreint/accesRestreint</url-pattern>
+  </servlet-mapping>
+  
+    <servlet>
+    <servlet-name>accesRestreint2</servlet-name>
+    <jsp-file>/META-INF/restreint/accesRestreint2.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>accesRestreint2</servlet-name>
+    <url-pattern>/restreint/accesRestreint2</url-pattern>
+  </servlet-mapping>
+  
+    <servlet>
+    <servlet-name>accesRestreint3</servlet-name>
+    <jsp-file>/META-INF/restreint/accesRestreint3.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>accesRestreint3</servlet-name>
+    <url-pattern>/restreint/accesRestreint3</url-pattern>
+  </servlet-mapping>
+  
+  <filter>
+  	<filter-name>Set Character Encodimg</filter-name>
+  	<filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
+  	<init-param>
+  		<param-name>encoding</param-name>
+  		<param-value>UTF-8</param-value>
+  	</init-param>
+  	<init-param>
+  		<param-name>ignore</param-name>
+  		<param-value>false</param-value>
+  	</init-param>
+  </filter>
+  	<filter-mapping>
+  		<filter-name>Set Character Encoding</filter-name>
+  		<url-pattern>/*</url-pattern>
+  	</filter-mapping>
+  
+
+  
 </web-app>
