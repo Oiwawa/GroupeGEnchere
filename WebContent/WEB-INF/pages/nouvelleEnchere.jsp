@@ -49,11 +49,11 @@
 
 		<!--DATE DE DEBUT D'ENCHERE DE L'ARTICLE  -->
 		<label for="date">Début de l'enchère : </label> <input type="date"
-			id="sdatedeb" name="sdateDeb" value="sdatedeb" > <br> <br>
+			id="sdatedeb" name="sdatedeb" value="sdatedeb"> <br> <br>
 
 		<!--DATE DE FIN D'ENCHERE DE L'ARTICLE  -->
 		<label for="date">Fin de l'enchère : </label> <input type="date"
-			id="sdateFin" name="sdateFin" value="sdatefin"> <br> <br>
+			id="sdatefin" name="sdatefin" value="sdatefin"> <br> <br>
 
 		<br>
 		<!-- RETRAIT -->
@@ -81,24 +81,26 @@
 				href="<%=request.getContextPath()%>/NouvelleEnchere.html"><input
 				type="button" value="Annuler" /></a>
 
+			<div>
+				<%
+				List<Integer> listeCodesErreur = (List<Integer>) request.getAttribute("listeCodesErreur");
+				if (listeCodesErreur != null) {
+				%>
+				<p style="color: red;">Erreur, l'article n'a pas pu être ajouté
+					:</p>
+				<%
+				for (int codeErreur : listeCodesErreur) {
+				%>
+				<p><%=LecteurMessage.getMessageErreur(codeErreur)%></p>
+				<%
+				}
+				}
+				%>
+			</div>
 		</div>
 
 		<!-- Erreurs -->
-		<%-- <div>
-			<%
-			List<Integer> listeCodesErreur = (List<Integer>) request.getAttribute("listeCodesErreur");
-			if (listeCodesErreur != null) {
-			%>
-			<p style="color: red;">Erreur, l'article n'a pas pu être ajouté :</p>
-			<%
-			for (int codeErreur : listeCodesErreur) {
-			%>
-			<p><%=LecteurMessage.getMessageErreur(codeErreur)%></p>
-			<%
-			}
-			}
-			%>
-		</div> --%>
+
 
 
 

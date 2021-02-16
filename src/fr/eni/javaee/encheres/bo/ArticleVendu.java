@@ -15,8 +15,7 @@ public class ArticleVendu {
 	private Utilisateur vendeur;
 	private Categorie noCategorie;
 	private Retrait lieuRetrait;
-	private Utilisateur noUtilisateur;
-	private Retrait noRetrait;
+	private EtatVente etatVenteEnum;
 	
 	// Constructeur vide
 
@@ -34,11 +33,12 @@ public class ArticleVendu {
 		this.dateFinEncheres = dateFinEncheres;
 		this.miseAPrix = miseAPrix;
 		this.prixVente = prixVente;
+		this.etatVenteEnum = EtatVente.ENCHERE_CREE;
 
 		this.calculEtatVente();
 	}
 
-	// Constructeur pleins
+	//Constructeur sans categorie
 	public ArticleVendu(int noArticle, String nomArticle, String description, Categorie noCategorie,
 			LocalDate dateDebutEncheres, LocalDate dateFinEncheres, float miseAPrix, float prixVente,
 			Utilisateur vendeur, Retrait lieuRetrait) {
@@ -55,10 +55,10 @@ public class ArticleVendu {
 
 		this.calculEtatVente();
 	}
-	
+	// Constructeur pleins
 	public ArticleVendu(int noArticle, String nomArticle, String description,
 			LocalDate dateDebutEncheres, LocalDate dateFinEncheres, float miseAPrix, float prixVente,
-			Categorie noCategorie, Utilisateur noUtilisateur, Retrait noRetrait) {
+			Categorie noCategorie, Utilisateur vendeur, Retrait lieuRetrait) {
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
 		this.description = description;
@@ -67,8 +67,8 @@ public class ArticleVendu {
 		this.miseAPrix = miseAPrix;
 		this.prixVente = prixVente;
 		this.noCategorie = noCategorie;
-		this.noUtilisateur = noUtilisateur; 
-		this.noRetrait = noRetrait;
+		this.vendeur = vendeur; 
+		this.lieuRetrait = lieuRetrait;
 	}
 
 	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
@@ -159,11 +159,11 @@ public class ArticleVendu {
 	}
 
 	public Retrait getLieuRetrait() {
-		return noRetrait;
+		return lieuRetrait;
 	}
 
 	public void setLieuRetrait(Retrait lieuRetrait) {
-		this.noRetrait = lieuRetrait;
+		this.lieuRetrait = lieuRetrait;
 	}
 
 	private void calculEtatVente() {
@@ -182,7 +182,15 @@ public class ArticleVendu {
 		return "ArticleVendu [noArticle=" + noArticle + ", nomArticle=" + nomArticle + ", description=" + description
 				+ ", dateDebutEncheres=" + dateDebutEncheres + ", dateFinEncheres=" + dateFinEncheres + ", miseAPrix="
 				+ miseAPrix + ", prixVente=" + prixVente + ", etatVente=" + etatVente + ", vendeur=" + vendeur
-				+ ", noRetrait=" + noRetrait + ", noCategorie=" + noCategorie + "]";
+				+ ", noRetrait=" + lieuRetrait + ", noCategorie=" + noCategorie + "]";
+	}
+
+	public EtatVente getEtatVenteEnum() {
+		return etatVenteEnum;
+	}
+
+	public void setEtatVenteEnum(EtatVente etatVenteEnum) {
+		this.etatVenteEnum = etatVenteEnum;
 	}
 
 

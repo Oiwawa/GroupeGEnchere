@@ -20,7 +20,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	// Constantes
 	private static final String INSERT = "INSERT INTO articles_vendus "
 			+ "(nom_article, description, date_debut_encheres, date_fin_encheres, "
-			+ "prix_initial, no_utilisateur, no_categorie, no_retrait " + "VALUES (?,?,?,?,?,?,?,?) ";
+			+ "prix_initial, no_utilisateur, no_categorie, no_retrait ) VALUES (?,?,?,?,?,?,?,?) ";
 
 	private static final String SQL_SELECT_BY_NAME = "SELECT * from ARTICLES_VENDUS " + "where nom_article =?";
 
@@ -54,7 +54,8 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			pstmt.setDate(3, Date.valueOf(article.getDateDebutEncheres()));
 			pstmt.setDate(4, Date.valueOf(article.getDateFinEncheres()));
 			pstmt.setFloat(5, article.getMiseAPrix());
-			pstmt.setInt(6, article.getVendeur().getNoUtilisateur());
+		//	pstmt.setInt(6, article.getVendeur().getNoUtilisateur());
+			pstmt.setInt(6, 2);
 			pstmt.setInt(7, article.getNoCategorie().getNoCategorie());
 			pstmt.setInt(8, article.getLieuRetrait().getIdRetrait());
 
