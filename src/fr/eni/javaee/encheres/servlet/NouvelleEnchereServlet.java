@@ -45,6 +45,7 @@ public class NouvelleEnchereServlet extends HttpServlet {
 			throws ServletException, IOException {
 		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/pages/nouvelleEnchere.jsp");
 		rd.forward(request, response);
+		
 
 	}
 
@@ -61,6 +62,15 @@ public class NouvelleEnchereServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		//Liste des erreurs
 		List<Integer> listeCodesErreur = new ArrayList<>();
+		//Liste des categories
+		List<Categorie> listeCategorie = new ArrayList<Categorie>();
+		try {
+			listeCategorie = CategorieManager.selectAllCat();
+		} catch (BusinessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		request.setAttribute("listeCategorie", listeCategorie);
 		// Création de l'article
 		ArticleVendu art = new ArticleVendu();
 		try {
@@ -124,15 +134,14 @@ public class NouvelleEnchereServlet extends HttpServlet {
 					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/accueilNonConnecte.jsp");
 					rd.forward(request, response);
 
-				} catch (Exception e) {
+				} catch (BusinessException e) {
 					// Si probleme regle pas respecter = renvoie vers la page + affichage erreurs
 					e.printStackTrace();
-					request.setAttribute("listeCodeErreur", ((BusinessException) e).getListeCodesErreur());
+					request.setAttribute("listeCodeErreur",  e.getListeCodesErreur());
 					RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/pages/nouvelleEnchere.jsp");
 					rd.forward(request, response);
 				}
-				// TODO changer la redirection vers la page avec bouton modification si tout se
-				// passe bien
+				
 
 			}
 		} catch (Exception e) {

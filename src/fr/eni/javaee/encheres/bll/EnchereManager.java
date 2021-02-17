@@ -33,4 +33,7 @@ public class EnchereManager {
 		}
 	}
 
+	public static Enchere selectById(int id) throws BusinessException {
+		return enchereDAO.selectById(id);
+	}
 }

@@ -15,7 +15,7 @@ import fr.eni.javaee.encheres.dal.DBConnexion;
 public class CategorieDAOJdbcImpl implements CategorieDAO {
 
 	private static final String SELECT_BY_ID = "SELECT [no_categorie] , [libelle] FROM [BDD_ENCHERES].[dbo].[CATEGORIES] WHERE no_categorie = ?";
-	private static final String SELECT_ALL = "select (no_categorie, libelle) from CATEGORIES";
+	private static final String SELECT_ALL = "SELECT [no_categorie] , [libelle] FROM [BDD_ENCHERES].[dbo].[CATEGORIES]";
 	
 	//SELECT PAR ID 
 	@Override

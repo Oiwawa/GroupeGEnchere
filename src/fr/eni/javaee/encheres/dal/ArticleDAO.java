@@ -22,8 +22,10 @@ public interface ArticleDAO {
 	public List<ArticleVendu> listeSelectByCat(int noCategorie) throws BusinessException;
 	//Selection par nom
 	public List<ArticleVendu> listeSelectByName(String name) throws BusinessException;
-	
+	//Selection par nom et categorie
 	public List<ArticleVendu> listeSelectByNameAndCat(String name, int noCategorie) throws BusinessException;
+	//Update article pour prix vente
+	public void update(ArticleVendu article) throws BusinessException;
 
 
 }

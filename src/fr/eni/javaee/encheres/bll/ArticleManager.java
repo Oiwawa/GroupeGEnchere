@@ -84,24 +84,19 @@ public class ArticleManager {
 		}
 	}
 
-//public static void validerEtatVente(EtatVente etatVente ) throws BusinessException{
-//	if(article.getEtatVenteEnum() == EtatVente.ENCHERE_TERMINEE) {
-//		businessException.ajouterErreur(CodesResultatBLL.REGLE_ETAT_VENTE_ARTICLE);
-//	}
-//}
 
 //--------------------------------------------------------------------
 	// selecte vente par USER
-	public List<ArticleVendu> selectByUser(int id) throws BusinessException {
+	public static List<ArticleVendu> selectByUser(int id) throws BusinessException {
 		return ArticleManager.articleDAO.selectByUser(id);
 	}
 
 	// Select vente par Article ID
-	public ArticleVendu selectById(int id) throws BusinessException {
+	public static ArticleVendu selectById(int id) throws BusinessException {
 		return ArticleManager.articleDAO.selectById(id);
 	}
 
-	public List<ArticleVendu> selectAll() throws BusinessException {
+	public static List<ArticleVendu> selectAll() throws BusinessException {
 		return ArticleManager.articleDAO.liste();
 	}
 

@@ -62,9 +62,9 @@ public class UserDAOJdbcImpl implements UserDAO {
 				user.setNom(rs.getString("nom"));
 				user.setPrenom(rs.getString("prenom"));
 				user.setEmail(rs.getString("email"));
-				user.setTelephone(rs.getInt("telephone"));
+				user.setTelephone(rs.getString("telephone"));
 				user.setRue(rs.getString("rue"));
-				user.setCodePostal(rs.getInt("code_postal"));
+				user.setCodePostal(rs.getString("code_postal"));
 				user.setVille(rs.getString("ville"));
 				user.setMotDePasse(rs.getString("mot_de_passe"));
 				user.setCredit(rs.getInt("credit"));
@@ -80,6 +80,6 @@ public class UserDAOJdbcImpl implements UserDAO {
 			throw businessException;
 		}
 		
-		return null;
+		return user;
 	}
 }
