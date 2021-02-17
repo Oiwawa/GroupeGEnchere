@@ -9,7 +9,7 @@ public class Utilisateur {
 	private String email;
 	private String telephone;
 	private String rue;
-	private int codePostal;
+	private String codePostal;
 	private String ville;
 	private String motDePasse;
 	private int credit;
@@ -28,7 +28,7 @@ public class Utilisateur {
 	}
 	//Constructeur sans ID 
 	public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone,
-			String rue, int codePostal, String ville, String motDePasse, int credit, boolean administrateur) {
+			String rue, String codePostal, String ville, String motDePasse, int credit, boolean administrateur) {
 		this.pseudo = pseudo;
 		this.nom = nom;
 		this.prenom = prenom;
@@ -44,7 +44,7 @@ public class Utilisateur {
 	
 	//Constructeur plein	
 	public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
-			String rue, int codePostal, String ville, String motDePasse, int credit, boolean administrateur) {
+			String rue, String codePostal, String ville, String motDePasse, int credit, boolean administrateur) {
 		super();
 		this.noUtilisateur = noUtilisateur;
 		this.pseudo = pseudo;
@@ -102,10 +102,10 @@ public class Utilisateur {
 	public void setRue(String rue) {
 		this.rue = rue;
 	}
-	public int getCodePostal() {
+	public String getCodePostal() {
 		return codePostal;
 	}
-	public void setCodePostal(int codePostal) {
+	public void setCodePostal(String codePostal) {
 		this.codePostal = codePostal;
 	}
 	public String getVille() {
@@ -135,6 +135,10 @@ public class Utilisateur {
 	
 	public void vend (ArticleVendu article) {
 		
+	}
+	
+	public Retrait getAdresseRetraitDefaut() {
+		return new Retrait(this.codePostal, this.rue, this.ville);
 	}
 	
 	@Override

@@ -2,15 +2,18 @@ package fr.eni.javaee.encheres.bll;
 
 import fr.eni.javaee.encheres.BusinessException;
 import fr.eni.javaee.encheres.bo.Retrait;
+import fr.eni.javaee.encheres.bo.Utilisateur;
 import fr.eni.javaee.encheres.dal.RetraitDAO;
 import fr.eni.javaee.encheres.dal.jdbcImpl.RetraitDAOJdbcImpl;
+
 
 public class RetraitManager {
 
 	//Instanciation 
 	private static RetraitDAO retraitDAO = new RetraitDAOJdbcImpl();
 	private static BusinessException businessException = new BusinessException();
-	
+	private static Utilisateur user = new Utilisateur();
+
 	public RetraitManager() {
 	}
 	/**
@@ -31,12 +34,17 @@ public class RetraitManager {
 		
 	}
 	private static void validerAdresse(Retrait retrait, BusinessException businessException) {
+		
 		//Si la rue, le code postal et la ville ne sont pas indiqués, renvoie erreur 
-		if(retrait.getRue() == null || retrait.getCodePostal() == null || retrait.getVille() == null
-				|| retrait.getRue().trim().equals("") || retrait.getCodePostal().trim().equals("")
-				|| retrait.getVille().trim().equals("")) {
+		if(retrait.getRue() == null || retrait.getRue().trim().equals("")  
+				|| retrait.getCodePostal() == null 
+				|| retrait.getCodePostal().trim().equals("")
+				|| retrait.getVille() == null || retrait.getVille().trim().equals("")) {
+				retrait = user.getAdresseRetraitDefaut();
+				
+				} else if(retrait.getCodePostal().length()<5) {
 					
-			businessException.ajouterErreur(CodesResultatBLL.REGLE_RETRAITS_ADRESSE_ERREUR);
+					businessException.ajouterErreur(CodesResultatBLL.REGLE_RETRAITS_ADRESSE_ERREUR);
 				}
 	}
 	

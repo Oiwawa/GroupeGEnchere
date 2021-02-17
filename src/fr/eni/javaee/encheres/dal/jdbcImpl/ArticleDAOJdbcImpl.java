@@ -32,6 +32,11 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 	private static final String SELECT_ALL = "SELECT * from ARTICLES_VENDUS";
 
+	private static final String SELECT_BY_ID = "SELECT * from ARTICLE_VENDUS WHERE no_article= ?";
+	private static final String UPDATE = "update ARTICLES_VENDUS set nom_article = ?, description = ?,"
+			+ "	date_debut_encheres=?, date_fin_encheres= ?, prix_initial= ?, prix_vente= ?, "
+			+ "	no_utilisateur= ?, no_categorie=?, no_retrait=? where no_article= ? ";
+
 	// Insert un nouvel article
 	@Override
 	public void insertArticle(ArticleVendu article) throws BusinessException {
@@ -54,7 +59,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			pstmt.setDate(3, Date.valueOf(article.getDateDebutEncheres()));
 			pstmt.setDate(4, Date.valueOf(article.getDateFinEncheres()));
 			pstmt.setFloat(5, article.getMiseAPrix());
-		//	pstmt.setInt(6, article.getVendeur().getNoUtilisateur());
+			// pstmt.setInt(6, article.getVendeur().getNoUtilisateur());
 			pstmt.setInt(6, 2);
 			pstmt.setInt(7, article.getNoCategorie().getNoCategorie());
 			pstmt.setInt(8, article.getLieuRetrait().getIdRetrait());
@@ -249,8 +254,39 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	// Select un article par son ID
 	@Override
 	public ArticleVendu selectById(int id) throws BusinessException {
+		ArticleVendu article = null;
+
+		try (Connection cnx = DBConnexion.seConnecter()) {
+
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_ID);
+			pstmt.setInt(1, id);
+			ResultSet rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				Categorie categorie = new Categorie(rs.getInt("no_categorie"), "un libelle");
+				Utilisateur utilisateur = new Utilisateur(rs.getInt("no_utilisateur"));
+				Retrait retrait = new Retrait(rs.getInt("no_retrait"));
+
+				 article = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"),
+						rs.getString("description"), categorie, rs.getDate("date_debut_encheres").toLocalDate(),
+						rs.getDate("date_fin_encheres").toLocalDate(), rs.getFloat("prix_initial"),
+						rs.getFloat("prix_vente"), utilisateur, retrait);
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodeResultatDal.LECTURE_ARTICLES_ECHEC);
+			throw businessException;
+		}
+
+		return article;
+	}
+
+	@Override
+	public void update(ArticleVendu article) throws BusinessException {
 		// TODO Auto-generated method stub
-		return null;
+
 	}
 
 }

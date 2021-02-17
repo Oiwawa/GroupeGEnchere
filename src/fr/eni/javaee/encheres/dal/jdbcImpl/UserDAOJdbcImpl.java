@@ -37,7 +37,7 @@ public class UserDAOJdbcImpl implements UserDAO {
 				pstmt.setString(4, user.getEmail());
 				pstmt.setString(5, user.getTelephone());
 				pstmt.setString(6, user.getRue());
-				pstmt.setInt(7, user.getCodePostal());
+				pstmt.setString(7, user.getCodePostal());
 				pstmt.setString(8, user.getVille());
 				pstmt.setString(9, user.getMotDePasse());
 
@@ -94,7 +94,7 @@ public class UserDAOJdbcImpl implements UserDAO {
 				user.setEmail(rs.getString("email"));
 				user.setTelephone(rs.getString("telephone"));
 				user.setRue(rs.getString("rue"));
-				user.setCodePostal(rs.getInt("code_postal"));
+				user.setCodePostal(rs.getString("code_postal"));
 				user.setVille(rs.getString("ville"));
 				user.setMotDePasse(rs.getString("mot_de_passe"));
 				user.setCredit(rs.getInt("credit"));
@@ -110,6 +110,6 @@ public class UserDAOJdbcImpl implements UserDAO {
 			throw businessException;
 		}
 		
-		return null;
+		return user;
 	}
 }

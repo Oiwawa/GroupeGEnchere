@@ -13,8 +13,11 @@ public interface EnchereDAO {
 	public List<Enchere> selectAll() throws BusinessException;
 	//Trouver une enchere par son ID
 	public Enchere selectById(int id) throws BusinessException;
-	//Trouvé une enchere gagné par un  USER
-	public List<Enchere> selectGagneeParEncherisseur(int id) throws BusinessException;
-	//Trouvé les encheres ou USER a encherit
-	public List<Enchere> selectByEncherisseur(int id) throws BusinessException;
+	
+	
+	
+//	//Trouvé une enchere gagné par un  USER
+//	public List<Enchere> selectGagneeParEncherisseur(int id) throws BusinessException;
+//	//Trouvé les encheres ou USER a encherit
+//	public List<Enchere> selectByEncherisseur(int id) throws BusinessException;
 }

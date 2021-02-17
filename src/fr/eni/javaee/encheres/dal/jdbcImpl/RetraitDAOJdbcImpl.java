@@ -62,6 +62,7 @@ public class RetraitDAOJdbcImpl implements RetraitDAO {
 			if (rs.next()) {
 				retrait = new Retrait();
 				retrait.setIdRetrait(rs.getInt("no_retrait"));
+				retrait.setCodePostal(rs.getString("code_postal"));
 				retrait.setRue(rs.getString("rue"));
 				retrait.setVille(rs.getString("ville"));
 			}
@@ -88,6 +89,7 @@ public class RetraitDAOJdbcImpl implements RetraitDAO {
 			while (rs.next()) {
 				Retrait retrait = new Retrait();
 				retrait.setIdRetrait(rs.getInt("no_retrait"));
+				retrait.setCodePostal(rs.getString("code_postal"));
 				retrait.setRue(rs.getString("rue"));
 				retrait.setVille(rs.getString("ville"));
 				retraits.add(retrait);

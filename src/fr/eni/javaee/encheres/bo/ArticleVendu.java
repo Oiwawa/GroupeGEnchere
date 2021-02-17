@@ -16,7 +16,7 @@ public class ArticleVendu {
 	private Categorie noCategorie;
 	private Retrait lieuRetrait;
 	private EtatVente etatVenteEnum;
-	
+
 	// Constructeur vide
 
 	public ArticleVendu() {
@@ -25,7 +25,7 @@ public class ArticleVendu {
 	// Constructeur sans id
 
 	public ArticleVendu(String nomArticle, String description, Categorie noCategorie, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, float miseAPrix, float prixVente) {
+			LocalDate dateFinEncheres, float miseAPrix, float prixVente, EtatVente etatVenteEnum) {
 		this.nomArticle = nomArticle;
 		this.description = description;
 		this.noCategorie = noCategorie;
@@ -33,12 +33,11 @@ public class ArticleVendu {
 		this.dateFinEncheres = dateFinEncheres;
 		this.miseAPrix = miseAPrix;
 		this.prixVente = prixVente;
-		this.etatVenteEnum = EtatVente.ENCHERE_CREE;
+		this.etatVenteEnum = etatVenteEnum;
 
-		this.calculEtatVente();
 	}
 
-	//Constructeur sans categorie
+	// Constructeur sans categorie
 	public ArticleVendu(int noArticle, String nomArticle, String description, Categorie noCategorie,
 			LocalDate dateDebutEncheres, LocalDate dateFinEncheres, float miseAPrix, float prixVente,
 			Utilisateur vendeur, Retrait lieuRetrait) {
@@ -50,15 +49,15 @@ public class ArticleVendu {
 		this.miseAPrix = miseAPrix;
 		this.prixVente = prixVente;
 		this.noCategorie = noCategorie;
-		this.vendeur = vendeur; 
+		this.vendeur = vendeur;
 		this.lieuRetrait = lieuRetrait;
 
-		this.calculEtatVente();
 	}
+
 	// Constructeur pleins
-	public ArticleVendu(int noArticle, String nomArticle, String description,
-			LocalDate dateDebutEncheres, LocalDate dateFinEncheres, float miseAPrix, float prixVente,
-			Categorie noCategorie, Utilisateur vendeur, Retrait lieuRetrait) {
+	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres,
+			LocalDate dateFinEncheres, float miseAPrix, float prixVente, Categorie noCategorie, Utilisateur vendeur,
+			Retrait lieuRetrait) {
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
 		this.description = description;
@@ -67,7 +66,7 @@ public class ArticleVendu {
 		this.miseAPrix = miseAPrix;
 		this.prixVente = prixVente;
 		this.noCategorie = noCategorie;
-		this.vendeur = vendeur; 
+		this.vendeur = vendeur;
 		this.lieuRetrait = lieuRetrait;
 	}
 
@@ -114,7 +113,7 @@ public class ArticleVendu {
 
 	public void setDateDebutEncheres(LocalDate dateDebutEncheres) {
 		this.dateDebutEncheres = dateDebutEncheres;
-		this.calculEtatVente();
+
 	}
 
 	public LocalDate getDateFinEncheres() {
@@ -123,7 +122,6 @@ public class ArticleVendu {
 
 	public void setDateFinEncheres(LocalDate dateFinEncheres) {
 		this.dateFinEncheres = dateFinEncheres;
-		this.calculEtatVente();
 	}
 
 	public float getMiseAPrix() {
@@ -166,17 +164,6 @@ public class ArticleVendu {
 		this.lieuRetrait = lieuRetrait;
 	}
 
-	private void calculEtatVente() {
-		LocalDate today = LocalDate.now();
-		if (today.isBefore(dateDebutEncheres)) {
-			this.setEtatVente("Vente non debute");
-		} else if (today.isAfter(dateDebutEncheres) && today.isBefore(dateFinEncheres)) {
-			this.setEtatVente("Vente en cours");
-		} else {
-			this.setEtatVente("Vente terminee");
-		}
-	}
-
 	@Override
 	public String toString() {
 		return "ArticleVendu [noArticle=" + noArticle + ", nomArticle=" + nomArticle + ", description=" + description
@@ -190,9 +177,20 @@ public class ArticleVendu {
 	}
 
 	public void setEtatVenteEnum(EtatVente etatVenteEnum) {
-		this.etatVenteEnum = etatVenteEnum;
+		if (dateDebutEncheres.isAfter(LocalDate.now())) {
+
+			this.etatVenteEnum = EtatVente.ENCHERE_CREE;
+		} else {
+			if (dateDebutEncheres.isEqual(LocalDate.now())) {
+				this.etatVenteEnum = EtatVente.ENCHERE_EN_COURS;
+			} else {
+				if (dateFinEncheres.isEqual(LocalDate.now())) {
+					this.etatVenteEnum = EtatVente.ENCHERE_TERMINEE;
+				}
+			}
+
+		}
+
 	}
-
-
 
 }

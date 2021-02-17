@@ -12,7 +12,6 @@ public class Retrait{
 	
 	//Constructeur vide
 	public Retrait() {
-		super();
 	}
 	//Constructeur avec ID seul
 	public Retrait(int idRetrait) {

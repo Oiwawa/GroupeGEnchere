@@ -53,7 +53,7 @@ public class CreationUtilisateurServlet extends HttpServlet {
 			String pseudo = request.getParameter("pseudo");
 			String prenom = request.getParameter("prenom");
 			String telephone = request.getParameter("telephone");
-			int codepostal = Integer.parseInt(request.getParameter("codepostal"));
+			String codepostal = request.getParameter("codepostal");
 			String mdp = request.getParameter("mdp");
 			String nom = request.getParameter("nom");
 			String email = request.getParameter("email");
