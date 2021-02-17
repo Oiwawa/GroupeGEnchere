@@ -15,33 +15,63 @@ import fr.eni.javaee.encheres.dal.UserDAO;
 public class UserDAOJdbcImpl implements UserDAO {
 	
 	private static final String SELECT_BY_ID ="SELECT [no_utilisateur],[pseudo],[nom],[prenom],[email],[telephone],[rue],[code_postal],[ville],[mot_de_passe],[credit],[administrateur] FROM [BDD_ENCHERES].[dbo].[UTILISATEURS] WHERE [no_utilisateur] = ? ";
+	
+	private static final String INSERT_USER ="INSERT INTO UTILISATEURS (pseudo, nom, prenom, email, telephone,"
+			+ "rue, code_postal, ville, mot_de_passe, administrateur, credit) VALUES (?,?,?,?,?,?,?,?,?,0,0) ";	
+	
 	@Override
-	public void inscription(Utilisateur user) throws DALException, SQLException {
-		// TODO Auto-generated method stub
+	public void inscription(Utilisateur user) throws BusinessException {
+		if(user==null) {
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodeResultatDal.INSERT_USER_NULL);
+			throw businessException;
+		}
+	
+		try (Connection cnx = DBConnexion.seConnecter()) {
+				cnx.setAutoCommit(false);
+				PreparedStatement pstmt = cnx.prepareStatement(INSERT_USER, PreparedStatement.RETURN_GENERATED_KEYS);
+				
+				pstmt.setString(1, user.getPseudo());
+				pstmt.setString(2, user.getNom());
+				pstmt.setString(3, user.getPrenom());
+				pstmt.setString(4, user.getEmail());
+				pstmt.setString(5, user.getTelephone());
+				pstmt.setString(6, user.getRue());
+				pstmt.setInt(7, user.getCodePostal());
+				pstmt.setString(8, user.getVille());
+				pstmt.setString(9, user.getMotDePasse());
 
-	}
-
-	@Override
-	public void connexion(Utilisateur user) throws DALException, SQLException {
-		// TODO Auto-generated method stub
-
+				pstmt.executeUpdate();
+				ResultSet rs = pstmt.getGeneratedKeys();
+				
+				if(rs.next()) {
+					int idUniqueCree = rs.getInt(1);
+					user.setNoUtilisateur(idUniqueCree);
+				}
+				rs.close();
+				pstmt.close();
+				cnx.commit();
+			 
+		} catch (Exception e) {
+		e.printStackTrace();
+		BusinessException businessException = new BusinessException();
+		businessException.ajouterErreur(CodeResultatDal.INSERT_USER_ECHEC);
+		}
+		
 	}
 
 	@Override
 	public void updateUser(Utilisateur user) throws DALException, SQLException {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void deleteUser(Utilisateur user) throws DALException, SQLException {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void afficherProfil(Utilisateur user) throws DALException, SQLException {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -62,7 +92,7 @@ public class UserDAOJdbcImpl implements UserDAO {
 				user.setNom(rs.getString("nom"));
 				user.setPrenom(rs.getString("prenom"));
 				user.setEmail(rs.getString("email"));
-				user.setTelephone(rs.getInt("telephone"));
+				user.setTelephone(rs.getString("telephone"));
 				user.setRue(rs.getString("rue"));
 				user.setCodePostal(rs.getInt("code_postal"));
 				user.setVille(rs.getString("ville"));

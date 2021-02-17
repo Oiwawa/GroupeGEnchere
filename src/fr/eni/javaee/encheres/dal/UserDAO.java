@@ -9,10 +9,7 @@ public interface UserDAO {
 
 	// -------------------USER-------------------//
 		// Inscription au site
-		public void inscription(Utilisateur user) throws DALException, SQLException;
-
-		// Connexion au site
-		public void connexion(Utilisateur user) throws DALException, SQLException;
+		public void inscription(Utilisateur user) throws BusinessException;
 
 		// Modification du profil
 		public void updateUser(Utilisateur user) throws DALException, SQLException;

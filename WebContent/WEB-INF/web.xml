@@ -3,6 +3,8 @@
 	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	id="WebApp_ID" version="3.1">
+	
+	
 	<display-name>GroupeGEnchere</display-name>
 	<welcome-file-list>
 		<welcome-file>Accueil.html</welcome-file>
@@ -60,6 +62,15 @@
 	<servlet-mapping>
 		<servlet-name>accesRestreint3</servlet-name>
 		<url-pattern>/restreint/accesRestreint3</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>creationUtilisateur</servlet-name>
+		<jsp-file>/WEB-INF/pages/CreationUtilisateur.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>creationUtilisateur</servlet-name>
+		<url-pattern>/pages/creationUtilisateur</url-pattern>
 	</servlet-mapping>
 	
 <filter>

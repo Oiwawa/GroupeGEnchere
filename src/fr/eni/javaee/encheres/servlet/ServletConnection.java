@@ -30,7 +30,7 @@ public class ServletConnection extends HttpServlet {
 		// recuperation de la session -- identifiant stocke en memoire dans la methode
 		// doGet
 		HttpSession maSession = request.getSession();
-		maSession.getAttribute("identifiant");
+		maSession.getAttribute("user");
 
 		// Recuperation des infos stocke dans les cookies - renvoie tout les cookies de l'utilisateur stocke pour ce site
 		
@@ -88,12 +88,13 @@ public class ServletConnection extends HttpServlet {
 		
 	
 					
+		
 		/*
 		 * // Stockage dans des cookies cote visiteur Cookie cookie = new
 		 * Cookie("identifiant", identifiant); // defini l'age d'expiration en seconde.
-		 * Garde les infos enregistre pdt ce temps. Ici dure 1jour cookie.setMaxAge(60 *
-		 * 60 * 24); response.addCookie(cookie)
-		 */;
+		 * // Garde les infos enregistre pdt ce temps. Ici dure 1jour
+		 * cookie.setMaxAge(60 * 60 * 24); response.addCookie(cookie);
+		 */
 					
 
 

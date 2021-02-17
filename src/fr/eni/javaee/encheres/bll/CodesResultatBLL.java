@@ -56,4 +56,43 @@ public abstract class CodesResultatBLL {
 	 */
 
 	public static final int REGLE_ETAT_VENTE_ARTICLE=30008;
+	
+//REGLE CREATION D'UN COMPTE UTILISATEUR
+	/**
+	 * Regle nom user 
+	 */
+	public static final int REGLE_NOM_USER = 40000;
+	/**
+	 * Regle PSEUDO user 
+	 */
+	public static final int REGLE_PSEUDO_USER = 40001;
+	/**
+	 * Regle PRENOM user 
+	 */
+	public static final int REGLE_PRENOM_USER = 40002;
+	/**
+	 * Regle EMAIL user 
+	 */
+	public static final int REGLE_EMAIL_USER = 40003;
+	/**
+	 * Regle TELEPHONE user 
+	 */
+	public static final int REGLE_TELEPHONE_USER = 40004;
+	/**
+	 * Regle RUE user 
+	 */
+	public static final int REGLE_RUE_USER = 40005;
+	/**
+	 * Regle CP user 
+	 */
+	public static final int REGLE_CP_USER = 40006;
+	/**
+	 * Regle VILLE user 
+	 */
+	public static final int REGLE_VILLE_USER = 40007;
+	/**
+	 * Regle MDP user 
+	 */
+	public static final int REGLE_MDP_USER = 40008;
+	
 }

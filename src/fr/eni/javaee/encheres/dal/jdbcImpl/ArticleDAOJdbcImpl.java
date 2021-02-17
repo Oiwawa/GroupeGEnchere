@@ -163,8 +163,8 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 		List<ArticleVendu> listeArticleSelectByCat = new ArrayList<ArticleVendu>();
 
-		try (Connection cnx = DBConnexion.seConnecter();
-				PreparedStatement pstmt = cnx.prepareStatement(SQL_SELECT_BY_CAT);) {
+		try (Connection cnx = DBConnexion.seConnecter()) {
+			PreparedStatement pstmt = cnx.prepareStatement(SQL_SELECT_BY_CAT);
 			pstmt.setInt(1, noCategorie);
 			ResultSet rs = pstmt.executeQuery();
 
@@ -204,8 +204,8 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 		List<ArticleVendu> listeArticleSelectByNameAndCat = new ArrayList<ArticleVendu>();
 
-		try (Connection cnx = DBConnexion.seConnecter();
-				PreparedStatement pstmt = cnx.prepareStatement(SQL_SELECT_BY_NAMEANDCAT);) {
+		try (Connection cnx = DBConnexion.seConnecter()) {
+			PreparedStatement pstmt = cnx.prepareStatement(SQL_SELECT_BY_NAMEANDCAT);
 			pstmt.setInt(1, noCategorie);
 			pstmt.setString(2, name);
 
