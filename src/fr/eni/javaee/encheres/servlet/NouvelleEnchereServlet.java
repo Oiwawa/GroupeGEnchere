@@ -60,6 +60,9 @@ public class NouvelleEnchereServlet extends HttpServlet {
 
 		// La session
 		HttpSession session = request.getSession();
+		Utilisateur user = new Utilisateur();
+		request.setAttribute("user", user);
+		session.setAttribute("user", user);
 		//Liste des erreurs
 		List<Integer> listeCodesErreurs = new ArrayList<Integer>();
 		// Liste des categories
@@ -96,7 +99,6 @@ public class NouvelleEnchereServlet extends HttpServlet {
 			LocalDate recupDateFin = LocalDate.parse(request.getParameter("sdatefin"));
 
 			// Récupération de la session user
-			Utilisateur user = (Utilisateur) session.getAttribute("user");
 			
 			// Recuperation de la rue de la ville et code postal
 			String rue = request.getParameter("srue");

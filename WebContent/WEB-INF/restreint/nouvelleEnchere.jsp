@@ -71,7 +71,7 @@
 			<h1>Retrait</h1>
 			<div>
 				<label for="article">Rue : </label> <input type="text" id="rue"
-					name="srue" placeholder="Rue"<%-- value=<%=connectedUser.getRue() %>--%> >
+					name="srue" placeholder="Rue" value=<%=connectedUser.getRue() %> >
 				<br>
 			</div>
 
@@ -79,13 +79,13 @@
 			<div>
 				<label for="article">Code Postal : </label> <input type="text"
 					id="cp" name="scodepostal" min="0" maxlength="5"
-					placeholder="Ex: 44000"<%-- 	value=<%=connectedUser.getCodePostal() --%> >
+					placeholder="Ex: 44000" 	value=<%=connectedUser.getCodePostal()%> >
 				<br>
 			</div>
 			<br>
 			<div>
 				<label for="article">Ville : </label> <input type="text" id="ville"
-					name="sville" placeholder="Ville"<%-- value=<%=connectedUser.getVille() %> --%>>
+					name="sville" placeholder="Ville" value="<%=connectedUser.getVille()%>">
 				<br>
 			</div>
 
