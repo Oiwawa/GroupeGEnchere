@@ -94,5 +94,10 @@ public abstract class CodesResultatBLL {
 	 * Regle MDP user 
 	 */
 	public static final int REGLE_MDP_USER = 40008;
+	/**
+	 * Regle connexion user 
+	 */
+	public static final int ERREUR_CONNECTION = 40008;
+
 	
 }

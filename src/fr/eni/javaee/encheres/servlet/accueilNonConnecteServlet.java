@@ -54,27 +54,9 @@ public class accueilNonConnecteServlet extends HttpServlet {
 			String rechercheName = request.getParameter("nomArticle");
 	        String rechercheCat = request.getParameter("categorie");
 	        
-	        System.out.println("rechercheCat : " + rechercheCat);
-	       
-	        int cat = 0;
-	        
-	        if (rechercheCat.equals("informatique")) {
-	        	cat = 1;
-	        }
-	        else if (rechercheCat.equals("ameublements")) {
-	          	cat = 2;
-	        }
-	        else if (rechercheCat.equals("vetements")) {
-	          	cat = 3;
-	        }
-	        else if (rechercheCat.equals("sport_loisirs")) {
-	          	cat = 4;
-	        }
-	        
-
 	        try {
 	            ArticleManager am = new ArticleManager();
-	            List<ArticleVendu> avs = am.selectArticle(rechercheName, cat);
+	            List<ArticleVendu> avs = am.selectArticle(rechercheName, Integer.parseInt(rechercheCat));
 	            System.out.println("avs : " + avs);
 	            
 	            // met les attributs

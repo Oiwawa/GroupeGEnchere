@@ -22,11 +22,17 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			+ "(nom_article, description, date_debut_encheres, date_fin_encheres, "
 			+ "prix_initial, no_utilisateur, no_categorie, no_retrait ) VALUES (?,?,?,?,?,?,?,?) ";
 
-	private static final String SQL_SELECT_BY_NAME = "SELECT * from ARTICLES_VENDUS " + "where nom_article =?";
+	private static final String SQL_SELECT_BY_NAME = "SELECT * from ARTICLES_VENDUS a " 
+			+ "INNER JOIN UTILISATEURS u on a.no_utilisateur = u.no_utilisateur"
+			+ "where nom_article =?";
 
-	private static final String SQL_SELECT_BY_CAT = "SELECT * from ARTICLES_VENDUS " + "where no_categorie = ?";
+	private static final String SQL_SELECT_BY_CAT = "SELECT * from ARTICLES_VENDUS a " 
+			+ "INNER JOIN UTILISATEURS u on a.no_utilisateur = u.no_utilisateur"
+			+ "where no_categorie = ?"
+	;
 
 	private static final String SQL_SELECT_BY_NAMEANDCAT = "SELECT * from [ARTICLES_VENDUS] a "
+			+ "INNER JOIN UTILISATEURS u on a.no_utilisateur = u.no_utilisateur "
 			+ "INNER JOIN CATEGORIES c on a.no_categorie = c.no_categorie " 
 			+ "where nom_article = ? and c.no_categorie = ? ";
 
