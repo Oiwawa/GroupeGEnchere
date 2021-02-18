@@ -15,6 +15,7 @@
 <title>AccueilConnecte</title>
 </head>
 <body>
+<%ArrayList<ArticleVendu> avs = (ArrayList<ArticleVendu>) request.getAttribute("avs"); %>
 	<header>
 		<!-- Titre -->
 		<h1>
@@ -67,7 +68,9 @@
             </tr>
 
 			<%
-			ArrayList<ArticleVendu> avs = (ArrayList<ArticleVendu>) request.getAttribute("avs");
+			if(avs !=null) {
+				
+			
 			for (ArticleVendu av : avs) {
 			%>
 			<tr>
@@ -79,6 +82,7 @@
                 <td><%=av.getVendeur().getPseudo()%></td>
             </tr>
 			<%
+			}
 			}
 			%>
 		</table>

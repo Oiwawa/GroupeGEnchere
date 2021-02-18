@@ -43,7 +43,7 @@ public class AccueilConnecteServlet extends HttpServlet {
 			} catch (BusinessException e) {
 				e.printStackTrace();
 			}
-			request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/restreint/accueilConnecte.jsp").forward(request, response);
 		     
 	   
 
@@ -84,7 +84,7 @@ public class AccueilConnecteServlet extends HttpServlet {
 		            request.setAttribute("listeCodesErreur",e.getMessage());
 		        }
 		        
-		        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp");
+		        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/restreint/accueilConnecte.jsp");
 		        rd.forward(request, response);
 
 		    }

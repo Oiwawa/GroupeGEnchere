@@ -22,7 +22,8 @@
 
 	<form action="CreationUtilisateur" method="post">
 		<fieldset>
-		<br><br>
+			<br>
+			<br>
 			<legend>Inscription</legend>
 			<div>
 				<label for="pseudo"> Pseudo : <span class="requis">*</span></label>
@@ -77,13 +78,13 @@
 				<button type="submit" class="sansLabel">Creer</button>
 				<button type="button" href="<%=request.getContextPath()%>/Accueil.html">Annuler</button>
 			</div>
-			
-			<br>
-			<br>
+			<br> <br>
 			<p>
-				<% if(request.getAttribute("message") != null){
+				<%
+				if (request.getAttribute("message") != null) {
 					out.println((String) request.getAttribute("message"));
-				} %>
+				}
+				%>
 			</p>
 		</fieldset>
 

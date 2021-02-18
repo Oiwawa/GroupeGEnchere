@@ -68,8 +68,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			pstmt.setDate(3, Date.valueOf(article.getDateDebutEncheres()));
 			pstmt.setDate(4, Date.valueOf(article.getDateFinEncheres()));
 			pstmt.setFloat(5, article.getMiseAPrix());
-			// pstmt.setInt(6, article.getVendeur().getNoUtilisateur());
-			pstmt.setInt(6, 2);
+			pstmt.setInt(6, article.getVendeur().getNoUtilisateur());
 			pstmt.setInt(7, article.getNoCategorie().getNoCategorie());
 			pstmt.setInt(8, article.getLieuRetrait().getIdRetrait());
 

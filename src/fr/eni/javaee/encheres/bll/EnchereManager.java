@@ -29,7 +29,7 @@ public class EnchereManager {
 	public static void validerDate(LocalDate date, BusinessException businessException) {
 	
 		if(date==null || date.isAfter(LocalDate.now()) ) {
-			businessException.ajouterErreur(CodesResultatBLL.REGLE_DATE_DEBUT_VENTE);
+			businessException.ajouterErreur(CodesResultatBLL.REGLE_DATE_VENTE);
 		}
 	}
 

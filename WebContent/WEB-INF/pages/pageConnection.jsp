@@ -24,7 +24,7 @@
 		<p>
 			<label for="identifiant"> Identifiant </label>
 			<input type="text" name="identifiant" id="identifiant"
-			size="40" maxlength= "10" required/>
+			size="40" maxlength= "30" required/>
 		</p>
 		<p>
 			<label for="motdepasse"> Mot de passe </label>

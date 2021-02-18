@@ -93,13 +93,13 @@ public class CreationUtilisateurServlet extends HttpServlet {
 					msg += LecteurMessage.getMessageErreur(codeErreur) + "</br>"; // tranforme le code d'erreur en son message
 				}
 				request.setAttribute("message", msg); // ajoute msg comme attribut de la request pour la JSP
-				RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/pages/creationUtilisateur.jsp");
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/creationUtilisateur.jsp");
 				rd.forward(request, response);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			request.setAttribute("message", "Erreur de l'application.");
-			RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/pages/creationUtilisateur.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/creationUtilisateur.jsp");
 			rd.forward(request, response);
 
 		}
