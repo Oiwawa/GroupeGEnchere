@@ -23,6 +23,7 @@ public class RestrictionFiltre implements Filter {
 	//Realiser une verification
 	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
 			throws IOException, ServletException {
+		
 		/*Cast des objets request et response*/
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) resp;

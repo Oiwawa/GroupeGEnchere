@@ -77,7 +77,10 @@ public class CreationUtilisateurServlet extends HttpServlet {
 				UserManager.inscription(user, confirmation);
 				request.setAttribute("Utilisateur", user);
 				HttpSession session = request.getSession();
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp");
+				session.setAttribute("user", user);
+				
+				// Reponse a l'utilisateur
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/restreint/accueilConnecte.jsp");
 				rd.forward(request, response);
 
 			} catch (BusinessException e) {

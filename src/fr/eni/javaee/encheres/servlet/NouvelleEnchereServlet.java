@@ -44,7 +44,7 @@ public class NouvelleEnchereServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/nouvelleEnchere.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/restreint/nouvelleEnchere.jsp");
 		rd.forward(request, response);
 
 	}
@@ -129,7 +129,7 @@ public class NouvelleEnchereServlet extends HttpServlet {
 			try {
 				ArticleManager.insertArticle(art);
 				request.setAttribute("ArticleAffiche", art);
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp");
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/restreint/accueilConnecte.jsp");
 				rd.forward(request, response);
 
 			} catch (BusinessException e) {
@@ -137,14 +137,14 @@ public class NouvelleEnchereServlet extends HttpServlet {
 				 // Recupere la liste de code erreur associe a l'exception qui arrive du manager
 					request.setAttribute("listeCodesErreurs", listeCodesErreurs); 
 				
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/nouvelleEnchere.jsp");
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/restreint/nouvelleEnchere.jsp");
 				rd.forward(request, response);
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			request.setAttribute("message", "Erreur de l'application.");
-			RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/pages/nouvelleEnchere.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/restreint/nouvelleEnchere.jsp");
 			rd.forward(request, response);
 
 		}

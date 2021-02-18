@@ -4,13 +4,19 @@
 <html>
 <head>
 <link type="text/css" rel="stylesheet" href= "<c:url value='/inc/form.css'/>" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css">
 <meta charset="UTF-8">
 <title>Page de connection</title>
 </head>
 <body>
 
-<h1>Entrez votre identifiant et votre mot de passe</h1>
-   
+<h1 align="center">
+			<a href="<%=request.getContextPath()%>/Accueil.html">Les objets
+				sont nos amis</a>
+		</h1>
+<h2 align="center">Entrez votre identifiant et votre mot de passe</h2>
+   <br>
+   <div align="center">
    	<fieldset>
 		<br><br>
 			<legend>Connexion</legend>
@@ -33,6 +39,7 @@
 		</p>
 	</form>
 	</fieldset>
+	</div>
 
 </body>
 </html>

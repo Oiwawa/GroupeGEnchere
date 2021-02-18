@@ -41,9 +41,9 @@ public class ConnectionManager {
 
 	}
 	
-	public static void validerConnection(String indentifiant, String mdp, BusinessException businessException) throws BusinessException {
-		if (utilisateur.getPseudo() != indentifiant 
-				|| utilisateur.getMotDePasse() != mdp) {
+	public static void validerConnection(String identifiant, String mdp, BusinessException businessException) throws BusinessException {
+		if (!utilisateur.getPseudo().equals(identifiant) 
+				|| !utilisateur.getMotDePasse().equals(mdp)) {
 			businessException.ajouterErreur(CodesResultatBLL.ERREUR_CONNECTION);
 		}
 	}

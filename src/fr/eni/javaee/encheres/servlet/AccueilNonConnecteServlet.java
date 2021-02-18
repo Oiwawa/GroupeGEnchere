@@ -21,7 +21,7 @@ import fr.eni.javaee.encheres.bo.Categorie;
  * Servlet implementation class accueilNonConnecteServlet
  */
 @WebServlet("/Accueil.html")
-public class accueilNonConnecteServlet extends HttpServlet {
+public class AccueilNonConnecteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 

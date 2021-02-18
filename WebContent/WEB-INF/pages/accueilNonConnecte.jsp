@@ -8,14 +8,10 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
-
-
-
-
 <html>
 
 <head>
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css">
 <meta charset="UTF-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -30,13 +26,13 @@
 	<header>
 		<!-- Titre -->
 		<h1 align="center">
-			<a href="/GroupeGEnchere/accueilNonConnecteServlet">Les objets
+			<a href="<%=request.getContextPath()%>/Accueil.html">Les objets
 				sont nos amis</a>
 		</h1>
 		<!-- INSCRIPTION ET CONNEXION---------------------------- -->
 		<div align="right">
-			<a href="/GroupeGEnchere/CreationUtilisateur">S'inscrire</a> <span>
-				- </span> <a href="/GroupeGEnchere/ServletConnection">Se connecter</a>
+			<a href="<%=request.getContextPath()%>/CreationUtilisateur">S'inscrire</a> <span>
+				- </span> <a href="<%=request.getContextPath()%>/ServletConnection">Se connecter</a>
 
 		</div>
 	</header>

@@ -10,14 +10,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css">
 <meta charset="UTF-8">
-<title>Resultat Login</title>
+<title>AccueilConnecte</title>
 </head>
 <body>
 	<header>
 		<!-- Titre -->
 		<h1>
-			<a href="/GroupeGEnchere/accueilNonConnecteServlet">Les objets sont nos amis</a>
+			<a href="<%=request.getContextPath()%>/Accueil.html">Les objets sont nos amis</a>
 		</h1>
 		<!-- INSCRIPTION ET CONNEXION---------------------------- -->
 		<div>

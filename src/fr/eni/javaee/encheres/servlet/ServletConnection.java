@@ -1,6 +1,8 @@
 package fr.eni.javaee.encheres.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,8 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import fr.eni.javaee.encheres.BusinessException;
 import fr.eni.javaee.encheres.bll.ConnectionManager;
 import fr.eni.javaee.encheres.bo.Utilisateur;
+import fr.eni.javaee.encheres.messages.LecteurMessage;
 
 /**
  * Servlet implementation class ServletConnection
@@ -32,8 +36,9 @@ public class ServletConnection extends HttpServlet {
 		HttpSession maSession = request.getSession();
 		maSession.getAttribute("user");
 
-		// Recuperation des infos stocke dans les cookies - renvoie tout les cookies de l'utilisateur stocke pour ce site
-		
+		// Recuperation des infos stocke dans les cookies - renvoie tout les cookies de
+		// l'utilisateur stocke pour ce site
+
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
@@ -56,7 +61,8 @@ public class ServletConnection extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("Passage dans la methode doPost");
+		List<Integer> listeCodesErreur = new ArrayList<>();
+		BusinessException businessException = new BusinessException();
 
 		// Recuperation des parametres de la requete.
 		String identifiant = request.getParameter("identifiant");
@@ -66,37 +72,40 @@ public class ServletConnection extends HttpServlet {
 			new ConnectionManager();
 			ConnectionManager cm = ConnectionManager.getInstance();
 			Utilisateur user = cm.connecterUser(identifiant, mdp);
-			
+
 			HttpSession maSession = request.getSession();
 			request.setAttribute("user", user);
 			maSession.setAttribute("user", user);
-			
+
 			// Reponse a l'utilisateur
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/resultatLogin.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/restreint/accueilConnecte.jsp");
 			rd.forward(request, response);
+
+		} catch (BusinessException e) {
+			e.printStackTrace();
 			
-
-
-		} catch (Exception e) {
-			System.out.println("in erreur :" + e.getMessage());
-			request.setAttribute("message", e.getMessage());
 			HttpSession maSession = request.getSession();
 			maSession.setAttribute("user", null);
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/pageConnection.jsp");
+			
+			List<Integer> listeCodesErreursManager = e.getListeCodesErreur(); // Recupere la liste de code erreur
+			// associe a l'exception qui arrive
+			// du manager
+			String msg = "";
+			for (Integer codeErreur : listeCodesErreursManager) {
+				msg += LecteurMessage.getMessageErreur(codeErreur) + "</br>"; // tranforme le code d'erreur en son
+																				// message
+			}
+			request.setAttribute("message", msg);
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/restreint/pageConnection.jsp");
 			rd.forward(request, response);
 		}
-		
-	
-					
-		
+
 		/*
 		 * // Stockage dans des cookies cote visiteur Cookie cookie = new
 		 * Cookie("identifiant", identifiant); // defini l'age d'expiration en seconde.
 		 * // Garde les infos enregistre pdt ce temps. Ici dure 1jour
 		 * cookie.setMaxAge(60 * 60 * 24); response.addCookie(cookie);
 		 */
-					
-
 
 	}
 
