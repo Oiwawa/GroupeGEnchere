@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import fr.eni.javaee.encheres.BusinessException;
 import fr.eni.javaee.encheres.bll.ArticleManager;
 import fr.eni.javaee.encheres.bo.ArticleVendu;
+import fr.eni.javaee.encheres.bo.Categorie;
 
 /**
  * Servlet implementation class accueilNonConnecteServlet
@@ -50,29 +51,32 @@ public class accueilNonConnecteServlet extends HttpServlet {
 	 */
 		protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	            throws ServletException, IOException {
-	        System.out.println("hello post accueilNonConnecteServlet");
-	        String rechercheName = request.getParameter("nomArticle");
+
+			String rechercheName = request.getParameter("nomArticle");
 	        String rechercheCat = request.getParameter("categorie");
+	        
+	        System.out.println("rechercheCat : " + rechercheCat);
+	       
 	        int cat = 0;
+	        
 	        if (rechercheCat.equals("informatique")) {
 	        	cat = 1;
 	        }
-	        else if (rechercheCat.equals("ameublement")) {
+	        else if (rechercheCat.equals("ameublements")) {
 	          	cat = 2;
 	        }
 	        else if (rechercheCat.equals("vetements")) {
 	          	cat = 3;
 	        }
-	        else if (rechercheCat.equals(" sport_loisirs")) {
+	        else if (rechercheCat.equals("sport_loisirs")) {
 	          	cat = 4;
 	        }
 	        
-	        System.out.println("categorie : " + rechercheCat);
-	        System.out.println("nomArticle : " + rechercheName);
 
 	        try {
 	            ArticleManager am = new ArticleManager();
 	            List<ArticleVendu> avs = am.selectArticle(rechercheName, cat);
+	            System.out.println("avs : " + avs);
 	            
 	            // met les attributs
 	            request.setAttribute("avs", avs);

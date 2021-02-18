@@ -18,6 +18,8 @@ public class UserManager {
 
 	public static Utilisateur inscription(Utilisateur user, String confirmation)
 			throws BusinessException {
+		
+		businessException.viderListeErreur(); // A chaque nouvelle inscription on vide la liste d'erreurs 
 
 		validerMotDePasse(user, confirmation, businessException);
 		validerPseudo(user, businessException);

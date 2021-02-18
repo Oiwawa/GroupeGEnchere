@@ -96,7 +96,7 @@ public class ArticleManager {
 		return ArticleManager.articleDAO.selectById(id);
 	}
 
-	public static List<ArticleVendu> selectAll() throws BusinessException {
+	public  List<ArticleVendu> selectAll() throws BusinessException {
 		return ArticleManager.articleDAO.liste();
 	}
 
@@ -104,13 +104,15 @@ public class ArticleManager {
 
 	public List<ArticleVendu> selectArticle(String name, int noCategorie) throws BusinessException {
 
-		if ((name == null) && (noCategorie == 0)) {
+		Boolean nameIsNull = (name == null || name == "");
+		
+		if (nameIsNull && (noCategorie == 0)) {
 			return ArticleManager.articleDAO.liste();
-		} else if ((name != null) && (noCategorie == 0)) {
+		} else if (!nameIsNull && (noCategorie == 0)) {
 			return ArticleManager.articleDAO.listeSelectByName(name);
-		} else if ((name == null) && (noCategorie != 0)) {
+		} else if (nameIsNull && (noCategorie != 0)) {
 			return ArticleManager.articleDAO.listeSelectByCat(noCategorie);
-		} else if ((name != null) && (noCategorie != 0)) {
+		} else if (!nameIsNull && (noCategorie != 0)) {
 			return ArticleManager.articleDAO.listeSelectByNameAndCat(name, noCategorie);
 		}
 		return null;

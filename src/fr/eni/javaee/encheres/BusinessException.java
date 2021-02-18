@@ -50,5 +50,9 @@ public class BusinessException extends Exception {
 	{
 		return this.listeCodesErreur;
 	}
+	
+	public void viderListeErreur() {
+		this.listeCodesErreur=new ArrayList<>();
+	}
 
 }

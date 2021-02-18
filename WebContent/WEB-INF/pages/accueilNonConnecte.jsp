@@ -4,6 +4,9 @@
 
 <%@page import="fr.eni.javaee.encheres.bo.ArticleVendu"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="fr.eni.javaee.encheres.bo.Categorie"%>
+<%@page import="fr.eni.javaee.encheres.bll.CategorieManager"%>
+
 
 
 
@@ -25,11 +28,11 @@
 	<header>
 		<!-- Titre -->
 		<h1>
-			<a href="#">Les objets sont nos amis</a>
+			<a href="/GroupeGEnchere/accueilNonConnecteServlet">Les objets sont nos amis</a>
 		</h1>
 		<!-- INSCRIPTION ET CONNEXION---------------------------- -->
 		<div>
-			<a href="">S'inscrire</a> <span> - </span> <a
+			<a href="/GroupeGEnchere/CreationUtilisateurServlet">S'inscrire</a> <span> - </span> <a
 				href="/GroupeGEnchere/ServletConnection">Se connecter</a>
 
 		</div>
@@ -45,37 +48,36 @@
 			<input type="text" placeholder="Le nom de l'article contient"
 				name="nomArticle">
 			<button type="submit" name="recherche" value="Rechercher">Rechercher</button>
-
-			<br>
+<br><br>
 			<!--CATEGORIE  -->
 			<div>
 				<label for="categorie">Categorie</label> <select name="categorie"
 					id="categorie">
-					<option value="">Toutes</option>
-					<option value="informatique">Informatique</option>
-					<option value="ameublement">Ameublement</option>
-					<option value="vetements">Vetements</option>
-					<option value="sport_loisirs">Sport Loisirs</option>
+					<option>Tous</option>
+						<%
+			for (Categorie categorie : CategorieManager.selectAllCat()) {
+			%>
+			<option > <%=categorie.getLibelle()%></option>
+			<%
+			}
+			%>	
 				</select>
 			</div>
 		</form>
+		<br><br><br><br>
+	
 
 		<!-- LISTE -->
 
-		<div>${av.forename}</div>
-		<div>${av.forename}</div>
-
-
-
-
-
-
 		<table border="1">
-			<tr bgcolor="00FF7F">
-				<th><b>Nom</b></th>
-				<th><b>Description</b></th>
-				<th><b>Etat de vente</b></th>
-			</tr>
+			<tr >
+                <th><b>Nom</b></th>
+                <th><b>Description</b></th>
+                <th><b>Prix</b></th>
+                <th><b>Début de l'enchère</b></th>
+                <th><b>Fin de l'enchère</b></th>
+                <th><b>Vendeur</b></th>
+            </tr>
 			<%-- Fetching the attributes of the request object 
              which was previously set by the servlet  
               "StudentServlet.java" 
@@ -87,10 +89,13 @@
 			<%-- Arranging data in tabular form 
         --%>
 			<tr>
-				<td><%=av.getNomArticle()%></td>
-				<td><%=av.getDescription()%></td>
-				<td><%=av.getEtatVente()%></td>
-			</tr>
+                <td><%=av.getNomArticle()%></td>
+                <td><%=av.getDescription()%></td> 
+                <td><%=av.getMiseAPrix()%></td>
+                <td><%=av.getDateDebutEncheres()%></td>
+                <td><%=av.getDateFinEncheres()%></td>
+                <td><%=av.getVendeur().getPseudo()%></td>
+            </tr>
 			<%
 			}
 			%>

@@ -27,12 +27,15 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	private static final String SQL_SELECT_BY_CAT = "SELECT * from ARTICLES_VENDUS " + "where no_categorie = ?";
 
 	private static final String SQL_SELECT_BY_NAMEANDCAT = "SELECT * from [ARTICLES_VENDUS] a "
-			+ "inner join CATEGORIES c on a.no_categorie = c.no_categorie" + "where no_categorie = ?,"
-			+ "where nom_article = '%?%' ";
+			+ "INNER JOIN CATEGORIES c on a.no_categorie = c.no_categorie " 
+			+ "where nom_article = ? and c.no_categorie = ? ";
 
-	private static final String SELECT_ALL = "SELECT * from ARTICLES_VENDUS";
+
+	private static final String SELECT_ALL = "SELECT * from ARTICLES_VENDUS a "
+			+"INNER JOIN UTILISATEURS u on a.no_utilisateur = u.no_utilisateur";
 
 	private static final String SELECT_BY_ID = "SELECT * from ARTICLE_VENDUS WHERE no_article= ?";
+	
 	private static final String UPDATE = "update ARTICLES_VENDUS set nom_article = ?, description = ?,"
 			+ "	date_debut_encheres=?, date_fin_encheres= ?, prix_initial= ?, prix_vente= ?, "
 			+ "	no_utilisateur= ?, no_categorie=?, no_retrait=? where no_article= ? ";
@@ -100,6 +103,8 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 				Categorie cat = new Categorie(rs.getInt("no_categorie"), "un libelle");
 				Utilisateur utilisateur = new Utilisateur(rs.getInt("no_utilisateur"));
+				utilisateur.setNom(rs.getString("nom"));
+				utilisateur.setPseudo(rs.getString("pseudo"));
 				Retrait retrait = new Retrait(rs.getInt("no_retrait"));
 
 				ArticleVendu av = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"),
@@ -127,7 +132,6 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	@Override
 	public List<ArticleVendu> listeSelectByName(String name) throws BusinessException {
 		List<ArticleVendu> listeArticleSelectByName = new ArrayList<ArticleVendu>();
-		System.out.println("Tu es dans la listeSelectByName");
 
 		try (Connection cnx = DBConnexion.seConnecter()) {
 			PreparedStatement pstmt = cnx.prepareStatement(SQL_SELECT_BY_NAME);
@@ -138,6 +142,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 				Categorie cat = new Categorie(rs.getInt("no_categorie"), "un libelle");
 				Utilisateur utilisateur = new Utilisateur(rs.getInt("no_utilisateur"));
+				utilisateur.setPseudo(rs.getString("pseudo"));
 				Retrait retrait = new Retrait(rs.getInt("no_retrait"));
 
 				ArticleVendu av = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"),
@@ -150,7 +155,6 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			rs.close();
 			pstmt.close();
 		} catch (Exception e) {
-			System.out.println("in listeSelectByName BusinessException");
 			// Exception est plus général que DAL ou BLLExecp
 			e.printStackTrace();
 			// Création d'une exception qui renvoie un code erreur
@@ -177,6 +181,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 				Categorie cat = new Categorie(rs.getInt("no_categorie"), "un libelle");
 				Utilisateur utilisateur = new Utilisateur(rs.getInt("no_utilisateur"));
+				utilisateur.setPseudo(rs.getString("pseudo"));
 				Retrait retrait = new Retrait(rs.getInt("no_retrait"));
 
 				ArticleVendu av = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"),
@@ -211,14 +216,16 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 		try (Connection cnx = DBConnexion.seConnecter()) {
 			PreparedStatement pstmt = cnx.prepareStatement(SQL_SELECT_BY_NAMEANDCAT);
-			pstmt.setInt(1, noCategorie);
-			pstmt.setString(2, name);
+			pstmt.setString(1, name);
+			pstmt.setInt(2, noCategorie);
+			
 
 			ResultSet rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 				Categorie cat = new Categorie(rs.getInt("no_categorie"), "un libelle");
 				Utilisateur utilisateur = new Utilisateur(rs.getInt("no_utilisateur"));
+				utilisateur.setPseudo(rs.getString("pseudo"));
 				Retrait retrait = new Retrait(rs.getInt("no_retrait"));
 
 				ArticleVendu av = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"),

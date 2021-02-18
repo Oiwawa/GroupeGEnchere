@@ -19,6 +19,7 @@
 
 	<form action="CreationUtilisateur" method="post">
 		<fieldset>
+		<br><br>
 			<legend>Inscription</legend>
 			<div>
 				<label for="pseudo"> Pseudo : <span class="requis">*</span></label>
@@ -69,9 +70,9 @@
 			<br>
 			<br>
 			<p>
-				<%
+				<% if(request.getAttribute("message") != null){
 					out.println((String) request.getAttribute("message"));
-				%>
+				} %>
 			</p>
 		</fieldset>
 

@@ -2,6 +2,7 @@ package fr.eni.javaee.encheres.servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -76,7 +77,7 @@ public class CreationUtilisateurServlet extends HttpServlet {
 				UserManager.inscription(user, confirmation);
 				request.setAttribute("Utilisateur", user);
 				HttpSession session = request.getSession();
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/creationUtilisateur.jsp");
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp");
 				rd.forward(request, response);
 
 			} catch (BusinessException e) {
@@ -84,8 +85,10 @@ public class CreationUtilisateurServlet extends HttpServlet {
 				List<Integer> listeCodesErreursManager = e.getListeCodesErreur(); // Recupere la liste de code erreur
 																					// associe a l'exception qui arrive
 																					// du manager
-				int codeErreur = listeCodesErreursManager.get(0); // recupere le 1er code de la liste d'erreur
-				String msg = LecteurMessage.getMessageErreur(codeErreur); // tranforme le code d'erreur en son message
+				String msg = "";
+				for (Integer codeErreur : listeCodesErreursManager) {
+					msg += LecteurMessage.getMessageErreur(codeErreur) + "</br>"; // tranforme le code d'erreur en son message
+				}
 				request.setAttribute("message", msg); // ajoute msg comme attribut de la request pour la JSP
 				RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/pages/creationUtilisateur.jsp");
 				rd.forward(request, response);
@@ -94,6 +97,8 @@ public class CreationUtilisateurServlet extends HttpServlet {
 			e.printStackTrace();
 			request.setAttribute("message", "Erreur de l'application.");
 			RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/pages/creationUtilisateur.jsp");
+			rd.forward(request, response);
+
 		}
 
 	}
