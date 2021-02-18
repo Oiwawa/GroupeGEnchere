@@ -38,7 +38,7 @@ public class AccueilConnecteServlet extends HttpServlet {
 		  ArticleManager am = new ArticleManager();
 		     List<ArticleVendu> avs = new ArrayList<ArticleVendu>();
 			try {
-				avs = ArticleManager.selectAll();
+				avs = am.selectAll();
 				request.setAttribute("avs", avs);
 			} catch (BusinessException e) {
 				e.printStackTrace();
@@ -79,7 +79,6 @@ public class AccueilConnecteServlet extends HttpServlet {
 		            // met les attributs
 		            request.setAttribute("avs", avs);
 		        } catch ( BusinessException e) {
-		        	System.out.println("in erreur");
 		            e.printStackTrace();
 		            request.setAttribute("avs", new ArrayList<ArticleVendu>());
 		            request.setAttribute("listeCodesErreur",e.getMessage());
