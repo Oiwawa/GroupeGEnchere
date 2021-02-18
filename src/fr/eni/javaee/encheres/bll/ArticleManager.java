@@ -80,7 +80,7 @@ public class ArticleManager {
 				|| article.getDateDebutEncheres().isBefore(LocalDate.now())
 				|| article.getDateFinEncheres().isBefore(article.getDateDebutEncheres())) {
 
-			businessException.ajouterErreur(CodesResultatBLL.REGLE_DATE_ENCHERE_ARTICLE);
+			businessException.ajouterErreur(CodesResultatBLL.REGLE_DATE_VENTE);
 		}
 	}
 

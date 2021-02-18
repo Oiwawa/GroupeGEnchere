@@ -25,7 +25,7 @@ public class ArticleVendu {
 	// Constructeur sans id
 
 	public ArticleVendu(String nomArticle, String description, Categorie noCategorie, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, float miseAPrix, float prixVente, EtatVente etatVenteEnum) {
+			LocalDate dateFinEncheres, float miseAPrix, float prixVente) {
 		this.nomArticle = nomArticle;
 		this.description = description;
 		this.noCategorie = noCategorie;
@@ -33,7 +33,6 @@ public class ArticleVendu {
 		this.dateFinEncheres = dateFinEncheres;
 		this.miseAPrix = miseAPrix;
 		this.prixVente = prixVente;
-		this.etatVenteEnum = setEtatVenteEnum(etatVenteEnum);
 
 	}
 
@@ -173,12 +172,8 @@ public class ArticleVendu {
 	}
 
 	public EtatVente getEtatVenteEnum() {
-		return etatVenteEnum;
-	}
-
-	public EtatVente setEtatVenteEnum(EtatVente etatVenteEnum) {
 		if (dateDebutEncheres.isAfter(LocalDate.now())) {
-
+			
 			this.etatVenteEnum = EtatVente.ENCHERE_CREE;
 		} else {
 			if (dateDebutEncheres.isEqual(LocalDate.now())) {
@@ -188,9 +183,13 @@ public class ArticleVendu {
 					this.etatVenteEnum = EtatVente.ENCHERE_TERMINEE;
 				}
 			}
-
+			
 		}
 		return etatVenteEnum;
+	}
+
+	public void setEtatVenteEnum(EtatVente etatVenteEnum) {
+		this.etatVenteEnum = etatVenteEnum;
 
 	}
 

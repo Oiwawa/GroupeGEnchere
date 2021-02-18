@@ -30,12 +30,9 @@ public abstract class CodesResultatBLL {
 	/**
 	 * Regle début d'enchere ne peut pas être avant date du jour
 	 */
-	public static final int REGLE_DATE_DEBUT_VENTE = 30003;
+	public static final int REGLE_DATE_VENTE = 30003;
 
-	/**
-	 * Regle fin d'enchere doit être minimum 24h apres date de debut
-	 */
-	public static final int REGLE_DATE_FIN_VENTE = 30004;
+
 	
 	/**
 	 * Regle le prix ne peut pas être <= a 0
@@ -46,11 +43,11 @@ public abstract class CodesResultatBLL {
 	 */
 	public static final int REGLE_RETRAITS_ADRESSE_ERREUR=30006;
 	
+	
 	/**
 	 * Regle quand le pseudo n'est pas correct
 	 */
 	public static final int REGLE_VALIDER_PSEUDO=30007;
-	
 	/**
 	 * Regle quand l'etat de la vente n'est pas correct
 	 */
