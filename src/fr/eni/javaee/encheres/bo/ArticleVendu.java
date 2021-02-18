@@ -33,7 +33,7 @@ public class ArticleVendu {
 		this.dateFinEncheres = dateFinEncheres;
 		this.miseAPrix = miseAPrix;
 		this.prixVente = prixVente;
-		this.etatVenteEnum = etatVenteEnum;
+		this.etatVenteEnum = setEtatVenteEnum(etatVenteEnum);
 
 	}
 
@@ -176,7 +176,7 @@ public class ArticleVendu {
 		return etatVenteEnum;
 	}
 
-	public void setEtatVenteEnum(EtatVente etatVenteEnum) {
+	public EtatVente setEtatVenteEnum(EtatVente etatVenteEnum) {
 		if (dateDebutEncheres.isAfter(LocalDate.now())) {
 
 			this.etatVenteEnum = EtatVente.ENCHERE_CREE;
@@ -190,6 +190,7 @@ public class ArticleVendu {
 			}
 
 		}
+		return etatVenteEnum;
 
 	}
 

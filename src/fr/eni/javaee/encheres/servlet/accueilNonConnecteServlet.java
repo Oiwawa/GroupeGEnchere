@@ -30,8 +30,7 @@ public class accueilNonConnecteServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-	     System.out.println("hello");
-	     ArticleManager am = new ArticleManager();
+     ArticleManager am = new ArticleManager();
 	     List<ArticleVendu> avs;
 		try {
 			avs = am.selectAll();

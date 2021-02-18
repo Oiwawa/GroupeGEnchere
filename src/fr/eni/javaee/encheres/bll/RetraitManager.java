@@ -34,7 +34,7 @@ public class RetraitManager {
 		
 	}
 	private static void validerAdresse(Retrait retrait, BusinessException businessException) {
-		
+		String testCP = "/^(([1-95]{2}|2A|2B)[0-9]{3})$|^[971-974]$/";
 		//Si la rue, le code postal et la ville ne sont pas indiqués, renvoie erreur 
 		if(retrait.getRue() == null || retrait.getRue().trim().equals("")  
 				|| retrait.getCodePostal() == null 
@@ -42,10 +42,9 @@ public class RetraitManager {
 				|| retrait.getVille() == null || retrait.getVille().trim().equals("")) {
 				retrait = user.getAdresseRetraitDefaut();
 				
-				} else if(retrait.getCodePostal().length()<5) {
-					
-					businessException.ajouterErreur(CodesResultatBLL.REGLE_RETRAITS_ADRESSE_ERREUR);
-				}
+				} // else if(!retrait.getCodePostal().matches(testCP)) {
+		//businessException.ajouterErreur(CodesResultatBLL.REGLE_RETRAITS_ADRESSE_ERREUR);				
+//				}
 	}
 	
 	public static Retrait selectRetraitById(int id) throws BusinessException {
