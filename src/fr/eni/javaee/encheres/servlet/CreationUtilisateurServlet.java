@@ -77,7 +77,7 @@ public class CreationUtilisateurServlet extends HttpServlet {
 				UserManager.inscription(user, confirmation);
 				request.setAttribute("Utilisateur", user);
 				HttpSession session = request.getSession();
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp");
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/restreint/accueilConnecte.jsp");
 				rd.forward(request, response);
 
 			} catch (BusinessException e) {
@@ -90,13 +90,13 @@ public class CreationUtilisateurServlet extends HttpServlet {
 					msg += LecteurMessage.getMessageErreur(codeErreur) + "</br>"; // tranforme le code d'erreur en son message
 				}
 				request.setAttribute("message", msg); // ajoute msg comme attribut de la request pour la JSP
-				RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/pages/creationUtilisateur.jsp");
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/creationUtilisateur.jsp");
 				rd.forward(request, response);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			request.setAttribute("message", "Erreur de l'application.");
-			RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/pages/creationUtilisateur.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/creationUtilisateur.jsp");
 			rd.forward(request, response);
 
 		}

@@ -29,79 +29,92 @@
 <body>
 	<header>
 		<!-- Titre -->
-		<h1>
-			<a href="/GroupeGEnchere/accueilNonConnecteServlet">Les objets sont nos amis</a>
+		<h1 align="center">
+			<a href="<%=request.getContextPath()%>/Accueil.html">Les objets
+				sont nos amis</a>
 		</h1>
 		<!-- INSCRIPTION ET CONNEXION---------------------------- -->
-		<div>
-			<a href="/GroupeGEnchere/CreationUtilisateurServlet">S'inscrire</a> <span> - </span> <a
-				href="/GroupeGEnchere/ServletConnection">Se connecter</a>
+		<div align="right">
+			<a href="<%=request.getContextPath()%>/CreationUtilisateur">S'inscrire</a> <span>
+				- </span> <a href="<%=request.getContextPath()%>/ServletConnection">Se connecter</a>
 
 		</div>
 	</header>
 	<section>
-		<div>
+		<div align="center">
 			<h3>Liste des encheres</h3>
 		</div>
 
 		<!-- FILTRE---------------------------- -->
-		<p>Filtres</p>
-		<form action="Accueil.html" method="post">
-			<input type="text" placeholder="Le nom de l'article contient"
-				name="nomArticle">
-			<button type="submit" name="recherche" value="Rechercher">Rechercher</button>
-<br><br>
-			<!--CATEGORIE  -->
-			<div>
-				<label for="categorie">Categorie</label> <select name="categorie"
-					id="categorie">
-					<option>Tous</option>
+		<div align="center">
+			<p>Filtres :</p>
+
+			<form action="Accueil.html" method="post">
+			<label for="nomArticle">Article :</label>
+				<input type="text" placeholder="Le nom de l'article contient"
+					name="nomArticle">
+		
+				<br>
+				<br>
+				<!--CATEGORIE  -->
+				<div>
+					<label for="categorie">Categorie :</label> <select name="categorie"
+						id="categorie">
+						<option value="0">Tous</option>
 						<%
-			for (Categorie categorie : CategorieManager.selectAllCat()) {
-			%>
-			<option > <%=categorie.getLibelle()%></option>
-			<%
-			}
-			%>	
-				</select>
-			</div>
-		</form>
-		<br><br><br><br>
-	
+						for (Categorie categorie : CategorieManager.selectAllCat()) {
+						%>
+							<option value="<%=categorie.getNoCategorie()%>"><%=categorie.getLibelle()%></option>
+						<%
+						}
+						%>
+					</select>
+				</div>
+				<br>
+				<br>
+				<button type="submit" name="recherche" value="Rechercher">Rechercher</button>
+			</form>
+		</div>
+		<br>
+		<br>
+		<br>
+		<br>
+
 
 		<!-- LISTE -->
-
-		<table border="1">
-			<tr >
-                <th><b>Nom</b></th>
-                <th><b>Description</b></th>
-                <th><b>Prix</b></th>
-                <th><b>Début de l'enchère</b></th>
-                <th><b>Fin de l'enchère</b></th>
-                <th><b>Vendeur</b></th>
-            </tr>
-			<%-- Fetching the attributes of the request object 
+		<div align="center">
+			<table border="1">
+				<tr>
+					<th><b>Nom</b></th>
+					<th><b>Description</b></th>
+					<th><b>Prix</b></th>
+					<th><b>Début de l'enchère</b></th>
+					<th><b>Fin de l'enchère</b></th>
+					<th><b>Vendeur</b></th>
+				</tr>
+				<%-- Fetching the attributes of the request object 
              which was previously set by the servlet  
               "StudentServlet.java" 
         --%>
-			<%
-			ArrayList<ArticleVendu> avs = (ArrayList<ArticleVendu>) request.getAttribute("avs");
-			for (ArticleVendu av : avs) {
-			%>
-			<%-- Arranging data in tabular form 
+				<%
+				ArrayList<ArticleVendu> avs = (ArrayList<ArticleVendu>) request.getAttribute("avs");
+				for (ArticleVendu av : avs) {
+				%>
+				<%-- Arranging data in tabular form 
         --%>
-			<tr>
-                <td><%=av.getNomArticle()%></td>
-                <td><%=av.getDescription()%></td> 
-                <td><%=av.getMiseAPrix()%></td>
-                <td><%=av.getDateDebutEncheres()%></td>
-                <td><%=av.getDateFinEncheres()%></td>
-                <td><%=av.getVendeur().getPseudo()%></td>
-            </tr>
-			<%
-			}
-			%>
-		</table>
+				<tr>
+					<td><%=av.getNomArticle()%></td>
+					<td><%=av.getDescription()%></td>
+					<td><%=av.getMiseAPrix()%></td>
+					<td><%=av.getDateDebutEncheres()%></td>
+					<td><%=av.getDateFinEncheres()%></td>
+					<td><%=av.getVendeur().getPseudo()%></td>
+				</tr>
+				<%
+				}
+				%>
+			</table>
+		</div>
 
 
 

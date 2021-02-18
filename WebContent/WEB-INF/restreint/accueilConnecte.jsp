@@ -14,10 +14,11 @@
 <title>Resultat Login</title>
 </head>
 <body>
+<%ArrayList<ArticleVendu> avs = (ArrayList<ArticleVendu>) request.getAttribute("avs"); %>
 	<header>
 		<!-- Titre -->
 		<h1>
-			<a href="/GroupeGEnchere/accueilNonConnecteServlet">Les objets sont nos amis</a>
+			<a href="<%=request.getContextPath()%>/Accueil.html">Les objets sont nos amis</a>
 		</h1>
 		<!-- INSCRIPTION ET CONNEXION---------------------------- -->
 		<div>
@@ -66,7 +67,9 @@
             </tr>
 
 			<%
-			ArrayList<ArticleVendu> avs = (ArrayList<ArticleVendu>) request.getAttribute("avs");
+			if(avs !=null) {
+				
+			
 			for (ArticleVendu av : avs) {
 			%>
 			<tr>
@@ -78,6 +81,7 @@
                 <td><%=av.getVendeur().getPseudo()%></td>
             </tr>
 			<%
+			}
 			}
 			%>
 		</table>

@@ -7,7 +7,9 @@ import fr.eni.javaee.encheres.dal.jdbcImpl.ConnectionDAOJdbcImpl;
 
 public class ConnectionManager {
 
+	private static BusinessException businessException = new BusinessException();
 	private ConnectionDAO connectionDAO = new ConnectionDAOJdbcImpl();
+	private static Utilisateur utilisateur = new Utilisateur();
 
 	private static ConnectionManager instance;
 
@@ -25,7 +27,24 @@ public class ConnectionManager {
 	// methode
 
 	public Utilisateur connecterUser(String identifiant, String mdp) throws BusinessException {
+		
+		businessException.viderListeErreur(); 
+		
+		validerConnection(identifiant, mdp, businessException);
+		
+		if (!businessException.hasErreurs()) {
+			connectionDAO.rechercheUser(identifiant, mdp);
+		} else {
+			throw businessException;
+		}
 		return this.connectionDAO.rechercheUser(identifiant, mdp);
 
+	}
+	
+	public static void validerConnection(String indentifiant, String mdp, BusinessException businessException) throws BusinessException {
+		if (utilisateur.getPseudo() != indentifiant 
+				|| utilisateur.getMotDePasse() != mdp) {
+			businessException.ajouterErreur(CodesResultatBLL.ERREUR_CONNECTION);
+		}
 	}
 }

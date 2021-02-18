@@ -15,13 +15,12 @@ import javax.servlet.http.HttpServletResponse;
 import fr.eni.javaee.encheres.BusinessException;
 import fr.eni.javaee.encheres.bll.ArticleManager;
 import fr.eni.javaee.encheres.bo.ArticleVendu;
-import fr.eni.javaee.encheres.bo.Categorie;
 
 /**
  * Servlet implementation class accueilNonConnecteServlet
  */
 @WebServlet("/Accueil.html")
-public class accueilNonConnecteServlet extends HttpServlet {
+public class AccueilNonConnecteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 
@@ -31,7 +30,7 @@ public class accueilNonConnecteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
      ArticleManager am = new ArticleManager();
-	     List<ArticleVendu> avs;
+	     List<ArticleVendu> avs = new ArrayList<ArticleVendu>();
 		try {
 			avs = am.selectAll();
 			request.setAttribute("avs", avs);
@@ -50,37 +49,19 @@ public class accueilNonConnecteServlet extends HttpServlet {
 	 */
 		protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	            throws ServletException, IOException {
+		     List<ArticleVendu> avs = new ArrayList<ArticleVendu>();
 
 			String rechercheName = request.getParameter("nomArticle");
 	        String rechercheCat = request.getParameter("categorie");
 	        
-	        System.out.println("rechercheCat : " + rechercheCat);
-	       
-	        int cat = 0;
-	        
-	        if (rechercheCat.equals("informatique")) {
-	        	cat = 1;
-	        }
-	        else if (rechercheCat.equals("ameublements")) {
-	          	cat = 2;
-	        }
-	        else if (rechercheCat.equals("vetements")) {
-	          	cat = 3;
-	        }
-	        else if (rechercheCat.equals("sport_loisirs")) {
-	          	cat = 4;
-	        }
-	        
-	        
 	        try {
 	            ArticleManager am = new ArticleManager();
-	            List<ArticleVendu> avs = am.selectArticle(rechercheName, cat);
+	            avs = am.selectArticle(rechercheName, Integer.parseInt(rechercheCat));
 	            System.out.println("avs : " + avs);
 	            
 	            // met les attributs
 	            request.setAttribute("avs", avs);
 	        } catch ( BusinessException e) {
-	        	System.out.println("in erreur");
 	            e.printStackTrace();
 	            request.setAttribute("avs", new ArrayList<ArticleVendu>());
 	            request.setAttribute("listeCodesErreur",e.getMessage());

@@ -72,7 +72,7 @@ public class ServletConnection extends HttpServlet {
 			maSession.setAttribute("user", user);
 			
 			// Reponse a l'utilisateur
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/resultatLogin.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/restreint/accueilConnecte.jsp");
 			rd.forward(request, response);
 			
 
