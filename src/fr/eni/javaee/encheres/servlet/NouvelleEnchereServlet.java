@@ -123,7 +123,6 @@ public class NouvelleEnchereServlet extends HttpServlet {
 			art.setNoCategorie(categorie);
 			art.setVendeur(user);
 
-
 			// Réalisation du traitement
 
 			try {

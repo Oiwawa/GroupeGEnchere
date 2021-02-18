@@ -71,7 +71,7 @@ public class accueilNonConnecteServlet extends HttpServlet {
 	          	cat = 4;
 	        }
 	        
-
+	        
 	        try {
 	            ArticleManager am = new ArticleManager();
 	            List<ArticleVendu> avs = am.selectArticle(rechercheName, cat);
