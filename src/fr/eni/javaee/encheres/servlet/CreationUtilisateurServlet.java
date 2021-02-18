@@ -94,6 +94,8 @@ public class CreationUtilisateurServlet extends HttpServlet {
 			e.printStackTrace();
 			request.setAttribute("message", "Erreur de l'application.");
 			RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/pages/creationUtilisateur.jsp");
+			rd.forward(request, response);
+
 		}
 
 	}

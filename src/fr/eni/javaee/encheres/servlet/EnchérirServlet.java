@@ -41,6 +41,7 @@ public class EnchérirServlet extends HttpServlet {
 		
 		try {
 			articleDetail = ArticleManager.selectById(idArticle);
+			request.setAttribute("ArticleAffiche", articleDetail);
 		} catch (BusinessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

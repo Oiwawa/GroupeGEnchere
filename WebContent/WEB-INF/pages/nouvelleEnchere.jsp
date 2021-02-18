@@ -12,23 +12,25 @@
 <title>Les objets sont nos amis</title>
 </head>
 <body>
-
+<h1><a href="<%=request.getContextPath()%>/AccueilConnecte">Accueil</a></h1>
 	<%
 	Utilisateur connectedUser = (Utilisateur) session.getAttribute("user");
 	List<Categorie> listeCategories = (List<Categorie>) request.getAttribute("listeCategorie");
+	List<Integer> listeCodesErreurs = (List<Integer>) request.getAttribute("listeCodesErreurs");
+
 	%>
 	<h1>Nouvelle Vente</h1>
 	<br>
 	<!--NOM DE L'ARTICLE ---------  -->
-	<form action="<%=request.getContextPath()%>/NouvelleEnchere.html"
+	<form action="<%=request.getContextPath()%>/VenteArticle"
 		method="post">
 
 		<label for="article">Article : </label> <input type="text" id="nomArt"
 			name="sarticle" placeholder="Nom de l'article..." maxlength="30" required> <br>
 		<br>
 		<!--DESCRIPTION DE L'ARTICLE ---------  -->
-		<label for="description">Description : </label>
-		<textarea rows="5" cols="30" for="sdescription"
+		<label  for="description">Description : </label>
+		<textarea style="resized: none" rows="5" cols="30" for="sdescription"
 			id="description" name="sdescription" value="sdescription"
 			maxlength="300" placeholder="Description de l'article..." required>
 				</textarea>
@@ -40,18 +42,18 @@
 			for (Categorie categorie : CategorieManager.selectAllCat()) {
 			%>
 			<option value=<%=categorie.getNoCategorie()%>><%=categorie.getLibelle()%></option>
-			<%
-			}
-			%>
+					<%
+					}
+					%>
 
 		</select> <br> <br>
 		<!--PHOTO DE L'ARTICLE ---------  -->
 		<label>Photo de l'article : </label> <input type="file"
-			accept=".jpeg, .jpg, .jpe, .jfif, .jif"> <input type="submit">
+			accept=".jpeg, .jpg, .jpe, .jfif, .jif"> 
 		<br> <br>
 		<!--PRIX DE DEPART DE L'ARTICLE ---------  -->
 		<label for="quantity">Prix : </label> <input type="number"
-			id="quantity" name="sprix" step="1" max="10000" value="sprix"
+			id="quantity" name="sprix" step="1" min="1" max="10000" value="sprix"
 			required> <br> <br>
 
 		<!--DATE DE DEBUT D'ENCHERE DE L'ARTICLE  -->
@@ -87,18 +89,19 @@
 
 			<!-- BOUTONS  -->
 			<input type="submit" value="Valider" /> <a
-				href="<%=request.getContextPath()%>/NouvelleEnchere.html"><input
+				href="<%=request.getContextPath()%>/VenteArticle"><input
 				type="button" value="Annuler" /></a>
 
+		</div>
+	</form>
 			<div>
 				<%
-				List<Integer> listeCodesErreur = (List<Integer>) request.getAttribute("listeCodesErreur");
-				if (listeCodesErreur != null) {
+				if (listeCodesErreurs !=null ) {
 				%>
 				<p style="color: red;">Erreur, l'article n'a pas pu être ajouté
 					:</p>
 				<%
-				for (int codeErreur : listeCodesErreur) {
+				for (int codeErreur : listeCodesErreurs) {
 				%>
 				<p><%=LecteurMessage.getMessageErreur(codeErreur)%></p>
 				<%
@@ -106,13 +109,11 @@
 				}
 				%>
 			</div>
-		</div>
 
 		<!-- Erreurs -->
 
 
 
 
-	</form>
 </body>
 </html>
