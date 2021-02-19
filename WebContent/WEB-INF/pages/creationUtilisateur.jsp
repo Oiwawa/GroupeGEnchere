@@ -15,8 +15,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css"></head>
 <body>
 <h1 align="center">
-			<a href="<%=request.getContextPath()%>/Accueil.html">Les objets
-				sont nos amis</a>
+			<a href="<%=request.getContextPath()%>/Accueil.html">ENI-Enchères</a>
 		</h1>
 	<h2 align="center">Mon profil</h2>
 
@@ -76,8 +75,10 @@
 
 			<div>
 				<button type="submit" class="sansLabel">Creer</button>
-				<button type="button" href="<%=request.getContextPath()%>/Accueil.html">Annuler</button>
-			</div>
+				<a href="<%=request.getContextPath()%>/Accueil.html">
+				<input type="button" value="Annuler" /></a>
+<%-- 				<button type="button" href="<%=request.getContextPath()%>/Accueil.html">Annuler</button>
+ --%>			</div>
 			<br> <br>
 			<p>
 				<%

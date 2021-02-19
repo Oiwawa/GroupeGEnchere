@@ -12,14 +12,14 @@
 <head>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css">
 <meta charset="UTF-8">
-<title>AccueilConnecte</title>
+<title>ENI-Enchères</title>
 </head>
 <body>
-<%ArrayList<ArticleVendu> avs = (ArrayList<ArticleVendu>) request.getAttribute("avs"); %>
-	<header>
+<%-- <%ArrayList<ArticleVendu> avs = (ArrayList<ArticleVendu>) request.getAttribute("avs"); %>
+ --%>	<header>
 		<!-- Titre -->
 		<h1>
-			<a href="<%=request.getContextPath()%>/Accueil.html">Les objets sont nos amis</a>
+			<a href="<%=request.getContextPath()%>/restreint/AccueilConnecte">ENI-Enchères</a>
 		</h1>
 		<!-- INSCRIPTION ET CONNEXION---------------------------- -->
 		<div>
@@ -33,28 +33,39 @@
 		</div>
 
 		<!-- FILTRE---------------------------- -->
-		<p>Filtres</p>
-		<form action="Accueil.html" method="post">
-			<input type="text" placeholder="Le nom de l'article contient"
-				name="nomArticle">
-			<button type="submit" name="recherche" value="Rechercher">Rechercher</button>
-<br><br>
-			<!--CATEGORIE  -->
-			<div>
-				<label for="categorie">Categorie</label> <select name="categorie"
-					id="categorie">
-					<option>Tous</option>
+		<div align="center">
+			<p>Filtres :</p>
+
+			<form action="<%=request.getContextPath()%>/restreint/AccueilConnecte" method="post">
+			<label for="nomArticle">Article :</label>
+				<input type="text" placeholder="Le nom de l'article contient"
+					name="nomArticle">
+		
+				<br>
+				
+				<!--CATEGORIE  -->
+				<div>
+					<label for="categorie">Categorie :</label> <select name="categorie"
+						id="categorie">
+						<option value="0">Tous</option>
 						<%
-			for (Categorie categorie : CategorieManager.selectAllCat()) {
-			%>
-			<option > <%=categorie.getLibelle()%></option>
-			<%
-			}
-			%>	
-				</select>
-			</div>
-		</form>
-		<br><br><br><br>
+						for (Categorie categorie : CategorieManager.selectAllCat()) {
+						%>
+							<option value="<%=categorie.getNoCategorie()%>"><%=categorie.getLibelle()%></option>
+						<%
+						}
+						%>
+					</select>
+				</div>
+				<br>
+				<br>
+				<button type="submit" name="recherche" value="Rechercher">Rechercher</button>
+			</form>
+		</div>
+		<br>
+		<br>
+		<br>
+		<br>
 	
 		<!-- LISTE -->
 		<table border="1">
@@ -67,24 +78,22 @@
                 <th><b>Vendeur</b></th>
             </tr>
 
-			<%
-			if(avs !=null) {
-				
-			
-			for (ArticleVendu av : avs) {
-			%>
-			<tr>
-                <td><%=av.getNomArticle()%></td>
-                <td><%=av.getDescription()%></td> 
-                <td><%=av.getMiseAPrix()%></td>
-                <td><%=av.getDateDebutEncheres()%></td>
-                <td><%=av.getDateFinEncheres()%></td>
-                <td><%=av.getVendeur().getPseudo()%></td>
-            </tr>
-			<%
-			}
-			}
-			%>
+				<%
+				ArrayList<ArticleVendu> avs = (ArrayList<ArticleVendu>) request.getAttribute("avs");
+				for (ArticleVendu av : avs) {
+				%>
+		
+				<tr>
+					<td><%=av.getNomArticle()%></td>
+					<td><%=av.getDescription()%></td>
+					<td><%=av.getMiseAPrix()%></td>
+					<td><%=av.getDateDebutEncheres()%></td>
+					<td><%=av.getDateFinEncheres()%></td>
+					<td><%=av.getVendeur().getPseudo()%></td>
+				</tr>
+				<%
+				}
+				%>
 		</table>
 	</section>
 	<footer> </footer>

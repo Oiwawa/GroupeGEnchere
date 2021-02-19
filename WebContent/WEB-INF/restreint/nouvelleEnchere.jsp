@@ -10,13 +10,12 @@
 <head>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css">
 <meta charset="UTF-8">
-<title>Les objets sont nos amis</title>
+<title>ENI-Enchères</title>
 </head>
 <body>
 	<!-- Titre -->
 	<h1>
-		<a href="<%=request.getContextPath()%>/Accueil.html">Les objets
-			sont nos amis</a>
+		<a href="<%=request.getContextPath()%>/restreint/AccueilConnecte">ENI-Enchères</a>
 	</h1>
 	<%
 	Utilisateur connectedUser = (Utilisateur) session.getAttribute("user");
@@ -24,6 +23,20 @@
 	List<Integer> listeCodesErreurs = (List<Integer>) request.getAttribute("listeCodesErreurs");
 	%>
 	<h1>Nouvelle Vente</h1>
+	<div>
+		<%
+		if (listeCodesErreurs != null) {
+		%>
+		<p style="color: red;">Erreur, l'article n'a pas pu être ajouté :</p>
+		<%
+		for (int codeErreur : listeCodesErreurs) {
+		%>
+		<p><%=LecteurMessage.getMessageErreur(codeErreur)%></p>
+		<%
+		}
+		}
+		%>
+	</div>
 	<br>
 	<!--NOM DE L'ARTICLE ---------  -->
 	<form action="<%=request.getContextPath()%>/VenteArticle" method="post">
@@ -72,7 +85,7 @@
 			<h1>Retrait</h1>
 			<div>
 				<label for="article">Rue : </label> <input type="text" id="rue"
-					name="srue" placeholder="Rue" value=<%=connectedUser.getRue() %> >
+					name="srue" placeholder="Rue" <%-- value=<%=connectedUser.getRue() %> --%> >
 				<br>
 			</div>
 
@@ -80,13 +93,13 @@
 			<div>
 				<label for="article">Code Postal : </label> <input type="text"
 					id="cp" name="scodepostal" min="0" maxlength="5"
-					placeholder="Ex: 44000" 	value=<%=connectedUser.getCodePostal()%> >
+					placeholder="Ex: 44000"  <%-- value=<%=connectedUser.getCodePostal()%> --%> >
 				<br>
 			</div>
 			<br>
 			<div>
 				<label for="article">Ville : </label> <input type="text" id="ville"
-					name="sville" placeholder="Ville" value="<%=connectedUser.getVille()%>">
+					name="sville" placeholder="Ville" <%-- value="<%=connectedUser.getVille()%> --%> ">
 				<br>
 			</div>
 
@@ -94,27 +107,13 @@
 
 			<!-- BOUTONS  -->
 			<input type="submit" value="Valider" /> <a
-				href="<%=request.getContextPath()%>/VenteArticle"><input
+				href="<%=request.getContextPath()%>/restreint/AccueilConnecte"><input
 				type="button" value="Annuler" /></a>
 
 		</div>
 	</form>
-	<div>
-		<%
-		if (listeCodesErreurs != null) {
-		%>
-		<p style="color: red;">Erreur, l'article n'a pas pu être ajouté :</p>
-		<%
-		for (int codeErreur : listeCodesErreurs) {
-		%>
-		<p><%=LecteurMessage.getMessageErreur(codeErreur)%></p>
-		<%
-		}
-		}
-		%>
-	</div>
-
 	<!-- Erreurs -->
+
 
 
 

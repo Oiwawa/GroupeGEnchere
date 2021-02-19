@@ -76,7 +76,7 @@ public class ServletConnection extends HttpServlet {
 			maSession.setAttribute("user", user);
 
 			// Reponse a l'utilisateur
-			RequestDispatcher rd = request.getRequestDispatcher("restreint/AccueilConnecte");
+			RequestDispatcher rd = request.getRequestDispatcher("/restreint/AccueilConnecte");
 			rd.forward(request, response);
 
 		} catch (BusinessException e) {
