@@ -23,12 +23,22 @@ public class ConnectionDAOJdbcImpl implements ConnectionDAO {
 
 			pstmt.setString(1, identifiant);
 			pstmt.setString(2, mdp);
+			
 
 			ResultSet rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 
 				user = new Utilisateur(rs.getString("pseudo"), rs.getString("mot_de_passe"), rs.getInt("no_utilisateur"));
+				user.setNoUtilisateur(rs.getInt("no_utilisateur"));
+                user.setNom(rs.getString("nom"));
+                user.setPrenom(rs.getString("prenom"));
+                user.setEmail(rs.getString("email"));
+                user.setTelephone(rs.getString("telephone"));
+                user.setRue(rs.getString("rue"));
+                user.setCodePostal(rs.getString("code_postal"));
+                user.setVille(rs.getString("ville"));
+                user.setCredit(rs.getInt("credit"));
 				
 				System.out.println("L'utilisateur trouve est :" + user);
 			}

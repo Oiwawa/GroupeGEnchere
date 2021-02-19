@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import fr.eni.javaee.encheres.BusinessException;
 import fr.eni.javaee.encheres.bll.ArticleManager;
 import fr.eni.javaee.encheres.bll.CategorieManager;
+import fr.eni.javaee.encheres.bll.ConnectionManager;
 import fr.eni.javaee.encheres.bll.RetraitManager;
 import fr.eni.javaee.encheres.bo.ArticleVendu;
 import fr.eni.javaee.encheres.bo.Categorie;
@@ -24,24 +25,11 @@ import fr.eni.javaee.encheres.bo.Retrait;
 import fr.eni.javaee.encheres.bo.Utilisateur;
 import fr.eni.javaee.encheres.messages.LecteurMessage;
 
-/**
- * Servlet implementation class NouvelleVenteServlet
- */
+
 @WebServlet("/VenteArticle")
 public class NouvelleEnchereServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public NouvelleEnchereServlet() {
-		super();
-	}
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/restreint/nouvelleEnchere.jsp");
@@ -49,10 +37,6 @@ public class NouvelleEnchereServlet extends HttpServlet {
 
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// Récupération des chaines encodages UTF-8
@@ -60,52 +44,64 @@ public class NouvelleEnchereServlet extends HttpServlet {
 
 		// La session
 		HttpSession session = request.getSession();
-		Utilisateur user = new Utilisateur();
-		request.setAttribute("user", user);
-		session.setAttribute("user", user);
+		Utilisateur user = null;
+		// Recuperer l'utilisateur depuis la session ou la request
+        if(session.getAttribute("user") != null) {
+            user = (Utilisateur) session.getAttribute("user");
+        } else if(request.getAttribute("user") != null) {
+            user = (Utilisateur) request.getAttribute("user");
+        } else {
+        	
+            // throw error
+        }
 		//Liste des erreurs
 		List<Integer> listeCodesErreurs = new ArrayList<Integer>();
+		
 		// Liste des categories
 		List<Categorie> listeCategorie = new ArrayList<Categorie>();
+		
 		try {
+			//Récupération de toutes les catégories
 			listeCategorie = CategorieManager.selectAllCat();
+			
 		} catch (BusinessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		//Envoie de la liste à la JSP
 		request.setAttribute("listeCategorie", listeCategorie);
+		
+		
 		// Création de l'article
 		ArticleVendu art = new ArticleVendu();
 		try {
 
-			// Variables de récupération ----------------
-			// Recuperation du nom de l'article
+					// Recuperation du nom de l'article
 			String recupNom = request.getParameter("sarticle");
 
-			// Recuperation de la description
+					// Recuperation de la description
 			String recupDesc = request.getParameter("sdescription");
 
-			// Recuperation du prix
+					// Recuperation du prix
 			int recupPrix = Integer.parseInt(request.getParameter("sprix"));
 
-			// Recuperation des categorie
+					// Recuperation des categorie
 			int categorieId = Integer.parseInt(request.getParameter("scategorie"));
 			Categorie categorie = CategorieManager.selectCatById(categorieId);
 
-			// Recuperation date début encheres
+					// Recuperation date début encheres
 			LocalDate recupDateDeb = LocalDate.parse(request.getParameter("sdatedeb"));
 
-			// Recuperation date fin d'encheres
+					// Recuperation date fin d'encheres
 			LocalDate recupDateFin = LocalDate.parse(request.getParameter("sdatefin"));
 
-			// Récupération de la session user
+					// Récupération de la session user
 			
-			// Recuperation de la rue de la ville et code postal
+					// Recuperation de la rue de la ville et code postal
 			String rue = request.getParameter("srue");
 			String ville = request.getParameter("sville");
 			String codePostal = request.getParameter("scodepostal");
 
-			// Création du retrait ou adresse par defaut du vendeur
+					// Création du retrait ou adresse par defaut du vendeur
 			if(rue == null || ville == null || codePostal ==null) {
 				art.setLieuRetrait(user.getAdresseRetraitDefaut());
 			} else {
@@ -113,7 +109,10 @@ public class NouvelleEnchereServlet extends HttpServlet {
 			retrait.setVille(ville);
 			retrait.setCodePostal(codePostal);
 			retrait.setRue(rue);
+			
+					//Ajout du retrait dans la BDD
 			RetraitManager.addRetrait(retrait);
+					
 			art.setLieuRetrait(retrait);
 			}
 			// Création de l'article
@@ -130,7 +129,7 @@ public class NouvelleEnchereServlet extends HttpServlet {
 			try {
 				ArticleManager.insertArticle(art);
 				request.setAttribute("ArticleAffiche", art);
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/restreint/accueilConnecte.jsp");
+				RequestDispatcher rd = request.getRequestDispatcher("restreint/AccueilConnecte");
 				rd.forward(request, response);
 
 			} catch (BusinessException e) {

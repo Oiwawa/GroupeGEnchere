@@ -16,7 +16,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<title>Les objets sont nos amis</title>
+<title>ENI-Enchères</title>
 <!-- Custom stylesheet -->
 <link rel="stylesheet" href="css/accueilStyle.css">
 
@@ -26,8 +26,7 @@
 	<header>
 		<!-- Titre -->
 		<h1 align="center">
-			<a href="<%=request.getContextPath()%>/Accueil.html">Les objets
-				sont nos amis</a>
+			<a href="<%=request.getContextPath()%>/Accueil.html">ENI-Enchères</a>
 		</h1>
 		<!-- INSCRIPTION ET CONNEXION---------------------------- -->
 		<div align="right">
@@ -88,16 +87,12 @@
 					<th><b>Fin de l'enchère</b></th>
 					<th><b>Vendeur</b></th>
 				</tr>
-				<%-- Fetching the attributes of the request object 
-             which was previously set by the servlet  
-              "StudentServlet.java" 
-        --%>
+		
 				<%
 				ArrayList<ArticleVendu> avs = (ArrayList<ArticleVendu>) request.getAttribute("avs");
 				for (ArticleVendu av : avs) {
 				%>
-				<%-- Arranging data in tabular form 
-        --%>
+		
 				<tr>
 					<td><%=av.getNomArticle()%></td>
 					<td><%=av.getDescription()%></td>

@@ -2,6 +2,7 @@ package fr.eni.javaee.encheres.servlet;
 
 import java.io.IOException;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import fr.eni.javaee.encheres.BusinessException;
 import fr.eni.javaee.encheres.bll.ArticleManager;
 import fr.eni.javaee.encheres.bo.ArticleVendu;
-import fr.eni.javaee.encheres.bo.Categorie;
 
 /**
  * Servlet implementation class accueilNonConnecteServlet

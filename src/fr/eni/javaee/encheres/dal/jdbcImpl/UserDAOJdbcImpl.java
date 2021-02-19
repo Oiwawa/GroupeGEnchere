@@ -60,20 +60,6 @@ public class UserDAOJdbcImpl implements UserDAO {
 		
 	}
 
-	@Override
-	public void updateUser(Utilisateur user) throws DALException, SQLException {
-
-	}
-
-	@Override
-	public void deleteUser(Utilisateur user) throws DALException, SQLException {
-
-	}
-
-	@Override
-	public void afficherProfil(Utilisateur user) throws DALException, SQLException {
-
-	}
 
 	@Override
 	public Utilisateur selectById(int id) throws BusinessException {
@@ -111,5 +97,20 @@ public class UserDAOJdbcImpl implements UserDAO {
 		}
 		
 		return user;
+	}
+	
+	@Override
+	public void updateUser(Utilisateur user) throws DALException, SQLException {
+		
+	}
+	
+	@Override
+	public void deleteUser(Utilisateur user) throws DALException, SQLException {
+		
+	}
+	
+	@Override
+	public void afficherProfil(Utilisateur user) throws DALException, SQLException {
+		
 	}
 }
