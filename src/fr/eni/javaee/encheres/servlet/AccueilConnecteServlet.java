@@ -20,75 +20,64 @@ import fr.eni.javaee.encheres.bo.Categorie;
 /**
  * Servlet implementation class AccueilConnecteServlet
  */
-@WebServlet("/AccueilConnecte")
+@WebServlet("/restreint/AccueilConnecte")
 public class AccueilConnecteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public AccueilConnecteServlet() {
-        super();
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		  ArticleManager am = new ArticleManager();
-		     List<ArticleVendu> avs = new ArrayList<ArticleVendu>();
-			try {
-				avs = am.selectAll();
-				request.setAttribute("avs", avs);
-			} catch (BusinessException e) {
-				e.printStackTrace();
-			}
-			request.getRequestDispatcher("/WEB-INF/restreint/accueilConnecte.jsp").forward(request, response);
-		     
-	   
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		System.out.println("AccueilConnecteServlet : doGet");
+		ArticleManager am = new ArticleManager();
+		List<ArticleVendu> avs = new ArrayList<ArticleVendu>();
+		try {
+			avs = am.selectAll();
+			request.setAttribute("avs", avs);
+		} catch (BusinessException e) {
+			e.printStackTrace();
+		}
+		request.getRequestDispatcher("/WEB-INF/restreint/accueilConnecte.jsp").forward(request, response);
+	}
 
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		System.out.println("AccueilConnecteServlet : doPost");
+
+		String rechercheName = request.getParameter("nomArticle");
+		String rechercheCat = request.getParameter("categorie");
+		
+		if(rechercheCat == null) {
+			doGet(request, response);
+			return;
+		}
+		int categorieId = Integer.parseInt(rechercheCat);
+
+		System.out.println("categorie : " + categorieId);
+		System.out.println("nomArticle : " + rechercheName);
+
+		try {
+			ArticleManager am = new ArticleManager();
+			List<ArticleVendu> avs = new ArrayList<ArticleVendu>();
+			avs = am.selectArticle(rechercheName, categorieId);
+
+			// met les attributs
+			request.setAttribute("avs", avs);
+		} catch (BusinessException e) {
+			e.printStackTrace();
+			request.setAttribute("avs", new ArrayList<ArticleVendu>());
+			request.setAttribute("listeCodesErreur", e.getMessage());
 		}
 
-		/**
-		 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-		 */
-			protected void doPost(HttpServletRequest request, HttpServletResponse response)
-		            throws ServletException, IOException {
-		        List<Categorie> listeCategorie = new ArrayList<Categorie>();
-		        List<ArticleVendu> avs = new ArrayList<ArticleVendu>();
-	            ArticleManager am = new ArticleManager();
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/restreint/accueilConnecte.jsp");
+		rd.forward(request, response);
 
-				try {
-					listeCategorie = CategorieManager.selectAllCat();
-				} catch (BusinessException e) {
-					e.printStackTrace();
-				}
-				request.setAttribute("listeCategorie", listeCategorie);
-				
-				
-				
-				String rechercheName = request.getParameter("nomArticle");
-				int categorieId = Integer.parseInt(request.getParameter("scategorie"));
-		        
-		        System.out.println("categorie : " + categorieId);
-		        System.out.println("nomArticle : " + rechercheName);
+	}
 
-		        try {
-		             avs = am.selectArticle(rechercheName, categorieId);
-		            
-		            // met les attributs
-		            request.setAttribute("avs", avs);
-		        } catch ( BusinessException e) {
-		            e.printStackTrace();
-		            request.setAttribute("avs", new ArrayList<ArticleVendu>());
-		            request.setAttribute("listeCodesErreur",e.getMessage());
-		        }
-		        
-		        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/restreint/accueilConnecte.jsp");
-		        rd.forward(request, response);
-
-		    }
-
-		}
-	
-
+}

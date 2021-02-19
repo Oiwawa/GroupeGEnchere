@@ -47,6 +47,7 @@ public class RestrictionFiltre implements Filter {
 		//Recuperation de la session depuis la requete 
 		HttpSession masession = request.getSession();
 		
+		System.out.println("filtre : user : " + masession.getAttribute("user"));
 		if(masession.getAttribute("user")==null){
 			/*Redirection vers la page public */
 			response.sendRedirect(request.getContextPath() + ACCES_CONNECTION);

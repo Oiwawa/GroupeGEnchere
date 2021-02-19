@@ -32,7 +32,7 @@
 	
 	<servlet>
 		<servlet-name>creationUtilisateur</servlet-name>
-		<jsp-file>/WEB-INF/pages/CreationUtilisateur.jsp</jsp-file>
+		<jsp-file>/WEB-INF/pages/creationUtilisateur.jsp</jsp-file>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>creationUtilisateur</servlet-name>
@@ -50,24 +50,24 @@
 		<url-pattern>/restreint/*</url-pattern>
 	</filter-mapping>
 	<!-- ACCUEIL CONNECTE  -->
-	<servlet>
-		<servlet-name>accueilConnecte</servlet-name>
-		<jsp-file>/WEB-INF/restraint/accueilConnecte.jsp</jsp-file>
-	</servlet>
+ 	<servlet> 
+		<servlet-name>AccueilConnecte</servlet-name>
+		<jsp-file>/WEB-INF/restreint/accueilConnecte.jsp</jsp-file> 
+	</servlet> 
 	<servlet-mapping>
-		<servlet-name>accueilConnecte</servlet-name>
-		<url-pattern>/restraint/accueilConnecte</url-pattern>
+ 		<servlet-name>AccueilConnecte</servlet-name> 
+		<url-pattern>/restreint/accueilConnecte</url-pattern> 
 	</servlet-mapping>
 	
 	
 		<!-- VENDRE UN ARTICLE  -->
 	<servlet>
 		<servlet-name>venteArticle</servlet-name>
-		<jsp-file>/WEB-INF/restraint/nouvelleEnchere.jsp</jsp-file>
+		<jsp-file>/WEB-INF/restreint/nouvelleEnchere.jsp</jsp-file>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>venteArticle</servlet-name>
-		<url-pattern>/restraint/nouvelleEnchere</url-pattern>
+		<url-pattern>/restreint/nouvelleEnchere</url-pattern>
 	</servlet-mapping>
 	
 <filter>

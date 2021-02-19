@@ -49,8 +49,6 @@ public class ServletConnection extends HttpServlet {
 				}
 			}
 		}
-
-		System.out.println("Passage dans la methode doGet");
 		this.getServletContext().getRequestDispatcher("/WEB-INF/pages/pageConnection.jsp").forward(request, response);
 
 	}
@@ -78,15 +76,15 @@ public class ServletConnection extends HttpServlet {
 			maSession.setAttribute("user", user);
 
 			// Reponse a l'utilisateur
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/restreint/accueilConnecte.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("restreint/AccueilConnecte");
 			rd.forward(request, response);
 
 		} catch (BusinessException e) {
 			e.printStackTrace();
-			
+
 			HttpSession maSession = request.getSession();
 			maSession.setAttribute("user", null);
-			
+
 			List<Integer> listeCodesErreursManager = e.getListeCodesErreur(); // Recupere la liste de code erreur
 			// associe a l'exception qui arrive
 			// du manager
@@ -96,7 +94,7 @@ public class ServletConnection extends HttpServlet {
 																				// message
 			}
 			request.setAttribute("message", msg);
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/restreint/pageConnection.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pages/pageConnection.jsp");
 			rd.forward(request, response);
 		}
 
