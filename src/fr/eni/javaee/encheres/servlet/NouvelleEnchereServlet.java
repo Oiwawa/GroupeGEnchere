@@ -60,9 +60,17 @@ public class NouvelleEnchereServlet extends HttpServlet {
 
 		// La session
 		HttpSession session = request.getSession();
-		Utilisateur user = new Utilisateur();
-		request.setAttribute("user", user);
-		session.setAttribute("user", user);
+		Utilisateur user = null;
+		
+		// Recuperer l'utilisateur depuis la session ou la request
+		if(session.getAttribute("user") != null) {
+			user = (Utilisateur) session.getAttribute("user");
+		} else if(request.getAttribute("user") != null) {
+			user = (Utilisateur) request.getAttribute("user");
+		} else {
+			// throw error
+		}
+		
 		//Liste des erreurs
 		List<Integer> listeCodesErreurs = new ArrayList<Integer>();
 		// Liste des categories

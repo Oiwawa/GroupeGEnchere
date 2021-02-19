@@ -29,7 +29,15 @@ public class ConnectionDAOJdbcImpl implements ConnectionDAO {
 			while (rs.next()) {
 
 				user = new Utilisateur(rs.getString("pseudo"), rs.getString("mot_de_passe"), rs.getInt("no_utilisateur"));
-				
+				user.setRue(rs.getString("rue"));
+				user.setNom(rs.getString("nom"));
+				user.setPrenom(rs.getString("prenom"));
+				user.setEmail(rs.getString("email"));
+				user.setTelephone(rs.getString("telephone"));
+				user.setCodePostal(rs.getString("code_postal"));
+				user.setCredit(rs.getInt("credit"));
+				user.setVille(rs.getString("ville"));
+				user.setNoUtilisateur(rs.getInt("no_utilisateur"));
 				System.out.println("L'utilisateur trouve est :" + user);
 			}
 
